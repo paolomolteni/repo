@@ -13,7 +13,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import it.paolomolteni.dao.CarDao;
 import it.paolomolteni.dao.PersonDao;
 import it.paolomolteni.model.Car;
 import it.paolomolteni.model.Person;
@@ -27,12 +26,6 @@ public class PersonService {
 	 */
 	@Inject
 	PersonDao personDao;
-	
-	/**
-	 * 
-	 */
-	@Inject
-	CarDao carDao;
 	
 	@POST
     @Path("/create")
@@ -80,26 +73,6 @@ public class PersonService {
 		
 		return ReponseBuilder.getOkResponse(model);
     }
-	
-	/**
-	 * @param personId
-	 * @param car
-	 * @return
-	 */
-	@POST
-    @Path("/car/create")
-	@Consumes("application/json")
-	@Produces("application/json")
-	@Transactional
-	public it.paolomolteni.model.Response addCarToPerson(@QueryParam("personId") long personId, Car car) {
-		
-		it.paolomolteni.pojo.Person person = personDao.get(personId);
-		
-		it.paolomolteni.pojo.Car carSaved = carDao.createCar(car.plate, person);
-		
-		System.out.println(String.format("ID car saved: %s", carSaved.getId()));
-		
-		return ReponseBuilder.getOkResponse();
-	}
+
 
 }

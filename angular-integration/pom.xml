@@ -31,6 +31,24 @@
   <build>
     <finalName>angular-integration</finalName>
     <plugins>
+    	<!-- This plugin clean the resources build in a previous step. -->
+   		<plugin>
+	    	<artifactId>maven-clean-plugin</artifactId>
+		    <configuration>
+	      		<filesets>
+		        	<fileset>
+		          		<directory>${basedir}/src/main/webapp</directory>
+		          		<includes>
+		            		<include>**/*.txt</include>
+		            		<include>**/*.ico</include>
+		            		<include>**/*.js</include>
+		            		<include>**/*.css</include>
+		          		</includes>
+		        	</fileset>
+		      	</filesets>
+		    </configuration>
+		</plugin>
+    	<!-- This plugin execute an external command. In this case the angular app is built. -->
     	<plugin>
 	        <groupId>org.codehaus.mojo</groupId>
 	        <artifactId>exec-maven-plugin</artifactId>
@@ -53,6 +71,7 @@
 	            </execution>
 	        </executions>
 	    </plugin>
+	    <!-- This plugin copy the angular app into the webapp folder -->
      	<plugin>
    			<artifactId>maven-resources-plugin</artifactId>
 	        <executions>

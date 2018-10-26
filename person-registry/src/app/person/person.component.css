@@ -1,0 +1,69 @@
+table {
+    border-collapse: collapse;
+}
+
+table, th, td{
+	border: 1px solid;
+}
+
+th, td{
+	/*width: 10vw;*/
+	min-width: 80px;
+}
+
+.divTablePeople{
+}
+
+.tableNoBorder{
+	border: 0 !important;
+}
+
+.divPeopleSelected{
+}
+
+.divCarCreation{
+}
+
+
+@media screen and (min-width: 802px) {
+	
+	.tableNewPerson{
+		float: left;
+		width: 20vw;
+	}
+	
+	.divTablePeople{
+		float: left;
+		width: 20vw;
+		margin-left: 1vw;
+	}
+	
+	.divPeopleSelected{
+		float: left;
+		width: 20vw;
+		margin-left: 1vw;
+	}
+	
+	.divCarCreation{
+		float: left;
+		margin-left: 1vw;
+		width: 20vw;
+	}
+	
+}
+
+@media screen and (max-width: 801px) {
+	
+	.divTablePeople{
+		margin-top: 1vh;
+	}
+	
+	.divPeopleSelected{
+		margin-top: 3vh;
+	}
+	
+	.divCarCreation{
+		margin-top: 1vh;
+	}
+	
+}

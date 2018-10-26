@@ -1,0 +1,33 @@
+
+<table class="tableNoBorder tableNewPerson">
+	<tr><td><input [(ngModel)]="name" placeholder="name"></td></tr>
+	<tr><td><input [(ngModel)]="lastName" placeholder="lastName"></td></tr>
+	<tr><td><input [(ngModel)]="age" placeholder="age"></td></tr>
+	<tr><td><button (click)="add();">Aggiungi</button></td></tr>
+</table>
+
+<div class="divTablePeople">
+	<table>
+		<th>Name</th><th>Last name</th>
+		<tr *ngFor="let person of people" (click)="getDetail(person);">
+			<td>{{person.name}}</td>
+			<td>{{person.lastName}}</td>
+		</tr>
+	</table>
+</div>
+
+
+<div class="divPeopleSelected">
+	<table *ngIf="personSelected">
+		<tr *ngFor="let car of personSelected.cars">
+			<td>{{car.id}}</td>
+			<td>{{car.plate}}</td>
+		</tr>
+	</table>
+</div>
+
+
+<div class="divCarCreation" *ngIf="personSelected">
+	<input [(ngModel)]="car.plate" placeholder="plate">
+	<button (click)="addCar();">Aggiungi</button>
+</div>

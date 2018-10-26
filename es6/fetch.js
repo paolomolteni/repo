@@ -1,5 +1,5 @@
 
-function testApi(path){
+function getRandomUser(path){
 
 	let myHeaders = new Headers();
 	myHeaders.append("Content-Type", "application/json");
@@ -16,9 +16,32 @@ function testApi(path){
 	})
 	.then((data) => {
 		
-		data.results.forEach((item) => {
+		data.results.forEach((user) => {
 			
-			console.log(item);
+			console.log("Nation: " + user.nat);
+			
+			getRandomUserSameNation(user.nat);
+			
+		});
+		
+	});
+	
+}
+
+function getRandomUserSameNation(nation){
+	
+	let getSameNationPromise = fetch("https://randomuser.me/api/?results=5&nat=" + nation);
+	
+	getSameNationPromise.then((response) => {
+		
+		return response.json();
+		
+	})
+	.then((data) => {
+		
+		data.results.forEach((user) => {
+					
+			console.log(`${user.name.title} ${user.name.first} ${user.name.last} ==> ${user.nat}`);
 			
 		});
 		
@@ -29,4 +52,4 @@ function testApi(path){
 //#################################################################################################
 //#################################################################################################
 
-testApi("https://randomuser.me/api/?results=10");
+getRandomUser("https://randomuser.me/api/?results=1");

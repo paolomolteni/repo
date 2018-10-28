@@ -20,6 +20,10 @@ export class PersonComponent implements OnInit {
 	@Input() lastName:string;
 	@Input() age:number;
 	
+	nameError:boolean = false;
+	lastNameError:boolean = false;
+	ageError:boolean = false;
+	
 	people:Person[];
 	personSelected:Person;
 
@@ -30,12 +34,20 @@ export class PersonComponent implements OnInit {
 	}
 	
 	add(): void{
+		
+		this.clearPersonErrors();
+		
+		if(!this.checkPersonBeforeSave()){
+			return;
+		}
+
 		let p = new Person();
 		p.name = this.name;
 		p.lastName = this.lastName;
 		p.age = this.age;
 		this.personService.addPerson(p).subscribe(reponse => {
 
+			this.clearPersonFields();
 			this.getAllPerson();
 			
 		});
@@ -67,6 +79,36 @@ export class PersonComponent implements OnInit {
 			this.getDetail(this.personSelected);
 			
 		});
+	}
+	
+	clearPersonErrors():void{
+		this.nameError = false;
+		this.lastNameError = false;
+		this.ageError = false;
+	}
+	
+	checkPersonBeforeSave(): boolean{
+		let check = true;
+		if(!this.name){
+			this.nameError = true;
+			check = false;
+		}
+		if(!this.lastName){
+			this.lastNameError = true;
+			check = false;
+		}
+		if(!this.age){
+			this.ageError = true;
+			check = false;
+		}
+		
+		return check;
+	}
+	
+	clearPersonFields():void{
+		this.name = null;
+		this.lastName = null;
+		this.age = null;
 	}
 
 }

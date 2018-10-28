@@ -1,8 +1,8 @@
 
 <table class="tableNoBorder tableNewPerson">
-	<tr><td><input [(ngModel)]="name" placeholder="name"></td></tr>
-	<tr><td><input [(ngModel)]="lastName" placeholder="lastName"></td></tr>
-	<tr><td><input [(ngModel)]="age" placeholder="age"></td></tr>
+	<tr><td><input [(ngModel)]="name" [ngClass]="{'error': nameError == true}" placeholder="name"></td></tr>
+	<tr><td><input [(ngModel)]="lastName" [ngClass]="{'error': lastNameError == true}" placeholder="lastName"></td></tr>
+	<tr><td><input [(ngModel)]="age" [ngClass]="{'error': ageError == true}" placeholder="age"></td></tr>
 	<tr><td><button (click)="add();">Aggiungi</button></td></tr>
 </table>
 

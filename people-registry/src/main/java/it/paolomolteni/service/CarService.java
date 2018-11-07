@@ -8,12 +8,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import it.paolomolteni.dao.CarDao;
 import it.paolomolteni.dao.PersonDao;
 import it.paolomolteni.model.Car;
 import it.paolomolteni.model.ReponseBuilder;
 
 @Path("/car")
+@Api(value = "CarService")
 public class CarService {
 	
 	/**
@@ -38,6 +41,7 @@ public class CarService {
 	@Consumes("application/json")
 	@Produces("application/json")
 	@Transactional
+	@ApiOperation(value = "Returns param", notes = "Returns param", response = it.paolomolteni.model.Response.class)
 	public it.paolomolteni.model.Response addCarToPerson(@QueryParam("personId") long personId, Car car) {
 		
 		it.paolomolteni.pojo.Person person = personDao.get(personId);

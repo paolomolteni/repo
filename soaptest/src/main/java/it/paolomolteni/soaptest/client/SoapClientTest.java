@@ -13,9 +13,9 @@ public class SoapClientTest {
 	
 	public static void main(String[] args) throws Exception {
 		URL remoteUrl = new URL("http://localhost:8080/soaptest/PersonService?wsdl");
-		URL localUrl = SoapClientTest.class.getClassLoader().getResource("PersonService.wsdl");
+//		URL localUrl = SoapClientTest.class.getClassLoader().getResource("PersonService.wsdl");
         QName qname = new QName("http://personservice/", "PersonService");
-        Service service = Service.create(localUrl, qname);
+        Service service = Service.create(remoteUrl, qname);
         PersonService personService = service.getPort(PersonService.class);
         
         Message message = personService.greeting(new Person() {{

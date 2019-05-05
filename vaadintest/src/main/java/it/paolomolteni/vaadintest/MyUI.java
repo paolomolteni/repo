@@ -14,7 +14,9 @@ import com.vaadin.data.HasValue.ValueChangeEvent;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.Registration;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -105,7 +107,28 @@ public class MyUI extends UI {
         cmbRegion.setSizeFull();
         addCmbRegionListener();
         
-        layout.addComponents(cmbCountry, cmbRegion);
+//        layout.addComponents(cmbCountry, cmbRegion);
+        
+        // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        MyJsComponent myJsComponent = new MyJsComponent();
+        myJsComponent.setId("divMap");
+        myJsComponent.setSizeFull();
+        myJsComponent.setHeight(400, Unit.PIXELS);
+        
+        TextField txtLatitude = new TextField();
+        txtLatitude.setSizeFull();
+        
+        TextField txtLongitude = new TextField();
+        txtLongitude.setSizeFull();
+        
+        Button btnApply = new Button("Apply");
+        btnApply.addClickListener(event -> {
+        	myJsComponent.setLatitude(Double.valueOf(txtLatitude.getValue()));
+        	myJsComponent.setLongitude(Double.valueOf(txtLongitude.getValue()));
+        });
+       
+        
+        layout.addComponents(txtLatitude, txtLongitude, btnApply, myJsComponent);
         
         setContent(layout);
     }

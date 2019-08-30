@@ -1,0 +1,41 @@
+<button (click)="newDetail()">Nuovo</button>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Data</th>
+      <th scope="col" sortable="nomeFarmaco">Nome</th>
+      <th scope="col">Descrizione</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let farmaco of farmaci; index as i" (click)="openDetail(farmaco)">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>{{farmaco.data}}</td>
+      <td>{{farmaco.nomeFarmaco}}</td>
+      <td>{{farmaco.descrizione}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="showDetail==true" class="divDetail">
+  <!-- Datepicker start-->
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd"
+              name="data" [(ngModel)]="detailInput.calendarModel" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- Datepicker end -->
+  <input type="text" name="nomeFarmaco" [(ngModel)]="detailInput.nomeFarmaco"><br/>
+  <input type="text" name="descrizione" [(ngModel)]="detailInput.descrizione"><br/>
+  <button (click)="saveDetail()">Salva</button>
+  <button (click)="closeDetail()">Chiudi</button>
+</div>
+

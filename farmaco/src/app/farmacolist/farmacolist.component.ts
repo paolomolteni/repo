@@ -19,8 +19,7 @@ export class FarmacolistComponent implements OnInit {
   ngOnInit() {
     this.detailInput = new FarmacoDetailInput();
     this.showDetail = false;
-    this.farmaci.push(new Farmaco('30/08/2019', 'Farmaco1', '2 volte al giorno'));
-    this.farmaci.push(new Farmaco('20/08/2019', 'Farmaco2', '3 volte al giorno'));
+    this.getFarmaci();
   }
 
   newDetail(): void {
@@ -30,11 +29,12 @@ export class FarmacolistComponent implements OnInit {
 
   openDetail(farmacoSelected: Farmaco): void {
     this.detailInput = new FarmacoDetailInput();
+    this.detailInput.id = farmacoSelected.id;
     this.detailInput.nomeFarmaco = farmacoSelected.nomeFarmaco;
     this.detailInput.descrizione = farmacoSelected.descrizione;
-    this.detailInput.calendarModel.day = +farmacoSelected.data.split("/")[0];
-    this.detailInput.calendarModel.month = +farmacoSelected.data.split("/")[1];
-    this.detailInput.calendarModel.year = +farmacoSelected.data.split("/")[2];
+    this.detailInput.calendarModel.day = +farmacoSelected.data.split("-")[2];
+    this.detailInput.calendarModel.month = +farmacoSelected.data.split("-")[1];
+    this.detailInput.calendarModel.year = +farmacoSelected.data.split("-")[0];
 
     this.showDetail = true;
   }
@@ -44,15 +44,20 @@ export class FarmacolistComponent implements OnInit {
   }
 
   saveDetail(): void {
-    this.farmaci.push(new Farmaco(this.detailInput.getDataFormatted(), this.detailInput.nomeFarmaco, this.detailInput.descrizione));
-    this.closeDetail();
+    let farmacoToSave = new Farmaco(this.detailInput.getDataFormatted(), this.detailInput.nomeFarmaco, this.detailInput.descrizione);
+    farmacoToSave.id = this.detailInput.id;
+    this.farmacoService.saveFarmaco(farmacoToSave).subscribe(res => {
+      this.closeDetail();
+      this.getFarmaci();
+    });
+    
   }
 
-  // getFarmaci(): void {
-	// 	this.peopleService.getPeopleFromService().subscribe(people => {
-	// 		this.people = people
-	// 	});
+  getFarmaci(): void {
+    this.farmacoService.getFarmaci().subscribe(farmaci => {
+      this.farmaci = farmaci
+    });
 
-	// }
+  }
 
 }

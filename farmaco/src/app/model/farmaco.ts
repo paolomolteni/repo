@@ -6,6 +6,8 @@ export class Farmaco {
 
 	public descrizione: string;
 
+	public id: number;
+
 	constructor(data: string, nomeFarmaco: string, descrizione: string) {
 		this.data = data;
 		this.nomeFarmaco = nomeFarmaco;

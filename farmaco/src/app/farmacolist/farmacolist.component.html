@@ -4,6 +4,7 @@
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">ID</th>
       <th scope="col">Data</th>
       <th scope="col" sortable="nomeFarmaco">Nome</th>
       <th scope="col">Descrizione</th>
@@ -12,6 +13,7 @@
   <tbody>
     <tr *ngFor="let farmaco of farmaci; index as i" (click)="openDetail(farmaco)">
       <th scope="row">{{ i + 1 }}</th>
+      <td>{{farmaco.id}}</td>
       <td>{{farmaco.data}}</td>
       <td>{{farmaco.nomeFarmaco}}</td>
       <td>{{farmaco.descrizione}}</td>

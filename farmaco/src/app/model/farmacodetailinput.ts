@@ -8,6 +8,8 @@ export class FarmacoDetailInput {
 
     descrizione: string;
 
+    id: number;
+
     constructor() {
         this.calendarModel = {
             day:0,
@@ -17,6 +19,6 @@ export class FarmacoDetailInput {
     }
     
     public getDataFormatted() {
-        return this.calendarModel.day+"/"+this.calendarModel.month+"/"+this.calendarModel.year;
+        return this.calendarModel.year+"-"+this.calendarModel.month+"-"+this.calendarModel.day;
     }
 }

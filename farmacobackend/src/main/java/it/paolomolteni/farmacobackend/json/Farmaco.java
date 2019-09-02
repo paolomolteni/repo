@@ -21,17 +21,31 @@ public class Farmaco {
 	 * 
 	 */
 	public String descrizione;
+	
+	/**
+	 * 
+	 */
+	public String dataScadenza;
+	
+	/**
+	 * 
+	 */
+	public String dataScadenzaAperto;
 
 	/**
 	 * @param data
 	 * @param nomeFarmaco
 	 * @param descrizione
+	 * @param dataScadenza
+	 * @param dataScadenzaAperto
 	 */
-	public Farmaco(String data, String nomeFarmaco, String descrizione) {
+	public Farmaco(String data, String nomeFarmaco, String descrizione, String dataScadenza, String dataScadenzaAperto) {
 		super();
 		this.data = data;
 		this.nomeFarmaco = nomeFarmaco;
 		this.descrizione = descrizione;
+		this.dataScadenza = dataScadenza;
+		this.dataScadenzaAperto = dataScadenzaAperto;
 	}
 	
 	/**
@@ -39,13 +53,17 @@ public class Farmaco {
 	 * @param data
 	 * @param nomeFarmaco
 	 * @param descrizione
+	 * @param dataScadenza
+	 * @param dataScadenzaAperto
 	 */
-	public Farmaco(Long id, String data, String nomeFarmaco, String descrizione) {
+	public Farmaco(Long id, String data, String nomeFarmaco, String descrizione, String dataScadenza, String dataScadenzaAperto) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.nomeFarmaco = nomeFarmaco;
 		this.descrizione = descrizione;
+		this.dataScadenza = dataScadenza;
+		this.dataScadenzaAperto = dataScadenzaAperto;
 	}
 	
 	/**

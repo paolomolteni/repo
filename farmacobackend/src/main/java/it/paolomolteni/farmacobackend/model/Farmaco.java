@@ -35,6 +35,18 @@ public class Farmaco {
 	 */
 	@Column(name="descrizione")
 	private String descrizione;
+	
+	/**
+	 * 
+	 */
+	@Column(name="data_scadenza")
+	private Date dataScadenza;
+	
+	/**
+	 * 
+	 */
+	@Column(name="data_scadenza_aperto")
+	private Date dataScadenzaAperto;
 
 	public Long getId() {
 		return id;
@@ -66,6 +78,22 @@ public class Farmaco {
 
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+
+	public Date getDataScadenza() {
+		return dataScadenza;
+	}
+
+	public void setDataScadenza(Date dataScadenza) {
+		this.dataScadenza = dataScadenza;
+	}
+
+	public Date getDataScadenzaAperto() {
+		return dataScadenzaAperto;
+	}
+
+	public void setDataScadenzaAperto(Date dataScadenzaAperto) {
+		this.dataScadenzaAperto = dataScadenzaAperto;
 	}
 
 }

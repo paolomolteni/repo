@@ -8,10 +8,16 @@ export class Farmaco {
 
 	public id: number;
 
-	constructor(data: string, nomeFarmaco: string, descrizione: string) {
+	public dataScadenza: string;
+
+	public dataScadenzaAperto: string;
+
+	constructor(data: string, nomeFarmaco: string, descrizione: string, dataScadenza: string, dataScadenzaAperto: string) {
 		this.data = data;
 		this.nomeFarmaco = nomeFarmaco;
 		this.descrizione = descrizione;
+		this.dataScadenza = dataScadenza;
+		this.dataScadenzaAperto = dataScadenzaAperto;
 	}
 
 }

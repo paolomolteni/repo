@@ -32,10 +32,9 @@ export class FarmacolistComponent implements OnInit {
     this.detailInput.id = farmacoSelected.id;
     this.detailInput.nomeFarmaco = farmacoSelected.nomeFarmaco;
     this.detailInput.descrizione = farmacoSelected.descrizione;
-    this.detailInput.calendarModel.day = +farmacoSelected.data.split("-")[2];
-    this.detailInput.calendarModel.month = +farmacoSelected.data.split("-")[1];
-    this.detailInput.calendarModel.year = +farmacoSelected.data.split("-")[0];
-
+    this.detailInput.calendarModel = this.detailInput.getData(farmacoSelected.data);
+    this.detailInput.dataScadenza = this.detailInput.getData(farmacoSelected.dataScadenza);
+    this.detailInput.dataScadenzaAperto = this.detailInput.getData(farmacoSelected.dataScadenzaAperto);
     this.showDetail = true;
   }
 
@@ -44,7 +43,11 @@ export class FarmacolistComponent implements OnInit {
   }
 
   saveDetail(): void {
-    let farmacoToSave = new Farmaco(this.detailInput.getDataFormatted(), this.detailInput.nomeFarmaco, this.detailInput.descrizione);
+    let data = this.detailInput.getDataFormatted(this.detailInput.calendarModel);
+    let dataScadenza = this.detailInput.getDataFormatted(this.detailInput.dataScadenza);
+    let dataScadenzaAperto = this.detailInput.getDataFormatted(this.detailInput.dataScadenzaAperto);
+
+    let farmacoToSave = new Farmaco(data, this.detailInput.nomeFarmaco, this.detailInput.descrizione, dataScadenza, dataScadenzaAperto);
     farmacoToSave.id = this.detailInput.id;
     this.farmacoService.saveFarmaco(farmacoToSave).subscribe(res => {
       this.closeDetail();

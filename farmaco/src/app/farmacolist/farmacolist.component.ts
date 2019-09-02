@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Farmaco } from '../model/farmaco';
 import { FarmacoDetailInput } from '../model/farmacodetailinput';
+import { FarmacoService } from '../farmaco.service';
 
 @Component({
   selector: 'app-farmacolist',
@@ -13,7 +14,7 @@ export class FarmacolistComponent implements OnInit {
   showDetail: boolean;
   detailInput: FarmacoDetailInput;
 
-  constructor() { }
+  constructor(private farmacoService: FarmacoService) { }
 
   ngOnInit() {
     this.detailInput = new FarmacoDetailInput();
@@ -46,5 +47,12 @@ export class FarmacolistComponent implements OnInit {
     this.farmaci.push(new Farmaco(this.detailInput.getDataFormatted(), this.detailInput.nomeFarmaco, this.detailInput.descrizione));
     this.closeDetail();
   }
+
+  // getFarmaci(): void {
+	// 	this.peopleService.getPeopleFromService().subscribe(people => {
+	// 		this.people = people
+	// 	});
+
+	// }
 
 }

@@ -11,12 +11,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let farmaco of farmaci; index as i" (click)="openDetail(farmaco)">
+    <tr *ngFor="let medicine of medicines; index as i" (click)="openDetail(medicine)">
       <th scope="row">{{ i + 1 }}</th>
-      <td>{{farmaco.id}}</td>
-      <td>{{farmaco.data}}</td>
-      <td>{{farmaco.nomeFarmaco}}</td>
-      <td>{{farmaco.descrizione}}</td>
+      <td>{{medicine.id}}</td>
+      <td>{{medicine.date}}</td>
+      <td>{{medicine.name}}</td>
+      <td>{{medicine.description}}</td>
     </tr>
   </tbody>
 </table>
@@ -28,7 +28,7 @@
     <div class="form-group">
       <div class="input-group">
         <input class="form-control" placeholder="yyyy-mm-dd"
-              name="data" [(ngModel)]="detailInput.calendarModel" ngbDatepicker #d="ngbDatepicker">
+              name="data" [(ngModel)]="detailInput.date" ngbDatepicker #d="ngbDatepicker">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
         </div>
@@ -42,7 +42,7 @@
     <div class="form-group">
       <div class="input-group">
         <input class="form-control" placeholder="yyyy-mm-dd"
-              name="dataScadenza" [(ngModel)]="detailInput.dataScadenza" ngbDatepicker #d2="ngbDatepicker">
+              name="dataScadenza" [(ngModel)]="detailInput.dateExpiry" ngbDatepicker #d2="ngbDatepicker">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
         </div>
@@ -56,7 +56,7 @@
     <div class="form-group">
       <div class="input-group">
         <input class="form-control" placeholder="yyyy-mm-dd"
-              name="dataScadenzaAperto" [(ngModel)]="detailInput.dataScadenzaAperto" ngbDatepicker #d3="ngbDatepicker">
+              name="dataScadenzaAperto" [(ngModel)]="detailInput.dateExpiryWhenOpened" ngbDatepicker #d3="ngbDatepicker">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"></button>
         </div>
@@ -65,8 +65,8 @@
   </form>
   <!-- data scadenza se aperto end -->
   
-  <input type="text" name="nomeFarmaco" [(ngModel)]="detailInput.nomeFarmaco"><br/>
-  <input type="text" name="descrizione" [(ngModel)]="detailInput.descrizione"><br/>
+  <input type="text" name="nomeFarmaco" [(ngModel)]="detailInput.name"><br/>
+  <input type="text" name="descrizione" [(ngModel)]="detailInput.description"><br/>
   <button (click)="saveDetail()">Salva</button>
   <button (click)="closeDetail()">Chiudi</button>
 </div>

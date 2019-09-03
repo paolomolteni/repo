@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Farmaco } from '../model/farmaco';
-import { FarmacoDetailInput } from '../model/farmacodetailinput';
+import { Medicine } from '../model/medicine';
+import { MedicineDetailInput } from '../model/medicinedetailinput';
 import { FarmacoService } from '../farmaco.service';
 
 @Component({
@@ -10,31 +10,31 @@ import { FarmacoService } from '../farmaco.service';
 })
 export class FarmacolistComponent implements OnInit {
 
-  farmaci: Farmaco[] = [];
+  medicines: Medicine[] = [];
   showDetail: boolean;
-  detailInput: FarmacoDetailInput;
+  detailInput: MedicineDetailInput;
 
   constructor(private farmacoService: FarmacoService) { }
 
   ngOnInit() {
-    this.detailInput = new FarmacoDetailInput();
+    this.detailInput = new MedicineDetailInput();
     this.showDetail = false;
-    this.getFarmaci();
+    this.getMedicines();
   }
 
   newDetail(): void {
-    this.detailInput = new FarmacoDetailInput();
+    this.detailInput = new MedicineDetailInput();
     this.showDetail = true;
   }
 
-  openDetail(farmacoSelected: Farmaco): void {
-    this.detailInput = new FarmacoDetailInput();
-    this.detailInput.id = farmacoSelected.id;
-    this.detailInput.nomeFarmaco = farmacoSelected.nomeFarmaco;
-    this.detailInput.descrizione = farmacoSelected.descrizione;
-    this.detailInput.calendarModel = this.detailInput.getData(farmacoSelected.data);
-    this.detailInput.dataScadenza = this.detailInput.getData(farmacoSelected.dataScadenza);
-    this.detailInput.dataScadenzaAperto = this.detailInput.getData(farmacoSelected.dataScadenzaAperto);
+  openDetail(medicineSelected: Medicine): void {
+    this.detailInput = new MedicineDetailInput();
+    this.detailInput.id = medicineSelected.id;
+    this.detailInput.name = medicineSelected.name;
+    this.detailInput.description = medicineSelected.description;
+    this.detailInput.date = this.detailInput.getData(medicineSelected.date);
+    this.detailInput.dateExpiry = this.detailInput.getData(medicineSelected.dateExpiry);
+    this.detailInput.dateExpiryWhenOpened = this.detailInput.getData(medicineSelected.dateExpiryWhenOpened);
     this.showDetail = true;
   }
 
@@ -43,22 +43,22 @@ export class FarmacolistComponent implements OnInit {
   }
 
   saveDetail(): void {
-    let data = this.detailInput.getDataFormatted(this.detailInput.calendarModel);
-    let dataScadenza = this.detailInput.getDataFormatted(this.detailInput.dataScadenza);
-    let dataScadenzaAperto = this.detailInput.getDataFormatted(this.detailInput.dataScadenzaAperto);
+    let date = this.detailInput.getDataFormatted(this.detailInput.date);
+    let dateExpiry = this.detailInput.getDataFormatted(this.detailInput.dateExpiry);
+    let dateExpiryWhenOpened = this.detailInput.getDataFormatted(this.detailInput.dateExpiryWhenOpened);
 
-    let farmacoToSave = new Farmaco(data, this.detailInput.nomeFarmaco, this.detailInput.descrizione, dataScadenza, dataScadenzaAperto);
-    farmacoToSave.id = this.detailInput.id;
-    this.farmacoService.saveFarmaco(farmacoToSave).subscribe(res => {
+    let medicineToSave = new Medicine(date, this.detailInput.name, this.detailInput.description, dateExpiry, dateExpiryWhenOpened);
+    medicineToSave.id = this.detailInput.id;
+    this.farmacoService.saveFarmaco(medicineToSave).subscribe(res => {
       this.closeDetail();
-      this.getFarmaci();
+      this.getMedicines();
     });
     
   }
 
-  getFarmaci(): void {
-    this.farmacoService.getFarmaci().subscribe(farmaci => {
-      this.farmaci = farmaci
+  getMedicines(): void {
+    this.farmacoService.getFarmaci().subscribe(medicines => {
+      this.medicines = medicines
     });
 
   }

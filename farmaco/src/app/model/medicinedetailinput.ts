@@ -1,38 +1,20 @@
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
-export class FarmacoDetailInput {
+export class MedicineDetailInput {
 
-    calendarModel: NgbDateStruct;
+    date: NgbDateStruct;
 
-    nomeFarmaco: string;
+    name: string;
 
-    descrizione: string;
+    description: string;
 
     id: number;
 
-    dataScadenza: NgbDateStruct
+    dateExpiry: NgbDateStruct
 
-    dataScadenzaAperto: NgbDateStruct;
+    dateExpiryWhenOpened: NgbDateStruct;
 
-    constructor() {
-        /*this.calendarModel = {
-            day:0,
-            month:0,
-            year:0
-        };
-
-        this.dataScadenza = {
-            day:0,
-            month:0,
-            year:0
-        };
-
-        this.dataScadenzaAperto = {
-            day:0,
-            month:0,
-            year:0
-        };*/
-    }
+    constructor() {}
     
     public getDataFormatted(calendar: NgbDateStruct) {
         if(calendar != null){

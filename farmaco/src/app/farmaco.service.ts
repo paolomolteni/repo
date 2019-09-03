@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Farmaco } from './model/farmaco';
+import { Medicine } from './model/medicine';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -9,16 +9,16 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class FarmacoService {
 
-  getFarmacoUrl = 'http://localhost:8888/farmaco/list';
-  saveFarmacoUrl = 'http://localhost:8888/farmaco/save';
+  getFarmacoUrl = 'http://localhost:8888/medicine/list';
+  saveFarmacoUrl = 'http://localhost:8888/medicine/save';
 
   constructor(private http: HttpClient) { }
 
-	getFarmaci(): Observable<Farmaco[]>{
-		return this.http.get<Farmaco[]>(this.getFarmacoUrl);
+	getFarmaci(): Observable<Medicine[]>{
+		return this.http.get<Medicine[]>(this.getFarmacoUrl);
   }
 
-  saveFarmaco(farmaco: Farmaco): Observable<Farmaco> {
+  saveFarmaco(medicine: Medicine): Observable<Medicine> {
 
     let httpOptions = {
       headers: new HttpHeaders({
@@ -26,7 +26,7 @@ export class FarmacoService {
       })
     };
 
-    return this.http.post<Farmaco>(this.saveFarmacoUrl, JSON.stringify(farmaco), httpOptions);
+    return this.http.post<Medicine>(this.saveFarmacoUrl, JSON.stringify(medicine), httpOptions);
 
   }
 

@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity(name="medicine")
 public class Medicine {
@@ -53,6 +55,13 @@ public class Medicine {
 	 */
 	@Column(name="cause")
 	private String cause;
+	
+	/**
+	 * 
+	 */
+	@ManyToOne
+	@JoinColumn(name="id_person", nullable=false)
+	private Person person;
 
 	public Long getId() {
 		return id;

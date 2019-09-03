@@ -14,6 +14,8 @@ export class MedicineDetailInput {
 
     dateExpiryWhenOpened: NgbDateStruct;
 
+    cause: string;
+
     constructor() {}
     
     public getDataFormatted(calendar: NgbDateStruct) {

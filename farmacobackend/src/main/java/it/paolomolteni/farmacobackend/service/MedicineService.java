@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.paolomolteni.farmacobackend.MedicineRepository;
 import it.paolomolteni.farmacobackend.model.Medicine;
+import it.paolomolteni.farmacobackend.model.Person;
+import it.paolomolteni.farmacobackend.repository.MedicineRepository;
+import it.paolomolteni.farmacobackend.repository.PersonRepository;
 
 @CrossOrigin
 @RestController
@@ -33,6 +36,12 @@ public class MedicineService {
 	/**
 	 * 
 	 */
+	@Autowired
+	private PersonRepository personRepository;
+	
+	/**
+	 * 
+	 */
 	private final String DATE_FORMAT = "yyyy-MM-dd";
 	
 	/**
@@ -43,6 +52,31 @@ public class MedicineService {
     public List<it.paolomolteni.farmacobackend.json.Medicine> getList() {
 		List<it.paolomolteni.farmacobackend.json.Medicine> list = new ArrayList<it.paolomolteni.farmacobackend.json.Medicine>();
 		List<Medicine> medicines = medicineRepository.getMedicines();
+
+		for(Medicine medicine : medicines) {
+			list.add(mapMedicine(medicine));
+		}
+		
+		return list;
+    }
+	
+	/**
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(path = "/list/person")
+    public List<it.paolomolteni.farmacobackend.json.Medicine> getListByPerson(@RequestParam(value="id") Long id) {
+		List<it.paolomolteni.farmacobackend.json.Medicine> list = new ArrayList<it.paolomolteni.farmacobackend.json.Medicine>();
+		
+		List<Medicine> medicines = new ArrayList<Medicine>();
+		
+		if(id != null) {
+			Person person = personRepository.findById(id).orElse(null);
+			
+			if(person != null) {
+				medicines.addAll(medicineRepository.getMedicinesByPerson(person));
+			}
+		}
 
 		for(Medicine medicine : medicines) {
 			list.add(mapMedicine(medicine));

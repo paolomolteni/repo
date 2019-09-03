@@ -35,6 +35,7 @@ export class FarmacolistComponent implements OnInit {
     this.detailInput.date = this.detailInput.getData(medicineSelected.date);
     this.detailInput.dateExpiry = this.detailInput.getData(medicineSelected.dateExpiry);
     this.detailInput.dateExpiryWhenOpened = this.detailInput.getData(medicineSelected.dateExpiryWhenOpened);
+    this.detailInput.cause = medicineSelected.cause;
     this.showDetail = true;
   }
 
@@ -47,7 +48,7 @@ export class FarmacolistComponent implements OnInit {
     let dateExpiry = this.detailInput.getDataFormatted(this.detailInput.dateExpiry);
     let dateExpiryWhenOpened = this.detailInput.getDataFormatted(this.detailInput.dateExpiryWhenOpened);
 
-    let medicineToSave = new Medicine(date, this.detailInput.name, this.detailInput.description, dateExpiry, dateExpiryWhenOpened);
+    let medicineToSave = new Medicine(date, this.detailInput.name, this.detailInput.description, dateExpiry, dateExpiryWhenOpened, this.detailInput.cause);
     medicineToSave.id = this.detailInput.id;
     this.farmacoService.saveFarmaco(medicineToSave).subscribe(res => {
       this.closeDetail();

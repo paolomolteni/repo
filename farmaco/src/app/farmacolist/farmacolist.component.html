@@ -68,6 +68,14 @@
   <input type="text" name="nomeFarmaco" [(ngModel)]="detailInput.name"><br/>
   <input type="text" name="descrizione" [(ngModel)]="detailInput.description"><br/>
   <input type="text" name="cause" [(ngModel)]="detailInput.cause"><br/>
+
+  <select class="inputWidth" [(ngModel)]="personId">
+    <option *ngFor="let person of peopleAvailable" value="{{person.id}}">
+      {{person.name}} {{person.lastName}}
+    </option>
+  </select>
+  <br/>
+  
   <button (click)="saveDetail()">Salva</button>
   <button (click)="closeDetail()">Chiudi</button>
 </div>

@@ -65,13 +65,13 @@ public class MedicineService {
 	 * @return
 	 */
 	@GetMapping(path = "/list/person")
-    public List<it.paolomolteni.farmacobackend.json.Medicine> getListByPerson(@RequestParam(value="id") Long id) {
+    public List<it.paolomolteni.farmacobackend.json.Medicine> getListByPerson(@RequestParam(value="personId") Long personId) {
 		List<it.paolomolteni.farmacobackend.json.Medicine> list = new ArrayList<it.paolomolteni.farmacobackend.json.Medicine>();
 		
 		List<Medicine> medicines = new ArrayList<Medicine>();
 		
-		if(id != null) {
-			Person person = personRepository.findById(id).orElse(null);
+		if(personId != null) {
+			Person person = personRepository.findById(personId).orElse(null);
 			
 			if(person != null) {
 				medicines.addAll(medicineRepository.getMedicinesByPerson(person));
@@ -114,6 +114,9 @@ public class MedicineService {
 		model.setDescription(medicine.description);
 		model.setCause(medicine.cause);
 		
+		Person person = this.personRepository.findById(medicine.personId).orElse(null);
+		model.setPerson(person);
+		
 		model = medicineRepository.save(model);
 		
 		return mapMedicine(model);
@@ -124,8 +127,11 @@ public class MedicineService {
 	 * @return
 	 */
 	private it.paolomolteni.farmacobackend.json.Medicine mapMedicine(Medicine medicine){
-		return new it.paolomolteni.farmacobackend.json.Medicine(medicine.getId(), getFormettedDate(medicine.getDate()), medicine.getName(), medicine.getDescription(),
+		it.paolomolteni.farmacobackend.json.Medicine json = new it.paolomolteni.farmacobackend.json.Medicine(medicine.getId(), getFormettedDate(medicine.getDate()), medicine.getName(), medicine.getDescription(),
 				getFormettedDate(medicine.getDateExpiry()), getFormettedDate(medicine.getDateExpiryWhenOpened()), medicine.getCause());
+		
+		json.personId = medicine.getPerson().getId();
+		return json;
 	}
 	
 	private String getFormettedDate(Date date) {

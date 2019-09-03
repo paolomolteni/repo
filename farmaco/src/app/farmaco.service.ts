@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Medicine } from './model/medicine';
 import { HttpHeaders } from '@angular/common/http';
@@ -11,6 +11,7 @@ export class FarmacoService {
 
   getFarmacoUrl = 'http://localhost:8888/medicine/list';
   saveFarmacoUrl = 'http://localhost:8888/medicine/save';
+  getFarmacoByPersonUrl = 'http://localhost:8888/medicine/list/person';
 
   constructor(private http: HttpClient) { }
 
@@ -28,6 +29,13 @@ export class FarmacoService {
 
     return this.http.post<Medicine>(this.saveFarmacoUrl, JSON.stringify(medicine), httpOptions);
 
+  }
+
+  getMedicinesByPerson(personId: number): Observable<Medicine[]> {
+    const options = {
+      params: new HttpParams().set('personId', personId + '')
+    };
+    return this.http.get<Medicine[]>(this.getFarmacoByPersonUrl, options);
   }
 
 

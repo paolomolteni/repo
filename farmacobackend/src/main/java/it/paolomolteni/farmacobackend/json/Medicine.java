@@ -36,6 +36,11 @@ public class Medicine {
 	 * 
 	 */
 	public String cause;
+	
+	/**
+	 * 
+	 */
+	public long personId;
 
 	/**
 	 * @param date

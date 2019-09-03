@@ -1,0 +1,27 @@
+<button (click)="newDetail()">Nuovo</button>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Cognome</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let person of people" (click)="openDetail(person)">
+      <td>{{person.id}}</td>
+      <td>{{person.name}}</td>
+      <td>{{person.lastName}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="showDetail" class="divDetail">
+  <input type="text" name="nomeFarmaco" [(ngModel)]="personInput.name"><br/>
+  <input type="text" name="descrizione" [(ngModel)]="personInput.lastName"><br/>
+  <button (click)="saveDetail()">Salva</button>
+  <button (click)="closeDetail()">Chiudi</button>
+  <br/>
+  <app-farmacolist [personId]="personInput.id"></app-farmacolist>
+</div>

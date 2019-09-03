@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Medicine } from '../model/medicine';
 import { MedicineDetailInput } from '../model/medicinedetailinput';
 import { FarmacoService } from '../farmaco.service';
+import { ActivatedRoute } from '@angular/router';
+import { PersonService } from '../services/person.service';
+import { Person } from '../model/person';
 
 @Component({
   selector: 'app-farmacolist',
@@ -13,13 +16,22 @@ export class FarmacolistComponent implements OnInit {
   medicines: Medicine[] = [];
   showDetail: boolean;
   detailInput: MedicineDetailInput;
+  peopleAvailable: Person[] = [];
 
-  constructor(private farmacoService: FarmacoService) { }
+  @Input()
+  personId: number;
+
+  constructor(private farmacoService: FarmacoService, private personService: PersonService) { }
 
   ngOnInit() {
     this.detailInput = new MedicineDetailInput();
     this.showDetail = false;
     this.getMedicines();
+    this.getPeople();
+  }
+
+  ngOnChanges() {
+    this.ngOnInit();
   }
 
   newDetail(): void {
@@ -48,7 +60,7 @@ export class FarmacolistComponent implements OnInit {
     let dateExpiry = this.detailInput.getDataFormatted(this.detailInput.dateExpiry);
     let dateExpiryWhenOpened = this.detailInput.getDataFormatted(this.detailInput.dateExpiryWhenOpened);
 
-    let medicineToSave = new Medicine(date, this.detailInput.name, this.detailInput.description, dateExpiry, dateExpiryWhenOpened, this.detailInput.cause);
+    let medicineToSave = new Medicine(date, this.detailInput.name, this.detailInput.description, dateExpiry, dateExpiryWhenOpened, this.detailInput.cause, this.personId);
     medicineToSave.id = this.detailInput.id;
     this.farmacoService.saveFarmaco(medicineToSave).subscribe(res => {
       this.closeDetail();
@@ -58,10 +70,24 @@ export class FarmacolistComponent implements OnInit {
   }
 
   getMedicines(): void {
-    this.farmacoService.getFarmaci().subscribe(medicines => {
-      this.medicines = medicines
-    });
+    // Check if a person was selected
+    if(this.personId != null){
+      this.farmacoService.getMedicinesByPerson(this.personId).subscribe(medicines => {
+        this.medicines = medicines
+      });
+    }
+    else{
+      this.farmacoService.getFarmaci().subscribe(medicines => {
+        this.medicines = medicines
+      });
+    }
 
+  }
+
+  getPeople() {
+    this.personService.getPeople().subscribe(people => {
+      this.peopleAvailable = people;
+    });
   }
 
 }

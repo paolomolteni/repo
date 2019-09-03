@@ -119,4 +119,13 @@ public class Medicine {
 		this.cause = cause;
 	}
 
+	public Person getPerson() {
+		return person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+	
+
 }

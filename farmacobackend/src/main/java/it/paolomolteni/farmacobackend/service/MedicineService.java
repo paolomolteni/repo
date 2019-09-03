@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.paolomolteni.farmacobackend.FarmacoRepository;
-import it.paolomolteni.farmacobackend.model.Farmaco;
+import it.paolomolteni.farmacobackend.MedicineRepository;
+import it.paolomolteni.farmacobackend.model.Medicine;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/farmaco")
-public class FarmacoService {
+@RequestMapping("/medicine")
+public class MedicineService {
 	
 	/**
 	 * 
 	 */
 	@Autowired
-	private FarmacoRepository farmacoRepository;
+	private MedicineRepository medicineRepository;
 	
 	/**
 	 * 
@@ -37,15 +37,15 @@ public class FarmacoService {
 	
 	/**
 	 * @return
-	 * http://localhost:8888/farmaco/list
+	 * http://localhost:8888/medicine/list
 	 */
 	@GetMapping(path = "/list")
-    public List<it.paolomolteni.farmacobackend.json.Farmaco> getList() {
-		List<it.paolomolteni.farmacobackend.json.Farmaco> list = new ArrayList<it.paolomolteni.farmacobackend.json.Farmaco>();
-		List<Farmaco> farmaci = farmacoRepository.getFarmaci();
+    public List<it.paolomolteni.farmacobackend.json.Medicine> getList() {
+		List<it.paolomolteni.farmacobackend.json.Medicine> list = new ArrayList<it.paolomolteni.farmacobackend.json.Medicine>();
+		List<Medicine> medicines = medicineRepository.getMedicines();
 
-		for(Farmaco farmaco : farmaci) {
-			list.add(mapFarmaco(farmaco));
+		for(Medicine medicine : medicines) {
+			list.add(mapMedicine(medicine));
 		}
 		
 		return list;
@@ -53,44 +53,45 @@ public class FarmacoService {
 	
 	/**
 	 * @param farmaco
-	 * http://localhost:8888/farmaco/save
+	 * http://localhost:8888/medicine/save
 	 */
 	@PostMapping(path = "/save")
-	public it.paolomolteni.farmacobackend.json.Farmaco save(@RequestBody it.paolomolteni.farmacobackend.json.Farmaco farmaco) {
-		Farmaco model = null;
+	public it.paolomolteni.farmacobackend.json.Medicine save(@RequestBody it.paolomolteni.farmacobackend.json.Medicine medicine) {
+		Medicine model = null;
 		
-		if(farmaco.id != null) {
-			model =	farmacoRepository.findById(farmaco.id).orElse(null);
+		if(medicine.id != null) {
+			model =	medicineRepository.findById(medicine.id).orElse(null);
 		}
 		
 		if(model == null) {
-			model = new Farmaco();
+			model = new Medicine();
 		}
 
 		try {
-			model.setData(getDateFromString(farmaco.data));
-			model.setDataScadenza(getDateFromString(farmaco.dataScadenza));
-			model.setDataScadenzaAperto(getDateFromString(farmaco.dataScadenzaAperto));
+			model.setDate(getDateFromString(medicine.date));
+			model.setDateExpiry(getDateFromString(medicine.dateExpiry));
+			model.setDateExpiryWhenOpened(getDateFromString(medicine.dateExpiryWhenOpened));
 		} 
 		catch (Exception e) {
 			
 		}
 		
-		model.setNomeFarmaco(farmaco.nomeFarmaco);
-		model.setDescrizione(farmaco.descrizione);
+		model.setName(medicine.name);
+		model.setDescription(medicine.description);
+		model.setCause(medicine.cause);
 		
-		model = farmacoRepository.save(model);
+		model = medicineRepository.save(model);
 		
-		return mapFarmaco(model);
+		return mapMedicine(model);
 	}
 	
 	/**
 	 * @param farmaco
 	 * @return
 	 */
-	private it.paolomolteni.farmacobackend.json.Farmaco mapFarmaco(Farmaco farmaco){
-		return new it.paolomolteni.farmacobackend.json.Farmaco(farmaco.getId(), getFormettedDate(farmaco.getData()), farmaco.getNomeFarmaco(), farmaco.getDescrizione(),
-				getFormettedDate(farmaco.getDataScadenza()), getFormettedDate(farmaco.getDataScadenzaAperto()));
+	private it.paolomolteni.farmacobackend.json.Medicine mapMedicine(Medicine medicine){
+		return new it.paolomolteni.farmacobackend.json.Medicine(medicine.getId(), getFormettedDate(medicine.getDate()), medicine.getName(), medicine.getDescription(),
+				getFormettedDate(medicine.getDateExpiry()), getFormettedDate(medicine.getDateExpiryWhenOpened()), medicine.getCause());
 	}
 	
 	private String getFormettedDate(Date date) {

@@ -6,17 +6,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import it.paolomolteni.farmacobackend.model.Farmaco;
+import it.paolomolteni.farmacobackend.model.Medicine;
 
 
 @Repository
-public interface FarmacoRepository extends CrudRepository<Farmaco, Long> {
+public interface MedicineRepository extends CrudRepository<Medicine, Long> {
 
 
 	/**
 	 * @return
 	 */
-	@Query(value = "SELECT f FROM it.paolomolteni.farmacobackend.model.Farmaco f order by f.id")
-	public List<Farmaco> getFarmaci();
+	@Query(value = "SELECT m FROM it.paolomolteni.farmacobackend.model.Medicine m order by m.id")
+	public List<Medicine> getMedicines();
 	
 }

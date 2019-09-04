@@ -91,14 +91,14 @@ export class FarmacolistComponent implements OnInit {
 
   deleteMedicine(medicine: Medicine) {
     this.farmacoService.deleteMedicine(medicine).subscribe(res => {
+      this.closeDetail();
+      this.getMedicines();
       if (res.success) {
         alert('Cancellazione avvenuto con successo!');
       }
       else {
         alert('Errore durante la cancellazione...');
       }
-      this.closeDetail();
-      this.getMedicines();
     });
   }
 

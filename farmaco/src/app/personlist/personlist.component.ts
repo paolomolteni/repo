@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Person } from '../model/person';
 import { PersonService } from '../services/person.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-personlist',
@@ -10,13 +11,14 @@ import { PersonService } from '../services/person.service';
 export class PersonlistComponent implements OnInit {
 
   people: Person[] = [];
-  showDetail: boolean;
+  showMedicines: boolean;
   personInput: Person;
+  popupRef: NgbModalRef;
 
-  constructor(private personService: PersonService) { }
+  constructor(private personService: PersonService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.showDetail = false;
+    this.showMedicines = false;
     this.getPeople();
   }
 
@@ -27,31 +29,31 @@ export class PersonlistComponent implements OnInit {
 
   }
 
-  newDetail() {
-    this.personInput = new Person();
-    this.showDetail = true;
-  }
-
-  openDetail(person: Person) {
+  openTableMedicines(person: Person) {
     this.personInput = new Person();
     this.personInput.name = person.name;
     this.personInput.lastName = person.lastName;
     this.personInput.id = person.id;
-    this.showDetail = true;
+    this.showMedicines = true;
   }
 
-  closeDetail(): void {
-    this.showDetail = false;
+  closePopup(): void {
+    this.popupRef.close();
   }
 
-  saveDetail(): void {
+  closeTableMedicines() {
+    this.showMedicines = false;
+  }
+
+  savePerson(): void {
     let personToSave = new Person();
     personToSave.id = this.personInput.id;
     personToSave.name = this.personInput.name;
     personToSave.lastName = this.personInput.lastName;
 
     this.personService.savePerson(personToSave).subscribe(res => {
-      this.closeDetail();
+      this.closePopup();
+      this.popupRef.close();
       this.getPeople();
     });
 
@@ -59,15 +61,27 @@ export class PersonlistComponent implements OnInit {
 
   deletePerson(person: Person) {
     this.personService.deletePerson(person).subscribe(res => {
+      this.closePopup();
+      this.getPeople();
       if (res.success) {
         alert('Cancellazione avvenuto con successo!');
       }
       else {
         alert('Errore durante la cancellazione...');
       }
-      this.closeDetail();
-      this.getPeople();
     });
+  }
+
+  openPopup(longContent, person: Person) {
+    this.personInput = new Person();
+
+    if (person != null) {
+      this.personInput.name = person.name;
+      this.personInput.lastName = person.lastName;
+      this.personInput.id = person.id;
+    }
+
+    this.popupRef = this.modalService.open(longContent, { scrollable: true });
   }
 
 }

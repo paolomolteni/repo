@@ -7,8 +7,8 @@
       <th scope="col">Data</th>
       <th scope="col" sortable="nomeFarmaco">Nome</th>
       <th scope="col">Descrizione</th>
-      <th scope="col">Dettaglio</th>
-      <th scope="col">Elimina</th>
+      <th scope="col" class="icon_column">Dettaglio</th>
+      <th scope="col" class="icon_column">Elimina</th>
     </tr>
   </thead>
   <tbody>
@@ -17,8 +17,12 @@
       <td>{{medicine.date}}</td>
       <td>{{medicine.name}}</td>
       <td>{{medicine.description}}</td>
-      <td (click)="openDetail(medicine)">det</td>
-      <td (click)="deleteMedicine(medicine)">can</td>
+      <td (click)="openDetail(medicine)">
+        <div class="detail_icon"></div>
+      </td>
+      <td (click)="deleteMedicine(medicine)">
+        <div class="delete_icon"></div>
+      </td>
     </tr>
   </tbody>
 </table>

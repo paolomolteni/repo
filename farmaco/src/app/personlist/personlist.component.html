@@ -1,4 +1,4 @@
-<button (click)="newDetail()">Nuovo</button>
+<button (click)="openPopup(longContent)">Nuovo</button>
 
 <table class="table table-striped">
   <thead>
@@ -6,8 +6,9 @@
       <th scope="col">ID</th>
       <th scope="col">Nome</th>
       <th scope="col">Cognome</th>
-      <th scope="col">Dettaglio</th>
-      <th scope="col">Elimina</th>
+      <th scope="col" class="icon_column">Dettaglio</th>
+      <th scope="col" class="icon_column">Elimina</th>
+      <th scope="col" class="icon_column">Farmaci</th>
     </tr>
   </thead>
   <tbody>
@@ -15,17 +16,38 @@
       <td>{{person.id}}</td>
       <td>{{person.name}}</td>
       <td>{{person.lastName}}</td>
-      <td (click)="openDetail(person)">det</td>
-      <td (click)="deletePerson(person)">can</td>
+      <td (click)="openPopup(longContent, person);">
+        <div class="detail_icon"></div>
+      </td>
+      <td (click)="deletePerson(person)">
+        <div class="delete_icon"></div>
+      </td>
+      <td (click)="openTableMedicines(person)">
+        <div class="list_icon"></div>
+      </td>
     </tr>
   </tbody>
 </table>
 
-<div *ngIf="showDetail" class="divDetail">
-  <input type="text" name="nomeFarmaco" [(ngModel)]="personInput.name"><br/>
-  <input type="text" name="descrizione" [(ngModel)]="personInput.lastName"><br/>
-  <button (click)="saveDetail()">Salva</button>
-  <button (click)="closeDetail()">Chiudi</button>
-  <br/>
+<div *ngIf="showMedicines" class="divDetail">
+  <button (click)="closeTableMedicines()">Chiudi</button>
   <app-farmacolist [personId]="personInput.id"></app-farmacolist>
 </div>
+
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <input type="text" name="nomeFarmaco" [(ngModel)]="personInput.name" class="inputTxt"><br/>
+    <input type="text" name="descrizione" [(ngModel)]="personInput.lastName" class="inputTxt"><br/>
+    <button (click)="savePerson()">Salva</button>
+    <button (click)="closePopup()">Chiudi</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

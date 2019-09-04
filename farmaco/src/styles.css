@@ -1,1 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+.icon_column{
+    width: 3%;
+}
+
+.delete_icon{
+    background-image: url("./app/icons/delete.png");
+    background-size: 23px;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    margin: auto;
+}
+
+.detail_icon{
+    background-image: url("./app/icons/detail.png");
+    background-size: 23px;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    margin: auto;
+}
+
+.inputTxt{
+    width: 100%;
+}
+
+.list_icon{
+    background-image: url("./app/icons/list.png");
+    background-size: 23px;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    margin: auto;
+}

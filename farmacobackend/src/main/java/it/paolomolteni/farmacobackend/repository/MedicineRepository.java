@@ -2,6 +2,7 @@ package it.paolomolteni.farmacobackend.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -26,5 +27,12 @@ public interface MedicineRepository extends CrudRepository<Medicine, Long> {
 	 */
 	@Query(value = "SELECT m FROM it.paolomolteni.farmacobackend.model.Medicine m where m.person = :person order by m.id")
 	public List<Medicine> getMedicinesByPerson(@Param("person") Person person);
+	
+	/**
+	 * @param person
+	 */
+	@Modifying
+	@Query("delete from it.paolomolteni.farmacobackend.model.Medicine m where m.person = :person")
+	public void deleteByPerson(@Param("person") Person person);
 	
 }

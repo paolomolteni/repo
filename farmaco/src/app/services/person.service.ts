@@ -2,6 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Person } from '../model/person';
+import { Response } from '../model/response';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+  })
+};
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +17,7 @@ export class PersonService {
 
   getPersonUrl = 'http://localhost:8888/person/list';
   savePersonUrl = 'http://localhost:8888/person/save';
+  deletePersonUrl = 'http://localhost:8888/person/delete';
 
   constructor(private http: HttpClient) { }
 
@@ -18,15 +26,12 @@ export class PersonService {
   }
 
   savePerson(person: Person): Observable<Person> {
-
-    let httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      })
-    };
-
     return this.http.post<Person>(this.savePersonUrl, JSON.stringify(person), httpOptions);
 
+  }
+
+  deletePerson(person: Person): Observable<Response<void>> {
+    return this.http.put<Response<void>>(this.deletePersonUrl + '?personId=' + person.id, null);
   }
 
 }

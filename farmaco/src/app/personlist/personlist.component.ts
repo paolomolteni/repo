@@ -57,4 +57,17 @@ export class PersonlistComponent implements OnInit {
 
   }
 
+  deletePerson(person: Person) {
+    this.personService.deletePerson(person).subscribe(res => {
+      if (res.success) {
+        alert('Cancellazione avvenuto con successo!');
+      }
+      else {
+        alert('Errore durante la cancellazione...');
+      }
+      this.closeDetail();
+      this.getPeople();
+    });
+  }
+
 }

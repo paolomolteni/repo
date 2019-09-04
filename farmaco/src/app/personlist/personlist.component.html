@@ -6,13 +6,17 @@
       <th scope="col">ID</th>
       <th scope="col">Nome</th>
       <th scope="col">Cognome</th>
+      <th scope="col">Dettaglio</th>
+      <th scope="col">Elimina</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let person of people" (click)="openDetail(person)">
+    <tr *ngFor="let person of people">
       <td>{{person.id}}</td>
       <td>{{person.name}}</td>
       <td>{{person.lastName}}</td>
+      <td (click)="openDetail(person)">det</td>
+      <td (click)="deletePerson(person)">can</td>
     </tr>
   </tbody>
 </table>

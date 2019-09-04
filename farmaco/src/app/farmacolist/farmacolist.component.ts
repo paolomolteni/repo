@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Medicine } from '../model/medicine';
 import { MedicineDetailInput } from '../model/medicinedetailinput';
 import { FarmacoService } from '../farmaco.service';
-import { ActivatedRoute } from '@angular/router';
 import { PersonService } from '../services/person.service';
 import { Person } from '../model/person';
 
@@ -87,6 +86,19 @@ export class FarmacolistComponent implements OnInit {
   getPeople() {
     this.personService.getPeople().subscribe(people => {
       this.peopleAvailable = people;
+    });
+  }
+
+  deleteMedicine(medicine: Medicine) {
+    this.farmacoService.deleteMedicine(medicine).subscribe(res => {
+      if (res.success) {
+        alert('Cancellazione avvenuto con successo!');
+      }
+      else {
+        alert('Errore durante la cancellazione...');
+      }
+      this.closeDetail();
+      this.getMedicines();
     });
   }
 

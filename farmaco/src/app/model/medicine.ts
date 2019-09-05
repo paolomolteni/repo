@@ -1,3 +1,5 @@
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+
 export class Medicine {
 
 	public date: string;
@@ -16,14 +18,12 @@ export class Medicine {
 
 	public personId: number;
 
-	constructor(date: string, name: string, description: string, dateExpiry: string, dateExpiryWhenOpened: string, cause: string, personId: number) {
-		this.date = date;
-		this.name = name;
-		this.description = description;
-		this.dateExpiry = dateExpiry;
-		this.dateExpiryWhenOpened = dateExpiryWhenOpened;
-		this.cause = cause;
-		this.personId = personId;
-	}
+	public dateCalendar: NgbDateStruct;
+
+	public dateExpiryCalendar: NgbDateStruct;
+
+	public dateExpiryWhenOpenedCalendar: NgbDateStruct;
+
+	constructor() {}
 
 }

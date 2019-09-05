@@ -1,4 +1,4 @@
-<button (click)="newDetail()">Nuovo</button>
+<button (click)="openPopup(longContent)">Nuovo</button>
 
 <table class="table table-striped">
   <thead>
@@ -17,7 +17,7 @@
       <td>{{medicine.date}}</td>
       <td>{{medicine.name}}</td>
       <td>{{medicine.description}}</td>
-      <td (click)="openDetail(medicine)">
+      <td (click)="openPopup(longContent, medicine)">
         <div class="detail_icon"></div>
       </td>
       <td (click)="deleteMedicine(medicine)">
@@ -27,62 +27,74 @@
   </tbody>
 </table>
 
-<div *ngIf="showDetail==true" class="divDetail">
-  
-  <!-- data -->
-  <form class="form-inline">
-    <div class="form-group">
-      <div class="input-group">
-        <input class="form-control" placeholder="yyyy-mm-dd"
-              name="data" [(ngModel)]="detailInput.date" ngbDatepicker #d="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+<!-- POPUP INSERIMENTO/MODIFICA -->
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- data -->
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd"
+                name="data" [(ngModel)]="medicine.dateCalendar" ngbDatepicker #d="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
-  <!-- data end -->
+    </form>
+    <!-- data end -->
 
-  <!-- data scadenza -->
-  <form class="form-inline">
-    <div class="form-group">
-      <div class="input-group">
-        <input class="form-control" placeholder="yyyy-mm-dd"
-              name="dataScadenza" [(ngModel)]="detailInput.dateExpiry" ngbDatepicker #d2="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+    <!-- data scadenza -->
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd"
+                name="dataScadenza" [(ngModel)]="medicine.dateExpiryCalendar" ngbDatepicker #d2="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d2.toggle()" type="button"></button>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
-  <!-- data scadenza end -->
+    </form>
+    <!-- data scadenza end -->
 
-  <!-- data scadenza se aperto -->
-  <form class="form-inline">
-    <div class="form-group">
-      <div class="input-group">
-        <input class="form-control" placeholder="yyyy-mm-dd"
-              name="dataScadenzaAperto" [(ngModel)]="detailInput.dateExpiryWhenOpened" ngbDatepicker #d3="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"></button>
+    <!-- data scadenza se aperto -->
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd"
+                name="dataScadenzaAperto" [(ngModel)]="medicine.dateExpiryWhenOpenedCalendar" ngbDatepicker #d3="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d3.toggle()" type="button"></button>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
-  <!-- data scadenza se aperto end -->
-  
-  <input type="text" name="nomeFarmaco" [(ngModel)]="detailInput.name"><br/>
-  <input type="text" name="descrizione" [(ngModel)]="detailInput.description"><br/>
-  <input type="text" name="cause" [(ngModel)]="detailInput.cause"><br/>
+    </form>
+    <!-- data scadenza se aperto end -->
+    
+    <input type="text" name="nomeFarmaco" [(ngModel)]="medicine.name"><br/>
+    <input type="text" name="descrizione" [(ngModel)]="medicine.description"><br/>
+    <input type="text" name="cause" [(ngModel)]="medicine.cause"><br/>
 
-  <select class="inputWidth" [(ngModel)]="personId">
-    <option *ngFor="let person of peopleAvailable" value="{{person.id}}">
-      {{person.name}} {{person.lastName}}
-    </option>
-  </select>
-  <br/>
-  
-  <button (click)="saveDetail()">Salva</button>
-  <button (click)="closeDetail()">Chiudi</button>
-</div>
+    <select class="inputWidth" [(ngModel)]="medicine.personId">
+      <option *ngFor="let person of peopleAvailable" value="{{person.id}}">
+        {{person.name}} {{person.lastName}}
+      </option>
+    </select>
+    <br/>
+    
+    <button (click)="saveDetail()">Salva</button>
+    <button (click)="closePopup()">Chiudi</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+<!-- POPUP INSERIMENTO/MODIFICA -->
 

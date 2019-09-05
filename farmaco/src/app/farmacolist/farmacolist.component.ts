@@ -1,9 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Medicine } from '../model/medicine';
-import { MedicineDetailInput } from '../model/medicinedetailinput';
 import { FarmacoService } from '../farmaco.service';
 import { PersonService } from '../services/person.service';
 import { Person } from '../model/person';
+import { DateUtil } from '../utils/dateutil';
+import { NgbModalRef, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-farmacolist',
@@ -13,18 +14,18 @@ import { Person } from '../model/person';
 export class FarmacolistComponent implements OnInit {
 
   medicines: Medicine[] = [];
-  showDetail: boolean;
-  detailInput: MedicineDetailInput;
+  medicine: Medicine;
   peopleAvailable: Person[] = [];
 
   @Input()
   personId: number;
 
-  constructor(private farmacoService: FarmacoService, private personService: PersonService) { }
+  popupRef: NgbModalRef;
+
+  constructor(private farmacoService: FarmacoService, private personService: PersonService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.detailInput = new MedicineDetailInput();
-    this.showDetail = false;
+    this.medicine = new Medicine();
     this.getMedicines();
     this.getPeople();
   }
@@ -33,36 +34,19 @@ export class FarmacolistComponent implements OnInit {
     this.ngOnInit();
   }
 
-  newDetail(): void {
-    this.detailInput = new MedicineDetailInput();
-    this.showDetail = true;
-  }
-
-  openDetail(medicineSelected: Medicine): void {
-    this.detailInput = new MedicineDetailInput();
-    this.detailInput.id = medicineSelected.id;
-    this.detailInput.name = medicineSelected.name;
-    this.detailInput.description = medicineSelected.description;
-    this.detailInput.date = this.detailInput.getData(medicineSelected.date);
-    this.detailInput.dateExpiry = this.detailInput.getData(medicineSelected.dateExpiry);
-    this.detailInput.dateExpiryWhenOpened = this.detailInput.getData(medicineSelected.dateExpiryWhenOpened);
-    this.detailInput.cause = medicineSelected.cause;
-    this.showDetail = true;
-  }
-
-  closeDetail(): void {
-    this.showDetail = false;
-  }
-
   saveDetail(): void {
-    let date = this.detailInput.getDataFormatted(this.detailInput.date);
-    let dateExpiry = this.detailInput.getDataFormatted(this.detailInput.dateExpiry);
-    let dateExpiryWhenOpened = this.detailInput.getDataFormatted(this.detailInput.dateExpiryWhenOpened);
-
-    let medicineToSave = new Medicine(date, this.detailInput.name, this.detailInput.description, dateExpiry, dateExpiryWhenOpened, this.detailInput.cause, this.personId);
-    medicineToSave.id = this.detailInput.id;
+    let medicineToSave = new Medicine();
+    medicineToSave.date = DateUtil.getDataFormatted(this.medicine.dateCalendar);
+    medicineToSave.name = this.medicine.name;
+    medicineToSave.description = this.medicine.description;
+    medicineToSave.dateExpiry = DateUtil.getDataFormatted(this.medicine.dateExpiryCalendar);
+    medicineToSave.dateExpiryWhenOpened = DateUtil.getDataFormatted(this.medicine.dateExpiryWhenOpenedCalendar);
+    medicineToSave.cause = this.medicine.cause;
+    medicineToSave.personId = this.medicine.personId;
+    medicineToSave.id = this.medicine.id;
+    
     this.farmacoService.saveFarmaco(medicineToSave).subscribe(res => {
-      this.closeDetail();
+      this.popupRef.close();
       this.getMedicines();
     });
     
@@ -91,7 +75,6 @@ export class FarmacolistComponent implements OnInit {
 
   deleteMedicine(medicine: Medicine) {
     this.farmacoService.deleteMedicine(medicine).subscribe(res => {
-      this.closeDetail();
       this.getMedicines();
       if (res.success) {
         alert('Cancellazione avvenuto con successo!');
@@ -100,6 +83,32 @@ export class FarmacolistComponent implements OnInit {
         alert('Errore durante la cancellazione...');
       }
     });
+  }
+
+  closePopup(): void {
+    this.popupRef.close();
+  }
+
+  openPopup(longContent, medicineSelected: Medicine) {
+    this.medicine = new Medicine();
+
+    if (medicineSelected != null) {
+      this.medicine = new Medicine();
+      this.medicine.id = medicineSelected.id;
+      this.medicine.name = medicineSelected.name;
+      this.medicine.description = medicineSelected.description;
+      this.medicine.dateCalendar = DateUtil.getData(medicineSelected.date);
+      this.medicine.dateExpiryCalendar = DateUtil.getData(medicineSelected.dateExpiry);
+      this.medicine.dateExpiryWhenOpenedCalendar = DateUtil.getData(medicineSelected.dateExpiryWhenOpened);
+      this.medicine.cause = medicineSelected.cause;
+      this.medicine.personId = medicineSelected.personId;
+    }
+
+    if(this.personId != null){
+      this.medicine.personId = this.personId;
+    }
+
+    this.popupRef = this.modalService.open(longContent, { scrollable: false });
   }
 
 }

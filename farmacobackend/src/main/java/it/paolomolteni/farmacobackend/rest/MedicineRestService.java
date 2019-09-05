@@ -1,13 +1,8 @@
 package it.paolomolteni.farmacobackend.rest;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +19,7 @@ import it.paolomolteni.farmacobackend.model.Person;
 import it.paolomolteni.farmacobackend.repository.MedicineRepository;
 import it.paolomolteni.farmacobackend.repository.PersonRepository;
 import it.paolomolteni.farmacobackend.service.MedicineService;
+import it.paolomolteni.farmacobackend.utils.DateUtil;
 
 @CrossOrigin
 @RestController
@@ -47,11 +43,6 @@ public class MedicineRestService {
 	 */
 	@Autowired
 	private MedicineService medicineService;
-	
-	/**
-	 * 
-	 */
-	private final String DATE_FORMAT = "yyyy-MM-dd";
 	
 	/**
 	 * @return
@@ -111,9 +102,9 @@ public class MedicineRestService {
 		}
 
 		try {
-			model.setDate(getDateFromString(medicine.date));
-			model.setDateExpiry(getDateFromString(medicine.dateExpiry));
-			model.setDateExpiryWhenOpened(getDateFromString(medicine.dateExpiryWhenOpened));
+			model.setDate(DateUtil.getDateFromString(medicine.date));
+			model.setDateExpiry(DateUtil.getDateFromString(medicine.dateExpiry));
+			model.setDateExpiryWhenOpened(DateUtil.getDateFromString(medicine.dateExpiryWhenOpened));
 		} 
 		catch (Exception e) {
 			
@@ -136,35 +127,11 @@ public class MedicineRestService {
 	 * @return
 	 */
 	private it.paolomolteni.farmacobackend.json.Medicine mapMedicine(Medicine medicine){
-		it.paolomolteni.farmacobackend.json.Medicine json = new it.paolomolteni.farmacobackend.json.Medicine(medicine.getId(), getFormettedDate(medicine.getDate()), medicine.getName(), medicine.getDescription(),
-				getFormettedDate(medicine.getDateExpiry()), getFormettedDate(medicine.getDateExpiryWhenOpened()), medicine.getCause());
+		it.paolomolteni.farmacobackend.json.Medicine json = new it.paolomolteni.farmacobackend.json.Medicine(medicine.getId(), DateUtil.getFormettedDate(medicine.getDate()), medicine.getName(), medicine.getDescription(),
+				DateUtil.getFormettedDate(medicine.getDateExpiry()), DateUtil.getFormettedDate(medicine.getDateExpiryWhenOpened()), medicine.getCause());
 		
 		json.personId = medicine.getPerson().getId();
 		return json;
-	}
-	
-	private String getFormettedDate(Date date) {
-		if(date != null) {
-			DateFormat df = new SimpleDateFormat(DATE_FORMAT);
-			return df.format(date);
-		}
-		
-		return null;
-	}
-	
-	private Date getDateFromString(String s) throws Exception {
-		
-		if(StringUtils.isBlank(s)) {
-			return null;
-		}
-		
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new SimpleDateFormat(DATE_FORMAT).parse(s));
-		calendar.set(Calendar.HOUR_OF_DAY, 2);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
-		return calendar.getTime();
 	}
 	
 	/**

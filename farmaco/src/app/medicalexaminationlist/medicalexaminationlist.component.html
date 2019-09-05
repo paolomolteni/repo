@@ -1,0 +1,59 @@
+<button (click)="newDetail()">Nuovo</button>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Data</th>
+      <th scope="col" >Motivazione</th>
+      <th scope="col">Prezzo</th>
+      <th scope="col" class="icon_column">Dettaglio</th>
+      <th scope="col" class="icon_column">Elimina</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let examination of examinations">
+      <td>{{examination.id}}</td>
+      <td>{{examination.date}}</td>
+      <td>{{examination.reason}}</td>
+      <td>{{examination.price}}</td>
+      <td (click)="openDetail(examination)">
+        <div class="detail_icon"></div>
+      </td>
+      <td (click)="deleteExamination(examination)">
+        <div class="delete_icon"></div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div *ngIf="showDetail==true" class="divDetail">
+  
+  <!-- data -->
+  <form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd"
+              name="data" [(ngModel)]="medicalExamination.dateCalendar" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- data end -->
+  
+  <input type="text" [(ngModel)]="medicalExamination.reason"><br/>
+  <input type="text" [(ngModel)]="medicalExamination.price"><br/>
+
+  <select class="inputWidth" [(ngModel)]="personId">
+    <option *ngFor="let person of peopleAvailable" value="{{person.id}}">
+      {{person.name}} {{person.lastName}}
+    </option>
+  </select>
+  <br/>
+  
+  <button (click)="saveDetail()">Salva</button>
+  <button (click)="closeDetail()">Chiudi</button>
+</div>
+

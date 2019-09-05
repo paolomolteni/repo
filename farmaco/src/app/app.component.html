@@ -11,22 +11,18 @@
             <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown1" role="button" (click)="openPersonDetail()">
             Persone gestite
             </a>
-            <!-- <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
-            <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Action</a>
-            <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Another action</a>
-            <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Something else here</a>
-            </div> -->
         </li>
 
         <li class="nav-item" ngbDropdown>
             <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button" (click)="openMedicineDetail()">
             Farmaci
             </a>
-            <!-- <div ngbDropdownMenu aria-labelledby="navbarDropdown2" class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Action</a>
-            <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Another action</a>
-            <a class="dropdown-item" href="#" (click)="$event.preventDefault()">Something else here</a>
-            </div> -->
+        </li>
+
+        <li class="nav-item" ngbDropdown>
+            <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown2" role="button" (click)="openExamination()">
+            Visite
+            </a>
         </li>
 
     </ul>
@@ -35,3 +31,4 @@
 
 <app-farmacolist *ngIf="showMedicineList"></app-farmacolist>
 <app-personlist *ngIf="showPersonList"></app-personlist>
+<app-medicalexaminationlist *ngIf="showExaminationList"></app-medicalexaminationlist>

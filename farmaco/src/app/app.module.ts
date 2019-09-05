@@ -11,12 +11,14 @@ import { FormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 import { PersonlistComponent } from './personlist/personlist.component';
+import { MedicalexaminationlistComponent } from './medicalexaminationlist/medicalexaminationlist.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FarmacolistComponent,
-    PersonlistComponent
+    PersonlistComponent,
+    MedicalexaminationlistComponent
   ],
   imports: [
     BrowserModule,

@@ -32,6 +32,7 @@
 <div *ngIf="showMedicines" class="divDetail">
   <button (click)="closeTableMedicines()">Chiudi</button>
   <app-farmacolist [personId]="personInput.id"></app-farmacolist>
+  <app-medicalexaminationlist [personId]="personInput.id"></app-medicalexaminationlist>
 </div>
 
 <ng-template #longContent let-modal>

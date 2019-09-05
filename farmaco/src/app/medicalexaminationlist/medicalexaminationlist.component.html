@@ -1,4 +1,4 @@
-<button (click)="newDetail()">Nuovo</button>
+<button (click)="openPopup(longContent)">Nuovo</button>
 
 <table class="table table-striped">
   <thead>
@@ -17,7 +17,7 @@
       <td>{{examination.date}}</td>
       <td>{{examination.reason}}</td>
       <td>{{examination.price}}</td>
-      <td (click)="openDetail(examination)">
+      <td (click)="openPopup(longContent, examination)">
         <div class="detail_icon"></div>
       </td>
       <td (click)="deleteExamination(examination)">
@@ -27,33 +27,46 @@
   </tbody>
 </table>
 
-<div *ngIf="showDetail==true" class="divDetail">
-  
-  <!-- data -->
-  <form class="form-inline">
-    <div class="form-group">
-      <div class="input-group">
-        <input class="form-control" placeholder="yyyy-mm-dd"
-              name="data" [(ngModel)]="medicalExamination.dateCalendar" ngbDatepicker #d="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+<!-- POPUP INSERIMENTO/MODIFICA -->
+<ng-template #longContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- data -->
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd"
+                name="data" [(ngModel)]="medicalExamination.dateCalendar" ngbDatepicker #d="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+          </div>
         </div>
       </div>
-    </div>
-  </form>
-  <!-- data end -->
-  
-  <input type="text" [(ngModel)]="medicalExamination.reason"><br/>
-  <input type="text" [(ngModel)]="medicalExamination.price"><br/>
+    </form>
+    <!-- data end -->
+    
+    <input type="text" [(ngModel)]="medicalExamination.reason"><br/>
+    <input type="text" [(ngModel)]="medicalExamination.price"><br/>
 
-  <select class="inputWidth" [(ngModel)]="personId">
-    <option *ngFor="let person of peopleAvailable" value="{{person.id}}">
-      {{person.name}} {{person.lastName}}
-    </option>
-  </select>
-  <br/>
-  
-  <button (click)="saveDetail()">Salva</button>
-  <button (click)="closeDetail()">Chiudi</button>
-</div>
+    <select class="inputWidth" [(ngModel)]="medicalExamination.personId">
+      <option *ngFor="let person of peopleAvailable" value="{{person.id}}">
+        {{person.name}} {{person.lastName}}
+      </option>
+    </select>
+    <br/>
+    
+    <button (click)="saveDetail()">Salva</button>
+    <button (click)="closePopup()">Chiudi</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+<!-- POPUP INSERIMENTO/MODIFICA -->
+
 

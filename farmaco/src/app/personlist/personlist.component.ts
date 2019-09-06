@@ -14,6 +14,10 @@ export class PersonlistComponent implements OnInit {
   showMedicines: boolean;
   personInput: Person;
   popupRef: NgbModalRef;
+  
+  page = 1;
+  pageSize = 4;
+  collectionSize: number;
 
   constructor(private personService: PersonService, private modalService: NgbModal) { }
 
@@ -24,7 +28,8 @@ export class PersonlistComponent implements OnInit {
 
   getPeople(): void {
     this.personService.getPeople().subscribe(people => {
-      this.people = people
+      this.resetPagination();
+      this.people = people;
     });
 
   }
@@ -82,6 +87,15 @@ export class PersonlistComponent implements OnInit {
     }
 
     this.popupRef = this.modalService.open(longContent, { scrollable: true });
+  }
+  
+  get personPaged(): Person[] {
+    this.collectionSize = this.people.length;
+    return this.people.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
+
+  resetPagination() {
+    this.page = 1;
   }
 
 }

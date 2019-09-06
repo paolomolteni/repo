@@ -22,6 +22,10 @@ export class FarmacolistComponent implements OnInit {
 
   popupRef: NgbModalRef;
 
+  page = 1;
+  pageSize = 4;
+  collectionSize: number;
+
   constructor(private farmacoService: FarmacoService, private personService: PersonService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -56,11 +60,13 @@ export class FarmacolistComponent implements OnInit {
     // Check if a person was selected
     if(this.personId != null){
       this.farmacoService.getMedicinesByPerson(this.personId).subscribe(medicines => {
+        this.resetPagination();
         this.medicines = medicines
       });
     }
     else{
       this.farmacoService.getFarmaci().subscribe(medicines => {
+        this.resetPagination();
         this.medicines = medicines
       });
     }
@@ -109,6 +115,15 @@ export class FarmacolistComponent implements OnInit {
     }
 
     this.popupRef = this.modalService.open(longContent, { scrollable: false });
+  }
+
+  get medicinePaged(): Medicine[] {
+    this.collectionSize = this.medicines.length;
+    return this.medicines.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
+
+  resetPagination() {
+    this.page = 1;
   }
 
 }

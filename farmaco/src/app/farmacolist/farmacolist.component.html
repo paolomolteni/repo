@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let medicine of medicines; index as i">
+    <tr *ngFor="let medicine of medicinePaged">
       <td>{{medicine.id}}</td>
       <td>{{medicine.date}}</td>
       <td>{{medicine.name}}</td>
@@ -26,6 +26,11 @@
     </tr>
   </tbody>
 </table>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+  </ngb-pagination>
+</div>
 
 <!-- POPUP INSERIMENTO/MODIFICA -->
 <ng-template #longContent let-modal>

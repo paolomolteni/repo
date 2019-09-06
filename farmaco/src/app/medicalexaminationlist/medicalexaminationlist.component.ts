@@ -21,6 +21,10 @@ export class MedicalexaminationlistComponent implements OnInit {
   @Input()
   personId: number;
 
+  page = 1;
+  pageSize = 4;
+  collectionSize: number;
+
   constructor(private examinationService: MedicalExaminationService, private personService: PersonService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -37,11 +41,13 @@ export class MedicalexaminationlistComponent implements OnInit {
     // Check if a person was selected
     if (this.personId != null) {
       this.examinationService.getExaminationByPerson(this.personId).subscribe(examinations => {
+        this.resetPagination();
         this.examinations = examinations;
       });
     }
     else {
       this.examinationService.getExaminations().subscribe(examinations => {
+        this.resetPagination();
         this.examinations = examinations;
       });
     }
@@ -101,6 +107,15 @@ export class MedicalexaminationlistComponent implements OnInit {
     }
 
     this.popupRef = this.modalService.open(longContent, { scrollable: false });
+  }
+
+  get examinationsPaged(): MedicalExamination[] {
+    this.collectionSize = this.examinations.length;
+    return this.examinations.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  }
+
+  resetPagination() {
+    this.page = 1;
   }
 
 }

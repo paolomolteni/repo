@@ -39,6 +39,12 @@ export class FarmacolistComponent implements OnInit {
   }
 
   saveDetail(): void {
+
+    if (this.medicine.personId == null) {
+      alert('Valorizzare il campo utente!');
+      return;
+    }
+
     let medicineToSave = new Medicine();
     medicineToSave.date = DateUtil.getDataFormatted(this.medicine.dateCalendar);
     medicineToSave.name = this.medicine.name;
@@ -80,15 +86,11 @@ export class FarmacolistComponent implements OnInit {
   }
 
   deleteMedicine(medicine: Medicine) {
-    this.farmacoService.deleteMedicine(medicine).subscribe(res => {
-      this.getMedicines();
-      if (res.success) {
-        alert('Cancellazione avvenuto con successo!');
-      }
-      else {
-        alert('Errore durante la cancellazione...');
-      }
-    });
+    if (confirm('Cancellare il farmaco?')) {
+      this.farmacoService.deleteMedicine(medicine).subscribe(res => {
+        this.getMedicines();
+      });
+    }
   }
 
   closePopup(): void {

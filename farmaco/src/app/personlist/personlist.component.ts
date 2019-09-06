@@ -65,16 +65,12 @@ export class PersonlistComponent implements OnInit {
   }
 
   deletePerson(person: Person) {
-    this.personService.deletePerson(person).subscribe(res => {
-      this.closePopup();
-      this.getPeople();
-      if (res.success) {
-        alert('Cancellazione avvenuto con successo!');
-      }
-      else {
-        alert('Errore durante la cancellazione...');
-      }
-    });
+    if (confirm('Cancellare l\'utene?')) {
+      this.personService.deletePerson(person).subscribe(res => {
+        this.closePopup();
+        this.getPeople();
+      });
+    }
   }
 
   openPopup(longContent, person: Person) {

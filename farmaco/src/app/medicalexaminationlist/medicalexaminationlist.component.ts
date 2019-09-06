@@ -61,18 +61,20 @@ export class MedicalexaminationlistComponent implements OnInit {
   }
 
   deleteExamination(examination: MedicalExamination) {
-    this.examinationService.deleteExamination(examination).subscribe(res => {
-      this.getExamination();
-      if (res.success) {
-        alert('Cancellazione avvenuto con successo!');
-      }
-      else {
-        alert('Errore durante la cancellazione...');
-      }
-    });
+    if (confirm('Cancellare la visita?')) {
+      this.examinationService.deleteExamination(examination).subscribe(res => {
+        this.getExamination();
+      });
+    }
   }
 
   saveDetail(): void {
+
+    if (this.medicalExamination.personId == null) {
+      alert('Valorizzare il campo utente!');
+      return;
+    }
+
     const examinationToSave = new MedicalExamination();
     examinationToSave.id = this.medicalExamination.id;
     examinationToSave.personId = this.medicalExamination.personId;

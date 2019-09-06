@@ -15,10 +15,10 @@ const httpOptions = {
 })
 export class MedicalExaminationService {
 
-  getMedicalExaminationUrl = 'http://localhost:8888/medicalexamination/list';
-  getMedicalExaminationByPersonUrl = 'http://localhost:8888/medicalexamination/list/person';
-  saveMedicalExaminationUrl = 'http://localhost:8888/medicalexamination/save';
-  deleteMedicalExaminationUrl = 'http://localhost:8888/medicalexamination/delete';
+  getMedicalExaminationUrl = 'http://localhost:8080/medicine/medicalexamination/list';
+  getMedicalExaminationByPersonUrl = 'http://localhost:8080/medicine/medicalexamination/list/person';
+  saveMedicalExaminationUrl = 'http://localhost:8080/medicine/medicalexamination/save';
+  deleteMedicalExaminationUrl = 'http://localhost:8080/medicine/medicalexamination/delete';
 
   constructor(private http: HttpClient) { }
 

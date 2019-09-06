@@ -16,10 +16,10 @@ const httpOptions = {
 })
 export class FarmacoService {
 
-  getFarmacoUrl = 'http://localhost:8888/medicine/list';
-  saveFarmacoUrl = 'http://localhost:8888/medicine/save';
-  getFarmacoByPersonUrl = 'http://localhost:8888/medicine/list/person';
-  deleteMedicneUrl = 'http://localhost:8888/medicine/delete';
+  getFarmacoUrl = 'http://localhost:8080/medicine/medicine/list';
+  saveFarmacoUrl = 'http://localhost:8080/medicine/medicine/save';
+  getFarmacoByPersonUrl = 'http://localhost:8080/medicine/medicine/list/person';
+  deleteMedicneUrl = 'http://localhost:8080/medicine/medicine/delete';
 
   constructor(private http: HttpClient) { }
 

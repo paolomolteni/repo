@@ -9,7 +9,8 @@ public class App extends SpringBootServletInitializer  {
     
 	/**
 	 * @param args
-	 * http://localhost:8080/invoice_v8/home
+	 * on Tomcat: http://localhost:8080/farmacobackend
+	 * 
 	 */
 	public static void main( String[] args ){
 		SpringApplication.run(App.class);

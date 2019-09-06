@@ -15,9 +15,9 @@ const httpOptions = {
 })
 export class PersonService {
 
-  getPersonUrl = 'http://localhost:8888/person/list';
-  savePersonUrl = 'http://localhost:8888/person/save';
-  deletePersonUrl = 'http://localhost:8888/person/delete';
+  getPersonUrl = 'http://localhost:8080/medicine/person/list';
+  savePersonUrl = 'http://localhost:8080/medicine/person/save';
+  deletePersonUrl = 'http://localhost:8080/medicine/person/delete';
 
   constructor(private http: HttpClient) { }
 

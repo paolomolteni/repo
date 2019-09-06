@@ -7,6 +7,7 @@
       <th scope="col">Data</th>
       <th scope="col" sortable="nomeFarmaco">Nome</th>
       <th scope="col">Descrizione</th>
+      <th scope="col">Utente</th>
       <th scope="col" class="icon_column">Dettaglio</th>
       <th scope="col" class="icon_column">Elimina</th>
     </tr>
@@ -17,6 +18,7 @@
       <td>{{medicine.date}}</td>
       <td>{{medicine.name}}</td>
       <td>{{medicine.description}}</td>
+      <td>{{getPerson(medicine.personId).name}} {{getPerson(medicine.personId).lastName}}</td>
       <td (click)="openPopup(longContent, medicine)">
         <div class="detail_icon"></div>
       </td>
@@ -45,8 +47,8 @@
     <!-- data -->
     <span>Data</span><br/>
     <form class="form-inline">
-      <div class="form-group">
-        <div class="input-group">
+      <div class="form-group inputWidth">
+        <div class="input-group inputWidth">
           <input class="form-control" placeholder="yyyy-mm-dd"
                 name="data" [(ngModel)]="medicine.dateCalendar" ngbDatepicker #d="ngbDatepicker">
           <div class="input-group-append">
@@ -60,8 +62,8 @@
     <!-- data scadenza -->
     <br/><span>Data scadenza</span><br/>
     <form class="form-inline">
-      <div class="form-group">
-        <div class="input-group">
+      <div class="form-group inputWidth">
+        <div class="input-group inputWidth">
           <input class="form-control" placeholder="yyyy-mm-dd"
                 name="dataScadenza" [(ngModel)]="medicine.dateExpiryCalendar" ngbDatepicker #d2="ngbDatepicker">
           <div class="input-group-append">
@@ -75,8 +77,8 @@
     <!-- data scadenza se aperto -->
     <br/><span>Data scadenza se aperto</span><br/>
     <form class="form-inline">
-      <div class="form-group">
-        <div class="input-group">
+      <div class="form-group inputWidth">
+        <div class="input-group inputWidth">
           <input class="form-control " placeholder="yyyy-mm-dd"
                 name="dataScadenzaAperto" [(ngModel)]="medicine.dateExpiryWhenOpenedCalendar" ngbDatepicker #d3="ngbDatepicker">
           <div class="input-group-append">

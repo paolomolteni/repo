@@ -128,4 +128,10 @@ export class FarmacolistComponent implements OnInit {
     this.page = 1;
   }
 
+  getPerson(personId: number): Person {
+    return this.peopleAvailable.find(item => {
+      return item.id == personId;
+    });
+  }
+
 }

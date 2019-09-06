@@ -7,6 +7,7 @@
       <th scope="col">Data</th>
       <th scope="col" >Motivazione</th>
       <th scope="col">Prezzo</th>
+      <th scope="col">Utente</th>
       <th scope="col" class="icon_column">Dettaglio</th>
       <th scope="col" class="icon_column">Elimina</th>
     </tr>
@@ -17,6 +18,7 @@
       <td>{{examination.date}}</td>
       <td>{{examination.reason}}</td>
       <td>{{examination.price}}</td>
+      <td>{{getPerson(examination.personId).name}} {{getPerson(examination.personId).lastName}}</td>
       <td (click)="openPopup(longContent, examination)">
         <div class="detail_icon"></div>
       </td>
@@ -45,8 +47,8 @@
     <!-- data -->
     <span>Data</span><br/>
     <form class="form-inline">
-      <div class="form-group">
-        <div class="input-group">
+      <div class="form-group inputWidth">
+        <div class="input-group inputWidth">
           <input class="form-control" placeholder="yyyy-mm-dd"
                 name="data" [(ngModel)]="medicalExamination.dateCalendar" ngbDatepicker #d="ngbDatepicker">
           <div class="input-group-append">

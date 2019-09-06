@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Medicine } from './model/medicine';
+import { Medicine } from '../model/medicine';
 import { HttpHeaders } from '@angular/common/http';
-import { Response } from './model/response';
+import { Response } from '../model/response';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type':  'application/json',
+    'Content-Type': 'application/json',
   })
 };
 
@@ -23,8 +23,8 @@ export class FarmacoService {
 
   constructor(private http: HttpClient) { }
 
-	getFarmaci(): Observable<Medicine[]>{
-		return this.http.get<Medicine[]>(this.getFarmacoUrl);
+  getFarmaci(): Observable<Medicine[]> {
+    return this.http.get<Medicine[]>(this.getFarmacoUrl);
   }
 
   saveFarmaco(medicine: Medicine): Observable<Medicine> {

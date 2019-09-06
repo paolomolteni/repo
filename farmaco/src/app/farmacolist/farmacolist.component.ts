@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Medicine } from '../model/medicine';
-import { FarmacoService } from '../farmaco.service';
+import { FarmacoService } from '../services/farmaco.service';
 import { PersonService } from '../services/person.service';
 import { Person } from '../model/person';
 import { DateUtil } from '../utils/dateutil';

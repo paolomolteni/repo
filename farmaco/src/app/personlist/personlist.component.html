@@ -37,18 +37,19 @@
 
 <ng-template #longContent let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">Modal title</h4>
+    <h4 class="modal-title">Utente</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <input type="text" name="nomeFarmaco" [(ngModel)]="personInput.name" class="inputTxt"><br/>
-    <input type="text" name="descrizione" [(ngModel)]="personInput.lastName" class="inputTxt"><br/>
-    <button (click)="savePerson()">Salva</button>
-    <button (click)="closePopup()">Chiudi</button>
+    <span>Nome</span><br/>
+    <input type="text" name="nomeFarmaco" [(ngModel)]="personInput.name" class="inputWidth"><br/>
+    <br/><span>Cognome</span><br/>
+    <input type="text" name="descrizione" [(ngModel)]="personInput.lastName" class="inputWidth"><br/>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-light" (click)="savePerson()">Salva</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Chiudi</button>
   </div>
 </ng-template>

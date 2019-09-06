@@ -32,3 +32,7 @@
     height: 25px;
     margin: auto;
 }
+
+.inputWidth{
+    min-width: 100%;
+}

@@ -30,13 +30,15 @@
 <!-- POPUP INSERIMENTO/MODIFICA -->
 <ng-template #longContent let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">Modal title</h4>
+    <h4 class="modal-title">Visita</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
+
     <!-- data -->
+    <span>Data</span><br/>
     <form class="form-inline">
       <div class="form-group">
         <div class="input-group">
@@ -50,21 +52,23 @@
     </form>
     <!-- data end -->
     
-    <input type="text" [(ngModel)]="medicalExamination.reason"><br/>
-    <input type="text" [(ngModel)]="medicalExamination.price"><br/>
+    <br/><span>Motivo</span><br/>
+    <input type="text" [(ngModel)]="medicalExamination.reason" class="inputWidth"><br/>
 
+    <br/><span>Prezzo</span><br/>
+    <input type="text" [(ngModel)]="medicalExamination.price" class="inputWidth"><br/>
+
+    <br/><span>Utente</span><br/>
     <select class="inputWidth" [(ngModel)]="medicalExamination.personId">
       <option *ngFor="let person of peopleAvailable" value="{{person.id}}">
         {{person.name}} {{person.lastName}}
       </option>
     </select>
     <br/>
-    
-    <button (click)="saveDetail()">Salva</button>
-    <button (click)="closePopup()">Chiudi</button>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-light" (click)="saveDetail()">Salva</button>
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Chiudi</button>
   </div>
 </ng-template>
 <!-- POPUP INSERIMENTO/MODIFICA -->

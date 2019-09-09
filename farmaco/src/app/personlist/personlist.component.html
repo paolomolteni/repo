@@ -1,4 +1,8 @@
-<button (click)="openPopup(longContent, null)">Nuovo</button>
+<div class="btn-group btn-group-toggle">
+  <label class="btn-primary" ngbButtonLabel>
+    <input type="checkbox" ngbButton (click)="openPopup(longContent, null)"> Nuovo utente
+  </label>
+</div>
 
 <table class="table table-striped">
   <thead>
@@ -34,8 +38,13 @@
   </ngb-pagination>
 </div>
 
-<div *ngIf="showMedicines" class="divDetail">
-  <button (click)="closeTableMedicines()">Chiudi</button>
+<div *ngIf="showDetail" class="divDetail">
+  <div class="btn-group btn-group-toggle">
+    <label class="btn-primary button_margin" ngbButtonLabel>
+      <input type="checkbox" ngbButton (click)="closeTableMedicines()">Chiudi
+    </label>
+  </div>
+
   <app-farmacolist [personId]="personInput.id"></app-farmacolist>
   <app-medicalexaminationlist [personId]="personInput.id"></app-medicalexaminationlist>
 </div>
@@ -54,7 +63,13 @@
     <input type="text" name="descrizione" [(ngModel)]="personInput.lastName" class="inputWidth"><br/>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="savePerson()">Salva</button>
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Chiudi</button>
+    <div class="btn-group btn-group-toggle">
+      <label class="btn-primary button_margin" ngbButtonLabel>
+        <input type="checkbox" ngbButton (click)="savePerson()"> Salva
+      </label>
+      <label class="btn-primary" ngbButtonLabel>
+        <input type="checkbox" ngbButton (click)="modal.close('Close click')"> Chiudi
+      </label>
+    </div>
   </div>
 </ng-template>

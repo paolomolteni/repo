@@ -1,3 +1,7 @@
 .examination-done{
     background-color: #ff5959 !important;
 }
+
+.examination-todo{
+    background-color: #93ff73 !important;
+}

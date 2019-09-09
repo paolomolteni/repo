@@ -1,4 +1,8 @@
-<button (click)="openPopup(longContent, null)">Nuovo</button>
+<div class="btn-group btn-group-toggle">
+  <label class="btn-primary" ngbButtonLabel>
+    <input type="checkbox" ngbButton (click)="openPopup(longContent, null)"> Nuovo farmaco
+  </label>
+</div>
 
 <table class="table table-striped">
   <thead>
@@ -111,8 +115,14 @@
     <br/>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="saveDetail()">Salva</button>
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Chiudi</button>
+    <div class="btn-group btn-group-toggle">
+      <label class="btn-primary button_margin" ngbButtonLabel>
+        <input type="checkbox" ngbButton (click)="saveDetail()"> Salva
+      </label>
+      <label class="btn-primary" ngbButtonLabel>
+        <input type="checkbox" ngbButton (click)="modal.close('Close click')"> Chiudi
+      </label>
+    </div>
   </div>
 </ng-template>
 <!-- POPUP INSERIMENTO/MODIFICA -->

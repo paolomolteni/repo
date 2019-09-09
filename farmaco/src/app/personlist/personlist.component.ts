@@ -11,7 +11,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 export class PersonlistComponent implements OnInit {
 
   people: Person[] = [];
-  showMedicines: boolean;
+  showDetail: boolean;
   personInput: Person;
   popupRef: NgbModalRef;
   
@@ -22,7 +22,7 @@ export class PersonlistComponent implements OnInit {
   constructor(private personService: PersonService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.showMedicines = false;
+    this.showDetail = false;
     this.getPeople();
   }
 
@@ -39,7 +39,7 @@ export class PersonlistComponent implements OnInit {
     this.personInput.name = person.name;
     this.personInput.lastName = person.lastName;
     this.personInput.id = person.id;
-    this.showMedicines = true;
+    this.showDetail = true;
   }
 
   closePopup(): void {
@@ -47,7 +47,7 @@ export class PersonlistComponent implements OnInit {
   }
 
   closeTableMedicines() {
-    this.showMedicines = false;
+    this.showDetail = false;
   }
 
   savePerson(): void {

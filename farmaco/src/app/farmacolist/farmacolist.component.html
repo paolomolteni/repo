@@ -5,6 +5,8 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Data</th>
+      <th scope="col">Scadenza</th>
+      <th scope="col">Scadenza se aperto</th>
       <th scope="col" sortable="nomeFarmaco">Nome</th>
       <th scope="col">Descrizione</th>
       <th scope="col">Utente</th>
@@ -13,9 +15,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let medicine of medicinePaged">
+    <tr *ngFor="let medicine of medicinePaged" [ngClass]="{'medicine-expired': isMedicineExpired(medicine)}">
       <td>{{medicine.id}}</td>
       <td>{{medicine.date}}</td>
+      <td>{{medicine.dateExpiry}}</td>
+      <td>{{medicine.dateExpiryWhenOpened}}</td>
       <td>{{medicine.name}}</td>
       <td>{{medicine.description}}</td>
       <td>{{getPerson(medicine.personId).name}} {{getPerson(medicine.personId).lastName}}</td>

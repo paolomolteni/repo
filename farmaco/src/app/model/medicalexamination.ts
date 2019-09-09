@@ -6,6 +6,8 @@ export class MedicalExamination {
 
     public date: string;
 
+    public type: string;
+
     public reason: string;
 
     public price: number;

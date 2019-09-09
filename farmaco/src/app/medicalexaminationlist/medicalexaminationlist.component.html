@@ -5,6 +5,7 @@
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Data</th>
+      <th scope="col" >Tipo visita</th>
       <th scope="col" >Motivazione</th>
       <th scope="col">Prezzo</th>
       <th scope="col">Utente</th>
@@ -13,9 +14,10 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let examination of examinationsPaged">
+    <tr *ngFor="let examination of examinationsPaged" [ngClass]="{'examination-done': isExaminationDone(examination)}">
       <td>{{examination.id}}</td>
       <td>{{examination.date}}</td>
+      <td>{{examination.type}}</td>
       <td>{{examination.reason}}</td>
       <td>{{examination.price}}</td>
       <td>{{getPerson(examination.personId).name}} {{getPerson(examination.personId).lastName}}</td>
@@ -59,6 +61,9 @@
     </form>
     <!-- data end -->
     
+    <br/><span>Tipo visita</span><br/>
+    <input type="text" [(ngModel)]="medicalExamination.type" class="inputWidth"><br/>
+
     <br/><span>Motivo</span><br/>
     <input type="text" [(ngModel)]="medicalExamination.reason" class="inputWidth"><br/>
 

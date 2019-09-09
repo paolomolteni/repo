@@ -134,4 +134,25 @@ export class FarmacolistComponent implements OnInit {
     });
   }
 
+  isMedicineExpired(medicine: Medicine): boolean {
+    let nowTs = new Date().getTime();
+
+    if(medicine.dateExpiry != null){
+      let medicineExpirationTs = new Date(medicine.dateExpiry).getTime();
+      if(medicineExpirationTs <= nowTs) {
+        return true;
+      }
+    }
+
+    if(medicine.dateExpiryWhenOpened != null) {
+      let medicineExpirationWhenOpenedTs = new Date(medicine.dateExpiryWhenOpened).getTime();
+      if(medicineExpirationWhenOpenedTs <= nowTs){
+        return true;
+      }
+
+    }
+
+    return false;
+  }
+
 }

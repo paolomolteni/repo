@@ -30,6 +30,12 @@ public class MedicalExamination {
 	/**
 	 * 
 	 */
+	@Column(name="type")
+	private String type;
+	
+	/**
+	 * 
+	 */
 	@Column(name="reason")
 	private String reason;
 	
@@ -60,6 +66,14 @@ public class MedicalExamination {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getReason() {

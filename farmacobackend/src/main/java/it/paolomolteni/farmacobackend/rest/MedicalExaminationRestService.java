@@ -108,6 +108,7 @@ public class MedicalExaminationRestService {
 			
 		}
 		
+		model.setType(examination.type);
 		model.setReason(examination.reason);
 		model.setPrice(examination.price);
 		
@@ -124,7 +125,7 @@ public class MedicalExaminationRestService {
 	 * @return
 	 */
 	private it.paolomolteni.farmacobackend.json.MedicalExamination mapExamination(MedicalExamination examination){
-		it.paolomolteni.farmacobackend.json.MedicalExamination json = new it.paolomolteni.farmacobackend.json.MedicalExamination(examination.getId(), DateUtil.getFormettedDate(examination.getDate()), examination.getReason(), examination.getPrice(), examination.getPerson().getId());
+		it.paolomolteni.farmacobackend.json.MedicalExamination json = new it.paolomolteni.farmacobackend.json.MedicalExamination(examination.getId(), DateUtil.getFormettedDate(examination.getDate()), examination.getType() , examination.getReason(), examination.getPrice(), examination.getPerson().getId());
 		return json;
 	}
 	

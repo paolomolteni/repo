@@ -81,6 +81,7 @@ export class MedicalexaminationlistComponent implements OnInit {
     examinationToSave.price = this.medicalExamination.price;
     examinationToSave.reason = this.medicalExamination.reason;
     examinationToSave.date = DateUtil.getDataFormatted(this.medicalExamination.dateCalendar);
+    examinationToSave.type = this.medicalExamination.type;
 
     this.examinationService.saveExamination(examinationToSave).subscribe(res => {
       this.popupRef.close();
@@ -102,6 +103,7 @@ export class MedicalexaminationlistComponent implements OnInit {
       this.medicalExamination.price = examination.price;
       this.medicalExamination.personId = examination.personId;
       this.medicalExamination.dateCalendar = DateUtil.getData(examination.date);
+      this.medicalExamination.type = examination.type;
     }
 
     if(this.personId != null){
@@ -124,6 +126,20 @@ export class MedicalexaminationlistComponent implements OnInit {
     return this.peopleAvailable.find(item => {
       return item.id == personId;
     });
+  }
+
+  isExaminationDone(examination: MedicalExamination): boolean {
+    const nowTs = new Date().getTime();
+
+    if (examination.date != null) {
+      const examinationDone = new Date(examination.date).getTime();
+      if (examinationDone <= nowTs) {
+        return true;
+      }
+
+    }
+
+    return false;
   }
 
 }

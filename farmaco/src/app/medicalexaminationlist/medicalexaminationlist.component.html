@@ -20,7 +20,7 @@
   <tbody>
     <tr *ngFor="let examination of examinationsPaged" [ngClass]="{'examination-done': isExaminationDone(examination), 'examination-todo': !isExaminationDone(examination)}">
       <td>{{examination.id}}</td>
-      <td>{{examination.date}}</td>
+      <td>{{getDateTimeFormatted(examination.tsDate)}}</td>
       <td>{{examination.type}}</td>
       <td>{{examination.reason}}</td>
       <td>{{examination.price}}</td>
@@ -64,6 +64,8 @@
       </div>
     </form>
     <!-- data end -->
+
+    <ngb-timepicker [(ngModel)]="medicalExamination.timePicker"></ngb-timepicker>
     
     <br/><span>Tipo visita</span><br/>
     <input type="text" [(ngModel)]="medicalExamination.type" class="inputWidth"><br/>

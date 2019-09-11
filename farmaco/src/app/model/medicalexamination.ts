@@ -1,10 +1,8 @@
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
 export class MedicalExamination {
 
     public id: number;
-
-    public date: string;
 
     public type: string;
 
@@ -15,4 +13,8 @@ export class MedicalExamination {
     public personId: number;
 
     public dateCalendar: NgbDateStruct;
+
+    public timePicker: NgbTimeStruct;
+
+    public tsDate: number;
 }

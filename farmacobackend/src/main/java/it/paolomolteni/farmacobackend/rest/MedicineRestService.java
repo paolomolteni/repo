@@ -1,6 +1,7 @@
 package it.paolomolteni.farmacobackend.rest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import it.paolomolteni.farmacobackend.model.Person;
 import it.paolomolteni.farmacobackend.repository.MedicineRepository;
 import it.paolomolteni.farmacobackend.repository.PersonRepository;
 import it.paolomolteni.farmacobackend.service.MedicineService;
-import it.paolomolteni.farmacobackend.utils.DateUtil;
 
 @CrossOrigin
 @RestController
@@ -101,13 +101,20 @@ public class MedicineRestService {
 			model = new Medicine();
 		}
 
-		try {
-			model.setDate(DateUtil.getDateFromString(medicine.date));
-			model.setDateExpiry(DateUtil.getDateFromString(medicine.dateExpiry));
-			model.setDateExpiryWhenOpened(DateUtil.getDateFromString(medicine.dateExpiryWhenOpened));
-		} 
-		catch (Exception e) {
-			
+		model.setDate(new Date(medicine.tsDate));
+		
+		if(medicine.tsDateExpiry != null) {
+			model.setDateExpiry(new Date(medicine.tsDateExpiry));
+		}
+		else {
+			model.setDateExpiry(null);
+		}
+		
+		if(medicine.tsDateExpiryWhenOpened != null) {
+			model.setDateExpiryWhenOpened(new Date(medicine.tsDateExpiryWhenOpened));
+		}
+		else {
+			model.setDateExpiryWhenOpened(null);
 		}
 		
 		model.setName(medicine.name);
@@ -127,8 +134,10 @@ public class MedicineRestService {
 	 * @return
 	 */
 	private it.paolomolteni.farmacobackend.json.Medicine mapMedicine(Medicine medicine){
-		it.paolomolteni.farmacobackend.json.Medicine json = new it.paolomolteni.farmacobackend.json.Medicine(medicine.getId(), DateUtil.getFormettedDate(medicine.getDate()), medicine.getName(), medicine.getDescription(),
-				DateUtil.getFormettedDate(medicine.getDateExpiry()), DateUtil.getFormettedDate(medicine.getDateExpiryWhenOpened()), medicine.getCause());
+		it.paolomolteni.farmacobackend.json.Medicine json = new it.paolomolteni.farmacobackend.json.Medicine(medicine.getId(), medicine.getDate().getTime(), medicine.getName(), medicine.getDescription(),
+				medicine.getDateExpiry() != null ? medicine.getDateExpiry().getTime() : null, 
+				medicine.getDateExpiryWhenOpened() != null ? medicine.getDateExpiryWhenOpened().getTime() : null, 
+				medicine.getCause());
 		
 		json.personId = medicine.getPerson().getId();
 		return json;
@@ -173,14 +182,15 @@ public class MedicineRestService {
 			if(medicineTmp == null) {
 				medicineTmp = new Medicine();
 			}
-
-			try {
-				medicineTmp.setDate(DateUtil.getDateFromString(medicine.date));
-				medicineTmp.setDateExpiry(DateUtil.getDateFromString(medicine.dateExpiry));
-				medicineTmp.setDateExpiryWhenOpened(DateUtil.getDateFromString(medicine.dateExpiryWhenOpened));
-			} 
-			catch (Exception e) {
-				
+			
+			medicineTmp.setDate(new Date(medicine.tsDate));
+			
+			if(medicine.tsDateExpiry != null) {
+				medicineTmp.setDateExpiry(new Date(medicine.tsDateExpiry));
+			}
+			
+			if(medicine.tsDateExpiryWhenOpened != null) {
+				medicineTmp.setDateExpiryWhenOpened(new Date(medicine.tsDateExpiryWhenOpened));
 			}
 			
 			medicineTmp.setName(medicine.name);

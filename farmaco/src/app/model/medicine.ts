@@ -2,7 +2,7 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 export class Medicine {
 
-	public date: string;
+	public tsDate: number;
 
 	public name: string;
 
@@ -10,9 +10,9 @@ export class Medicine {
 
 	public id: number;
 
-	public dateExpiry: string;
+	public tsDateExpiry: number;
 
-	public dateExpiryWhenOpened: string;
+	public tsDateExpiryWhenOpened: number;
 
 	public cause: string;
 

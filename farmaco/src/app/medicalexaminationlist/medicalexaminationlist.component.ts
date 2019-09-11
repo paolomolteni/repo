@@ -80,8 +80,10 @@ export class MedicalexaminationlistComponent implements OnInit {
     examinationToSave.personId = this.medicalExamination.personId;
     examinationToSave.price = this.medicalExamination.price;
     examinationToSave.reason = this.medicalExamination.reason;
-    examinationToSave.date = DateUtil.getDataFormatted(this.medicalExamination.dateCalendar);
     examinationToSave.type = this.medicalExamination.type;
+
+    const tsDate = DateUtil.getTsFromDateTimePicker(this.medicalExamination.dateCalendar, this.medicalExamination.timePicker);
+    examinationToSave.tsDate = tsDate;
 
     this.examinationService.saveExamination(examinationToSave).subscribe(res => {
       this.popupRef.close();
@@ -102,7 +104,8 @@ export class MedicalexaminationlistComponent implements OnInit {
       this.medicalExamination.reason = examination.reason;
       this.medicalExamination.price = examination.price;
       this.medicalExamination.personId = examination.personId;
-      this.medicalExamination.dateCalendar = DateUtil.getData(examination.date);
+      this.medicalExamination.dateCalendar = DateUtil.getDatePickerFromTs(examination.tsDate);
+      this.medicalExamination.timePicker = DateUtil.getTimePickerFromTs(examination.tsDate);
       this.medicalExamination.type = examination.type;
     }
 
@@ -131,15 +134,15 @@ export class MedicalexaminationlistComponent implements OnInit {
   isExaminationDone(examination: MedicalExamination): boolean {
     const nowTs = new Date().getTime();
 
-    if (examination.date != null) {
-      const examinationDone = new Date(examination.date).getTime();
-      if (examinationDone <= nowTs) {
-        return true;
-      }
-
+    if (examination.tsDate <= nowTs) {
+      return true;
     }
 
     return false;
+  }
+
+  getDateTimeFormatted(ts: number): string {
+    return DateUtil.getDateTimeFormatted(ts);
   }
 
 }

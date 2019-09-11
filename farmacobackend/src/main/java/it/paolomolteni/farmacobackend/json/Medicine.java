@@ -10,7 +10,7 @@ public class Medicine {
 	/**
 	 * 
 	 */
-	public String date;
+	public long tsDate;
 	
 	/**
 	 * 
@@ -25,12 +25,12 @@ public class Medicine {
 	/**
 	 * 
 	 */
-	public String dateExpiry;
+	public Long tsDateExpiry;
 	
 	/**
 	 * 
 	 */
-	public String dateExpiryWhenOpened;
+	public Long tsDateExpiryWhenOpened;
 	
 	/**
 	 * 
@@ -42,41 +42,42 @@ public class Medicine {
 	 */
 	public long personId;
 
+
 	/**
-	 * @param date
+	 * @param tsDate
 	 * @param name
 	 * @param description
-	 * @param dateExpiry
-	 * @param dateExpiryWhenOpened
+	 * @param tsDateExpiry
+	 * @param tsDateExpiryWhenOpened
 	 * @param cause
 	 */
-	public Medicine(String date, String name, String description, String dateExpiry, String dateExpiryWhenOpened, String cause) {
+	public Medicine(long tsDate, String name, String description, Long tsDateExpiry, Long tsDateExpiryWhenOpened, String cause) {
 		super();
-		this.date = date;
+		this.tsDate = tsDate;
 		this.name = name;
 		this.description = description;
-		this.dateExpiry = dateExpiry;
-		this.dateExpiryWhenOpened = dateExpiryWhenOpened;
+		this.tsDateExpiry = tsDateExpiry;
+		this.tsDateExpiryWhenOpened = tsDateExpiryWhenOpened;
 		this.cause = cause;
 	}
 
 	/**
 	 * @param id
-	 * @param date
+	 * @param tsDate
 	 * @param name
 	 * @param description
-	 * @param dateExpiry
-	 * @param dateExpiryWhenOpened
+	 * @param tsDateExpiry
+	 * @param tsDateExpiryWhenOpened
 	 * @param cause
 	 */
-	public Medicine(Long id, String date, String name, String description, String dateExpiry, String dateExpiryWhenOpened, String cause) {
+	public Medicine(Long id, long tsDate, String name, String description, Long tsDateExpiry, Long tsDateExpiryWhenOpened, String cause) {
 		super();
 		this.id = id;
-		this.date = date;
+		this.tsDate = tsDate;
 		this.name = name;
 		this.description = description;
-		this.dateExpiry = dateExpiry;
-		this.dateExpiryWhenOpened = dateExpiryWhenOpened;
+		this.tsDateExpiry = tsDateExpiry;
+		this.tsDateExpiryWhenOpened = tsDateExpiryWhenOpened;
 		this.cause = cause;
 	}
 	

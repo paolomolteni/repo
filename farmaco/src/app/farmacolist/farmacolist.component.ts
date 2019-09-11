@@ -61,11 +61,18 @@ export class FarmacolistComponent implements OnInit {
 
     this.personIdsSelected.forEach(pId => {
       let medicineToSave = new Medicine();
-      medicineToSave.date = DateUtil.getDataFormatted(this.medicine.dateCalendar);
+      medicineToSave.tsDate = DateUtil.getTsFromDateTimePicker(this.medicine.dateCalendar, null);
       medicineToSave.name = this.medicine.name;
       medicineToSave.description = this.medicine.description;
-      medicineToSave.dateExpiry = DateUtil.getDataFormatted(this.medicine.dateExpiryCalendar);
-      medicineToSave.dateExpiryWhenOpened = DateUtil.getDataFormatted(this.medicine.dateExpiryWhenOpenedCalendar);
+
+      if(this.medicine.dateExpiryCalendar != null){
+        medicineToSave.tsDateExpiry = DateUtil.getTsFromDateTimePicker(this.medicine.dateExpiryCalendar, null);
+      }
+
+      if(this.medicine.dateExpiryWhenOpenedCalendar != null){
+        medicineToSave.tsDateExpiryWhenOpened = DateUtil.getTsFromDateTimePicker(this.medicine.dateExpiryWhenOpenedCalendar, null);
+      }
+
       medicineToSave.cause = this.medicine.cause;
       medicineToSave.personId = pId;
       medicineToSave.id = this.medicine.id;
@@ -87,11 +94,24 @@ export class FarmacolistComponent implements OnInit {
     }
 
     let medicineToSave = new Medicine();
-    medicineToSave.date = DateUtil.getDataFormatted(this.medicine.dateCalendar);
+    medicineToSave.tsDate = DateUtil.getTsFromDateTimePicker(this.medicine.dateCalendar, null);
     medicineToSave.name = this.medicine.name;
     medicineToSave.description = this.medicine.description;
-    medicineToSave.dateExpiry = DateUtil.getDataFormatted(this.medicine.dateExpiryCalendar);
-    medicineToSave.dateExpiryWhenOpened = DateUtil.getDataFormatted(this.medicine.dateExpiryWhenOpenedCalendar);
+    
+    if(this.medicine.dateExpiryCalendar != null){
+      medicineToSave.tsDateExpiry = DateUtil.getTsFromDateTimePicker(this.medicine.dateExpiryCalendar, null);
+    }
+    else {
+      medicineToSave.tsDateExpiry = null;
+    }
+
+    if(this.medicine.dateExpiryWhenOpenedCalendar != null){
+      medicineToSave.tsDateExpiryWhenOpened = DateUtil.getTsFromDateTimePicker(this.medicine.dateExpiryWhenOpenedCalendar, null);
+    }
+    else{
+      medicineToSave.tsDateExpiryWhenOpened = null;
+    }
+
     medicineToSave.cause = this.medicine.cause;
     medicineToSave.personId = this.medicine.personId;
     medicineToSave.id = this.medicine.id;
@@ -146,9 +166,16 @@ export class FarmacolistComponent implements OnInit {
       this.medicine.id = medicineSelected.id;
       this.medicine.name = medicineSelected.name;
       this.medicine.description = medicineSelected.description;
-      this.medicine.dateCalendar = DateUtil.getData(medicineSelected.date);
-      this.medicine.dateExpiryCalendar = DateUtil.getData(medicineSelected.dateExpiry);
-      this.medicine.dateExpiryWhenOpenedCalendar = DateUtil.getData(medicineSelected.dateExpiryWhenOpened);
+      this.medicine.dateCalendar = DateUtil.getDatePickerFromTs(medicineSelected.tsDate);
+
+      if(medicineSelected.tsDateExpiry != null){
+        this.medicine.dateExpiryCalendar = DateUtil.getDatePickerFromTs(medicineSelected.tsDateExpiry);
+      }
+
+      if(medicineSelected.tsDateExpiryWhenOpened != null){
+        this.medicine.dateExpiryWhenOpenedCalendar = DateUtil.getDatePickerFromTs(medicineSelected.tsDateExpiryWhenOpened);
+      }
+
       this.medicine.cause = medicineSelected.cause;
       this.medicine.personId = medicineSelected.personId;
     }
@@ -179,24 +206,29 @@ export class FarmacolistComponent implements OnInit {
   }
 
   isMedicineExpired(medicine: Medicine): boolean {
-    let nowTs = new Date().getTime();
+    const nowTs = new Date().getTime();
 
-    if(medicine.dateExpiry != null){
-      let medicineExpirationTs = new Date(medicine.dateExpiry).getTime();
-      if(medicineExpirationTs <= nowTs) {
+    if (medicine.tsDateExpiry != null) {
+      if (medicine.tsDateExpiry <= nowTs) {
         return true;
       }
     }
 
-    if(medicine.dateExpiryWhenOpened != null) {
-      let medicineExpirationWhenOpenedTs = new Date(medicine.dateExpiryWhenOpened).getTime();
-      if(medicineExpirationWhenOpenedTs <= nowTs){
+    if (medicine.tsDateExpiryWhenOpened != null) {
+      if (medicine.tsDateExpiryWhenOpened <= nowTs) {
         return true;
       }
 
     }
 
     return false;
+  }
+
+  getDateFormatted(ts: number): string {
+    if(ts != null){
+      return DateUtil.getDateFormatted(ts);
+    }
+    return "";
   }
 
 }

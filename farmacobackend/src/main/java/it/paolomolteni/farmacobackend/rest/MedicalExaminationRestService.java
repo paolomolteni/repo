@@ -1,6 +1,7 @@
 package it.paolomolteni.farmacobackend.rest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import it.paolomolteni.farmacobackend.model.Person;
 import it.paolomolteni.farmacobackend.repository.MedicalExaminationRepository;
 import it.paolomolteni.farmacobackend.repository.PersonRepository;
 import it.paolomolteni.farmacobackend.service.MedicalExaminationService;
-import it.paolomolteni.farmacobackend.utils.DateUtil;
 
 @CrossOrigin
 @RestController
@@ -100,14 +100,8 @@ public class MedicalExaminationRestService {
 		if(model == null) {
 			model = new MedicalExamination();
 		}
-
-		try {
-			model.setDate(DateUtil.getDateFromString(examination.date));
-		} 
-		catch (Exception e) {
-			
-		}
 		
+		model.setDate(new Date(examination.tsDate));
 		model.setType(examination.type);
 		model.setReason(examination.reason);
 		model.setPrice(examination.price);
@@ -125,7 +119,7 @@ public class MedicalExaminationRestService {
 	 * @return
 	 */
 	private it.paolomolteni.farmacobackend.json.MedicalExamination mapExamination(MedicalExamination examination){
-		it.paolomolteni.farmacobackend.json.MedicalExamination json = new it.paolomolteni.farmacobackend.json.MedicalExamination(examination.getId(), DateUtil.getFormettedDate(examination.getDate()), examination.getType() , examination.getReason(), examination.getPrice(), examination.getPerson().getId());
+		it.paolomolteni.farmacobackend.json.MedicalExamination json = new it.paolomolteni.farmacobackend.json.MedicalExamination(examination.getId(), examination.getDate().getTime(), examination.getType() , examination.getReason(), examination.getPrice(), examination.getPerson().getId());
 		return json;
 	}
 	

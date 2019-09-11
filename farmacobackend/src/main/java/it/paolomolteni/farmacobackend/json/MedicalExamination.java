@@ -12,11 +12,6 @@ public class MedicalExamination {
 	/**
 	 * 
 	 */
-	public String date;
-	
-	/**
-	 * 
-	 */
 	public String type;
 	
 	/**
@@ -33,19 +28,24 @@ public class MedicalExamination {
 	 * 
 	 */
 	public BigDecimal price;
+	
+	/**
+	 * 
+	 */
+	public long tsDate;
 
 	/**
 	 * @param id
-	 * @param date
+	 * @param tsDate
 	 * @param type
 	 * @param reason
 	 * @param price
 	 * @param personId
 	 */
-	public MedicalExamination(Long id, String date, String type, String reason, BigDecimal price, long personId) {
+	public MedicalExamination(Long id, long tsDate, String type, String reason, BigDecimal price, long personId) {
 		super();
 		this.id = id;
-		this.date = date;
+		this.tsDate = tsDate;
 		this.type = type;
 		this.reason = reason;
 		this.price = price;

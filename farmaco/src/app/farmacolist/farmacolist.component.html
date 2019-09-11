@@ -21,9 +21,9 @@
   <tbody>
     <tr *ngFor="let medicine of medicinePaged" [ngClass]="{'medicine-expired': isMedicineExpired(medicine), 'medicine-not-expired': !isMedicineExpired(medicine)}">
       <td>{{medicine.id}}</td>
-      <td>{{medicine.date}}</td>
-      <td>{{medicine.dateExpiry}}</td>
-      <td>{{medicine.dateExpiryWhenOpened}}</td>
+      <td>{{getDateFormatted(medicine.tsDate)}}</td>
+      <td>{{getDateFormatted(medicine.tsDateExpiry)}}</td>
+      <td>{{getDateFormatted(medicine.tsDateExpiryWhenOpened)}}</td>
       <td>{{medicine.name}}</td>
       <td>{{medicine.description}}</td>
       <td>{{getPerson(medicine.personId).name}} {{getPerson(medicine.personId).lastName}}</td>

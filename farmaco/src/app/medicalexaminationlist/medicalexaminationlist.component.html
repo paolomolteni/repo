@@ -77,7 +77,15 @@
     <input type="text" [(ngModel)]="medicalExamination.price" class="inputWidth"><br/>
 
     <br/><span>Utente</span><br/>
-    <select class="inputWidth" [(ngModel)]="medicalExamination.personId">
+    
+    <!-- NEW MEDICNE -->
+    <select *ngIf="isNew" class="inputWidth" [(ngModel)]="personIdsSelected" multiple>
+      <option *ngFor="let person of peopleAvailable" value="{{person.id}}">
+        {{person.name}} {{person.lastName}}
+      </option>
+    </select>
+    <!-- UPDATE MEDIDINE -->
+    <select *ngIf="!isNew" class="inputWidth" [(ngModel)]="medicalExamination.personId">
       <option *ngFor="let person of peopleAvailable" value="{{person.id}}">
         {{person.name}} {{person.lastName}}
       </option>

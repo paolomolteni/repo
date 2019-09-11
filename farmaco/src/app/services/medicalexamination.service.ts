@@ -19,6 +19,7 @@ export class MedicalExaminationService {
   getMedicalExaminationByPersonUrl = 'http://localhost:8080/medicine/medicalexamination/list/person';
   saveMedicalExaminationUrl = 'http://localhost:8080/medicine/medicalexamination/save';
   deleteMedicalExaminationUrl = 'http://localhost:8080/medicine/medicalexamination/delete';
+  saveMedicalExaminationMultiUrl = 'http://localhost:8080/medicine/medicalexamination/save/multi';
 
   constructor(private http: HttpClient) { }
 
@@ -40,5 +41,9 @@ export class MedicalExaminationService {
       params: new HttpParams().set('personId', personId + '')
     };
     return this.http.get<MedicalExamination[]>(this.getMedicalExaminationByPersonUrl, options);
+  }
+
+  saveExaminationMulti(examinations: MedicalExamination[]): Observable<Response<void>> {
+    return this.http.post<Response<void>>(this.saveMedicalExaminationMultiUrl, JSON.stringify(examinations), httpOptions);
   }
 }

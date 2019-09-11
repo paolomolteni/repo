@@ -1,5 +1,7 @@
 package it.paolomolteni.farmacobackend.service;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,15 @@ public class MedicalExaminationService {
 	@Transactional
 	public void delete(MedicalExamination medicalExamination) {
 		medicalExaminationRepository.delete(medicalExamination);
+	}
+	
+	@Transactional
+	public void save(List<MedicalExamination> examinations) {
+		
+		for(MedicalExamination examination : examinations) {
+			medicalExaminationRepository.save(examination);
+		}
+		
 	}
 
 }

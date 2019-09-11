@@ -25,6 +25,10 @@ export class MedicalexaminationlistComponent implements OnInit {
   pageSize = 4;
   collectionSize: number;
 
+  personIdsSelected: number[] = [];
+
+  isNew = false;
+
   constructor(private examinationService: MedicalExaminationService, private personService: PersonService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -69,7 +73,46 @@ export class MedicalexaminationlistComponent implements OnInit {
   }
 
   saveDetail(): void {
+    if (this.isNew) {
+      this.saveMulti();
+    }
+    else {
+      this.saveSingle();
+    }
+  }
 
+  saveMulti(): void {
+    if (this.personIdsSelected.length == 0) {
+      alert('Valorizzare il campo utente!');
+      return;
+    }
+
+    const examinationsToSave: MedicalExamination[] = [];
+
+    this.personIdsSelected.forEach(pId => {
+
+      const examinationToSave = new MedicalExamination();
+      examinationToSave.id = this.medicalExamination.id;
+      examinationToSave.personId = pId;
+      examinationToSave.price = this.medicalExamination.price;
+      examinationToSave.reason = this.medicalExamination.reason;
+      examinationToSave.type = this.medicalExamination.type;
+
+      const tsDate = DateUtil.getTsFromDateTimePicker(this.medicalExamination.dateCalendar, this.medicalExamination.timePicker);
+      examinationToSave.tsDate = tsDate;
+
+      examinationsToSave.push(examinationToSave);
+
+    });
+
+    this.examinationService.saveExaminationMulti(examinationsToSave).subscribe(res => {
+      this.personIdsSelected = [];
+      this.popupRef.close();
+      this.getExamination();
+    });
+  }
+
+  saveSingle(): void {
     if (this.medicalExamination.personId == null) {
       alert('Valorizzare il campo utente!');
       return;
@@ -89,7 +132,6 @@ export class MedicalexaminationlistComponent implements OnInit {
       this.popupRef.close();
       this.getExamination();
     });
-
   }
 
   closePopup(): void {
@@ -100,6 +142,7 @@ export class MedicalexaminationlistComponent implements OnInit {
     this.medicalExamination = new MedicalExamination();
 
     if (examination != null) {
+      this.isNew = false;
       this.medicalExamination.id = examination.id;
       this.medicalExamination.reason = examination.reason;
       this.medicalExamination.price = examination.price;
@@ -107,6 +150,9 @@ export class MedicalexaminationlistComponent implements OnInit {
       this.medicalExamination.dateCalendar = DateUtil.getDatePickerFromTs(examination.tsDate);
       this.medicalExamination.timePicker = DateUtil.getTimePickerFromTs(examination.tsDate);
       this.medicalExamination.type = examination.type;
+    }
+    else {
+      this.isNew = true;
     }
 
     if(this.personId != null){

@@ -145,5 +145,42 @@ public class MedicalExaminationRestService {
 		
 		return new Response<Void>(true);
 	}
+	
+	/**
+	 * @param examinations
+	 * @return
+	 */
+	@PostMapping(path = "/save/multi")
+	public Response<Void> save(@RequestBody List<it.paolomolteni.farmacobackend.json.MedicalExamination> examinations) {
+		
+		List<MedicalExamination> examinationsToSave = new ArrayList<MedicalExamination>();
+		MedicalExamination examinationTmp = null;
+		
+		for(it.paolomolteni.farmacobackend.json.MedicalExamination examination : examinations) {
+			examinationTmp = null;
+			
+			if(examination.id != null) {
+				examinationTmp =	medicalExaminationRepository.findById(examination.id).orElse(null);
+			}
+			
+			if(examinationTmp == null) {
+				examinationTmp = new MedicalExamination();
+			}
+			
+			examinationTmp.setDate(new Date(examination.tsDate));
+			examinationTmp.setType(examination.type);
+			examinationTmp.setReason(examination.reason);
+			examinationTmp.setPrice(examination.price);
+			
+			Person person = this.personRepository.findById(examination.personId).orElse(null);
+			examinationTmp.setPerson(person);
+			
+			examinationsToSave.add(examinationTmp);
+		}
+		
+		medicalExaminationService.save(examinationsToSave);
+		
+		return new Response<Void>(true);
+	}
 
 }

@@ -183,7 +183,9 @@ export class FarmacolistComponent implements OnInit {
       this.isNew = true;
     }
 
-    if(this.personId != null){
+    if (this.personId != null) {
+      // From person view, show only the simple combobox
+      this.isNew = false;
       this.medicine.personId = this.personId;
     }
 

@@ -40,11 +40,11 @@
 
 <div *ngIf="showDetail" class="divDetail">
   <div class="btn-group btn-group-toggle">
-    <label class="btn-primary button_margin" ngbButtonLabel>
+    <label class="btn-primary button_margin close_clinic_btn" ngbButtonLabel>
       <input type="checkbox" ngbButton (click)="closeTableMedicines()">Chiudi
     </label>
   </div>
-
+  <br/>
   <app-farmacolist [personId]="personInput.id"></app-farmacolist>
   <app-medicalexaminationlist [personId]="personInput.id"></app-medicalexaminationlist>
 </div>

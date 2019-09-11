@@ -26,6 +26,10 @@ export class FarmacolistComponent implements OnInit {
   pageSize = 4;
   collectionSize: number;
 
+  personIdsSelected: number[] = [];
+
+  isNew = false;
+
   constructor(private farmacoService: FarmacoService, private personService: PersonService, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -39,7 +43,44 @@ export class FarmacolistComponent implements OnInit {
   }
 
   saveDetail(): void {
+    if (this.isNew) {
+      this.saveMulti();
+    } 
+    else {
+      this.saveSingle();
+    }
+  }
 
+  saveMulti(): void {
+    if (this.personIdsSelected.length == 0) {
+      alert('Valorizzare il campo utente!');
+      return;
+    }
+
+    const medicinesToSave: Medicine[] = [];
+
+    this.personIdsSelected.forEach(pId => {
+      let medicineToSave = new Medicine();
+      medicineToSave.date = DateUtil.getDataFormatted(this.medicine.dateCalendar);
+      medicineToSave.name = this.medicine.name;
+      medicineToSave.description = this.medicine.description;
+      medicineToSave.dateExpiry = DateUtil.getDataFormatted(this.medicine.dateExpiryCalendar);
+      medicineToSave.dateExpiryWhenOpened = DateUtil.getDataFormatted(this.medicine.dateExpiryWhenOpenedCalendar);
+      medicineToSave.cause = this.medicine.cause;
+      medicineToSave.personId = pId;
+      medicineToSave.id = this.medicine.id;
+
+      medicinesToSave.push(medicineToSave);
+    });
+
+    this.farmacoService.saveFarmacoMulti(medicinesToSave).subscribe(res => {
+      this.personIdsSelected = [];
+      this.popupRef.close();
+      this.getMedicines();
+    });
+  }
+
+  saveSingle(): void {
     if (this.medicine.personId == null) {
       alert('Valorizzare il campo utente!');
       return;
@@ -54,12 +95,11 @@ export class FarmacolistComponent implements OnInit {
     medicineToSave.cause = this.medicine.cause;
     medicineToSave.personId = this.medicine.personId;
     medicineToSave.id = this.medicine.id;
-    
+
     this.farmacoService.saveFarmaco(medicineToSave).subscribe(res => {
       this.popupRef.close();
       this.getMedicines();
     });
-    
   }
 
   getMedicines(): void {
@@ -101,6 +141,7 @@ export class FarmacolistComponent implements OnInit {
     this.medicine = new Medicine();
 
     if (medicineSelected != null) {
+      this.isNew = false;
       this.medicine = new Medicine();
       this.medicine.id = medicineSelected.id;
       this.medicine.name = medicineSelected.name;
@@ -110,6 +151,9 @@ export class FarmacolistComponent implements OnInit {
       this.medicine.dateExpiryWhenOpenedCalendar = DateUtil.getData(medicineSelected.dateExpiryWhenOpened);
       this.medicine.cause = medicineSelected.cause;
       this.medicine.personId = medicineSelected.personId;
+    }
+    else {
+      this.isNew = true;
     }
 
     if(this.personId != null){

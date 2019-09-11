@@ -1,3 +1,7 @@
 .medicine-expired{
     background-color: #ff5959 !important;
 }
+
+.medicine-not-expired{
+    background-color: #93ff73 !important;
+}

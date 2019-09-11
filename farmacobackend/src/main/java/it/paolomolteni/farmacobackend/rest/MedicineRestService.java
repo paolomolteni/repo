@@ -156,5 +156,47 @@ public class MedicineRestService {
 		
 		return new Response<Void>(true);
 	}
+	
+	@PostMapping(path = "/save/multi")
+	public Response<Void> save(@RequestBody List<it.paolomolteni.farmacobackend.json.Medicine> medicines) {
+		
+		List<Medicine> medicinesToSave = new ArrayList<Medicine>();
+		Medicine medicineTmp = null;
+		
+		for(it.paolomolteni.farmacobackend.json.Medicine medicine : medicines) {
+			medicineTmp = null;
+			
+			if(medicine.id != null) {
+				medicineTmp =	medicineRepository.findById(medicine.id).orElse(null);
+			}
+			
+			if(medicineTmp == null) {
+				medicineTmp = new Medicine();
+			}
+
+			try {
+				medicineTmp.setDate(DateUtil.getDateFromString(medicine.date));
+				medicineTmp.setDateExpiry(DateUtil.getDateFromString(medicine.dateExpiry));
+				medicineTmp.setDateExpiryWhenOpened(DateUtil.getDateFromString(medicine.dateExpiryWhenOpened));
+			} 
+			catch (Exception e) {
+				
+			}
+			
+			medicineTmp.setName(medicine.name);
+			medicineTmp.setDescription(medicine.description);
+			medicineTmp.setCause(medicine.cause);
+			
+			Person person = this.personRepository.findById(medicine.personId).orElse(null);
+			medicineTmp.setPerson(person);
+			
+			medicinesToSave.add(medicineTmp);
+		}
+		
+		medicineService.save(medicinesToSave);
+		
+		return new Response<Void>(true);
+		
+	}
 
 }

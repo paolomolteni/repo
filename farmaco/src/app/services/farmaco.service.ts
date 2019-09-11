@@ -20,6 +20,7 @@ export class FarmacoService {
   saveFarmacoUrl = 'http://localhost:8080/medicine/medicine/save';
   getFarmacoByPersonUrl = 'http://localhost:8080/medicine/medicine/list/person';
   deleteMedicneUrl = 'http://localhost:8080/medicine/medicine/delete';
+  saveFarmacoMultiUrl = 'http://localhost:8080/medicine/medicine/save/multi';
 
   constructor(private http: HttpClient) { }
 
@@ -40,6 +41,10 @@ export class FarmacoService {
 
   deleteMedicine(medicie: Medicine): Observable<Response<void>> {
     return this.http.put<Response<void>>(this.deleteMedicneUrl + '?medicineId=' + medicie.id, null);
+  }
+
+  saveFarmacoMulti(medicines: Medicine[]): Observable<Response<void>> {
+    return this.http.post<Response<void>>(this.saveFarmacoMultiUrl, JSON.stringify(medicines), httpOptions);
   }
 
 }

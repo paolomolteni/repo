@@ -22,7 +22,7 @@ export class MedicalexaminationlistComponent implements OnInit {
   personId: number;
 
   page = 1;
-  pageSize = 4;
+  pageSize = 8;
   collectionSize: number;
 
   personIdsSelected: number[] = [];

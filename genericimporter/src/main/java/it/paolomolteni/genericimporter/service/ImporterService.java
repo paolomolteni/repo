@@ -93,9 +93,9 @@ public class ImporterService {
 			
 		}
 		
-		for(Sql sql : sqlStack.getQueue()) {
-			System.out.println(sql);
-		}
+//		for(Sql sql : sqlStack.getQueue()) {
+//			System.out.println(sql);
+//		}
 		
 		return sqlStack;
 	}
@@ -121,8 +121,6 @@ public class ImporterService {
 				List<String> fieldsName = fields.stream().map(f -> f.getTableName()+"."+f.getFieldName()).collect(Collectors.toList());
 				rowValues.put(excelName, new FieldValue(fieldsName, value));
 			}
-			
-			System.out.println(rowValues);
 			
 //			{excel_1=[name=id, value=1.0], excel_2=[name=id, value=1.0]}
 
@@ -171,6 +169,19 @@ public class ImporterService {
 			
 		}
 		
+	}
+	
+	public Query performQuery(String queryStr, Map<String, Object> parameters) {
+		Query query = em.createNativeQuery(queryStr);
+		
+		System.out.println(String.format("[%s]", queryStr));
+		
+		for(Entry<String, Object> entryParameter : parameters.entrySet()) {
+			System.out.println(entryParameter.getKey()+": "+entryParameter.getValue());
+			query.setParameter(entryParameter.getKey(), entryParameter.getValue());
+		}
+		
+		return query;
 	}
 
 }

@@ -25,7 +25,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.12</version>
       <scope>test</scope>
     </dependency>
     
@@ -51,6 +51,20 @@
 	    <version>1</version>
 	    <scope>provided</scope>
 	</dependency>
+	
+	<!--#################### TEST #####################-->
+	<dependency>
+ 		<groupId>org.jboss.arquillian.junit</groupId>
+ 		<artifactId>arquillian-junit-container</artifactId>
+ 		<scope>test</scope>
+	</dependency>
+	
+	<dependency>
+ 		<groupId>org.jboss.arquillian.protocol</groupId>
+	 	<artifactId>arquillian-protocol-servlet</artifactId>
+	 	<scope>test</scope>
+	</dependency>
+	<!--#################### TEST #####################-->
     
   </dependencies>
 
@@ -63,6 +77,44 @@
 	            <ejbVersion>3.0</ejbVersion>
 	        </configuration>
 	    </plugin>
+	    
+<!-- 	    <plugin> -->
+<!-- 		    <groupId>org.apache.maven.plugins</groupId> -->
+<!-- 		    <artifactId>maven-surefire-plugin</artifactId> -->
+<!-- 		    <version>2.20.1</version> -->
+<!-- 		</plugin> -->
+	    
 	 </plugins>
   </build>
+  
+  <!--#################### TEST #####################-->
+  <dependencyManagement>
+  	<dependencies>
+		<dependency>
+            <groupId>org.jboss.arquillian</groupId>
+            <artifactId>arquillian-bom</artifactId>
+            <version>1.4.0.Final</version>
+            <scope>import</scope>
+            <type>pom</type>
+        </dependency>
+  	</dependencies>
+  </dependencyManagement>
+  
+  
+	<profiles>
+		<profile>
+	   		<!-- Run with: mvn clean test -Parq-wildfly-managed -->
+	   		<id>arq-wildfly-managed</id>
+	   		<dependencies>
+	      		<dependency>
+	         		<groupId>org.wildfly.arquillian</groupId>
+	         		<artifactId>wildfly-arquillian-container-managed</artifactId>
+	         		<version>2.1.1.Final</version>
+	         		<scope>test</scope>
+	     		 </dependency>
+	   		</dependencies>
+		</profile>
+  	</profiles>
+  <!--#################### TEST #####################-->
+  
 </project>

@@ -34,7 +34,7 @@ public class PersonController {
 	private PersonRepository personRepository;
 	
 	/**
-	 * http://localhost:8080/food/person/insert?name=Paolo&lastName=Molteni
+	 * http://localhost:8080/food/person/insert
 	 * 
 	 * @param name
 	 * @param lastName

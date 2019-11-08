@@ -5,15 +5,59 @@
 <body>
 
 <div id="app">
-  {{ message }}
+  <input v-model="name"><br/>
+  <input v-model="lastName"><br/>
+  <button v-on:click="createPerson()">Crea Persona</button>
 </div>
 
 <script>
 var app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!'
-  }
+	el: '#app',
+  	data: {
+    	message: 'Hello Vue!',
+    	name: '',
+    	lastName:''
+  	},
+  	methods: {
+    	createPerson: function (event) {
+      		
+      		if(this.name == "" || this.lastName == ""){
+      			alert("Verificare i parametri di input");
+      			return;
+      		}
+      		
+      		var myInit = { 
+      			method: 'POST',
+      			headers: {
+      				'Accept': 'application/json',
+      				'Content-Type': 'application/json'
+    			},
+    			body: JSON.stringify({name: this.name, lastName: this.lastName})
+      		};
+			
+			var url = "/food/person/insert";
+			
+			const promise = fetch(url, myInit).then(function(response) {
+
+				console.log("http status: " + response.status);
+				console.log("http status: " + response.ok);
+
+				return response.json();
+			});
+
+			promise.then((json) => {
+				console.log("Stato salvataggio: " + json.success);
+				this.name = "";
+				this.lastName = "";
+				alert("Salvataggio avvenuto con successo");
+			},
+			(error) => {
+				console.log("Errore generico: " + error);
+			});
+      		
+      		
+    	}
+  	}
 })
 </script>
 

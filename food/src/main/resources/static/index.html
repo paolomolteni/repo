@@ -8,6 +8,13 @@
   <input v-model="name"><br/>
   <input v-model="lastName"><br/>
   <button v-on:click="createPerson()">Crea Persona</button>
+  
+  <table border=1>
+  	<tr v-for="person in listPerson">
+		<td>{{ person.name + " " + person.lastName }}</td>
+ 	 </tr>
+  </table>
+  
 </div>
 
 <script>
@@ -16,7 +23,13 @@ var app = new Vue({
   	data: {
     	message: 'Hello Vue!',
     	name: '',
-    	lastName:''
+    	lastName:'',
+    	listPerson:[]
+  	},
+  	created: function(){
+  		
+  		this.readPersons();
+      	
   	},
   	methods: {
     	createPerson: function (event) {
@@ -49,13 +62,42 @@ var app = new Vue({
 				console.log("Stato salvataggio: " + json.success);
 				this.name = "";
 				this.lastName = "";
-				alert("Salvataggio avvenuto con successo");
+				this.readPersons();
 			},
 			(error) => {
 				console.log("Errore generico: " + error);
 			});
       		
       		
+    	},
+    	readPersons: function(){
+    	
+    		this.listPerson = [];
+    	
+    		var myInit = { 
+      			method: 'GET',
+      			headers: {
+      				'Accept': 'application/json',
+      				'Content-Type': 'application/json'
+    			}
+      		};
+      		
+      		var url = "/food/person/get";
+			
+			const promise = fetch(url, myInit).then(function(response) {
+				console.log("http status: " + response.status);
+				console.log("http status: " + response.ok);
+				return response.json();
+			});	
+		
+			promise.then((json) => {
+		
+				json.data.forEach(person => this.listPerson.push(person));
+		
+			},
+			(error) => {
+				console.log("Errore generico: " + error);
+			});
     	}
   	}
 })

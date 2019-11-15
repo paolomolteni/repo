@@ -16,13 +16,34 @@
   
   <table border=1>
   	<tr v-for="person in listPerson">
-		<td>{{  person.name + " " + person.lastName }}</td><td v-on:click="doUpdate(person)">Modifica</td><td v-on:click="deletePerson(person)">Elimina</td>
+		<td>{{person.id}}</td><td>{{  person.name + " " + person.lastName }}</td><td v-on:click="doUpdate(person)">Modifica</td><td v-on:click="deletePerson(person)">Elimina</td>
  	 </tr>
   </table>
+</div>
+
+<br/><br/><br/>
+
+<div id="foodEatenDiv">
+  <select v-model="foodEatenSelected.idPerson">
+	  <option value="1">Paolo Molteni</option>
+  </select><br/>
+  <input v-model="foodEatenSelected.meal"><br/>
+  <input v-model="foodEatenSelected.date"><br/>
   
+  <button v-on:click="createOrUpdateFoodEaten">
+  	<span v-if="foodEatenSelected.id == null">Inserisci pasto</span>
+  	<span v-if="foodEatenSelected.id != null">Aggiorna pasto</span>
+  </button>
+  
+  <table border=1>
+  	<tr v-for="foodEaten in listFoodEaten">
+		<td>{{foodEaten.id}}</td><td>{{ foodEaten.meal }}</td><td>{{ foodEaten.date }}</td><td>{{ foodEaten.idPerson }}</td>
+ 	 </tr>
+  </table>
 </div>
 
 <script src="js/index.js"></script>
+<script src="js/food_eaten.js"></script>
 
 </body>
 </html>

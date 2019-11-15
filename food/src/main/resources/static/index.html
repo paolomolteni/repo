@@ -5,13 +5,18 @@
 <body>
 
 <div id="app">
-  <input v-model="name"><br/>
-  <input v-model="lastName"><br/>
-  <button v-on:click="createPerson()">Crea Persona</button>
+  <input v-model="personSelected.name"><br/>
+  <input v-model="personSelected.lastName"><br/>
+  <button v-on:click="createOrUpdatePerson()">
+  	<span v-if="personSelected.id == null">Crea persona</span>
+  	<span v-if="personSelected.id != null">Aggiorna persona</span>
+  </button>
+  
+  <button v-on:click="cancell()">Annulla</button>
   
   <table border=1>
   	<tr v-for="person in listPerson">
-		<td>{{ person.name + " " + person.lastName }}</td>
+		<td>{{  person.name + " " + person.lastName }}</td><td v-on:click="doUpdate(person)">Modifica</td><td v-on:click="deletePerson(person)">Elimina</td>
  	 </tr>
   </table>
   
@@ -22,9 +27,11 @@ var app = new Vue({
 	el: '#app',
   	data: {
     	message: 'Hello Vue!',
-    	name: '',
-    	lastName:'',
-    	listPerson:[]
+    	listPerson:[],
+    	personSelected:{
+    		name:"",
+    		lastName:""
+    	}
   	},
   	created: function(){
   		
@@ -32,9 +39,54 @@ var app = new Vue({
       	
   	},
   	methods: {
-    	createPerson: function (event) {
+  		cancell: function(){
+  			this.personSelected = {};
+  		},
+  		doUpdate: function(person){
+  			this.personSelected = {
+  				id: person.id,
+  				name: person.name,
+  				lastName: person.lastName
+  			};
+  		},
+  		deletePerson : function(person){
       		
-      		if(this.name == "" || this.lastName == ""){
+      		var confirmDelete = confirm("Eliminare la persona?");
+      		
+      		if(confirmDelete == false){
+      			return;
+      		}
+      		
+      		var myInit = { 
+      			method: 'GET',
+      			headers: {
+      				'Accept': 'application/json',
+      				'Content-Type': 'application/json'
+    			}
+      		};
+			
+			var url = "/food/person/delete?id=" + person.id;
+			
+			const promise = fetch(url, myInit).then(function(response) {
+
+				console.log("http status: " + response.status);
+				console.log("http status: " + response.ok);
+
+				return response.json();
+			});
+
+			promise.then((json) => {
+				console.log("Stato eliminazione: " + json.success);
+				this.personSelected = {};
+				this.readPersons();
+			},
+			(error) => {
+				console.log("Errore generico: " + error);
+			});
+  		},
+    	createOrUpdatePerson: function () {
+      		
+      		if(this.personSelected.name == "" || this.personSelected.lastName == ""){
       			alert("Verificare i parametri di input");
       			return;
       		}
@@ -45,7 +97,7 @@ var app = new Vue({
       				'Accept': 'application/json',
       				'Content-Type': 'application/json'
     			},
-    			body: JSON.stringify({name: this.name, lastName: this.lastName})
+    			body: JSON.stringify({id: this.personSelected.id, name: this.personSelected.name, lastName: this.personSelected.lastName})
       		};
 			
 			var url = "/food/person/insert";
@@ -60,8 +112,7 @@ var app = new Vue({
 
 			promise.then((json) => {
 				console.log("Stato salvataggio: " + json.success);
-				this.name = "";
-				this.lastName = "";
+				this.personSelected = {};
 				this.readPersons();
 			},
 			(error) => {

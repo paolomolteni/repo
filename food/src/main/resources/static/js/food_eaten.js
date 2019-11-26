@@ -15,19 +15,20 @@ var foodEatenComponent = new Vue({
   		this.readFoodEaten();
   	},
   	methods: {
-  		/*cancell: function(){
+  		cancell: function(){
   			this.foodEatenSelected = {};
   		},
-  		doUpdate: function(person){
+  		doUpdate: function(foodEaten){
   			this.foodEatenSelected = {
-  				id: person.id,
-  				name: person.name,
-  				lastName: person.lastName
+  				id: foodEaten.id,
+  				idPerson: foodEaten.idPerson,
+  				meal: foodEaten.meal,
+  				date: foodEaten.date
   			};
   		},
-  		deletePerson : function(person){
+  		deleteFoodEaten : function(foodEaten){
       		
-      		var confirmDelete = confirm("Eliminare la persona?");
+      		var confirmDelete = confirm("Eliminare il pasto?");
       		
       		if(confirmDelete == false){
       			return;
@@ -41,7 +42,7 @@ var foodEatenComponent = new Vue({
     			}
       		};
 			
-			var url = "/food/person/delete?id=" + person.id;
+			var url = "/food/food/delete?id=" + foodEaten.id;
 			
 			const promise = fetch(url, myInit).then(function(response) {
 
@@ -59,7 +60,7 @@ var foodEatenComponent = new Vue({
 			(error) => {
 				console.log("Errore generico: " + error);
 			});
-  		},*/
+  		},
     	createOrUpdateFoodEaten: function () {
       		
       		if(this.foodEatenSelected.meal == "" || this.foodEatenSelected.date == ""){

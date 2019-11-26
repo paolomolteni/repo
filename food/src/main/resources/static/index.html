@@ -1,5 +1,6 @@
 <html>
 <head>
+	<title>Gestione alimentazione</title>
 	<script src="js/vue.min.js"></script>
 </head>
 <body>
@@ -24,10 +25,13 @@
 <br/><br/><br/>
 
 <div id="foodEatenDiv">
+  <span>Persona</span><br/>
   <select v-model="foodEatenSelected.idPerson">
 	  <option value="1">Paolo Molteni</option>
   </select><br/>
+  <span>Pasto</span><br/>
   <input v-model="foodEatenSelected.meal"><br/>
+  <span>Data</span><br/>
   <input v-model="foodEatenSelected.date"><br/>
   
   <button v-on:click="createOrUpdateFoodEaten">
@@ -37,7 +41,7 @@
   
   <table border=1>
   	<tr v-for="foodEaten in listFoodEaten">
-		<td>{{foodEaten.id}}</td><td>{{ foodEaten.meal }}</td><td>{{ foodEaten.date }}</td><td>{{ foodEaten.idPerson }}</td>
+		<td>{{foodEaten.id}}</td><td>{{ foodEaten.meal }}</td><td>{{ foodEaten.date }}</td><td>{{ foodEaten.idPerson }}</td><td v-on:click="doUpdate(foodEaten)">Modifica</td><td v-on:click="deleteFoodEaten(foodEaten)">Elimina</td>
  	 </tr>
   </table>
 </div>

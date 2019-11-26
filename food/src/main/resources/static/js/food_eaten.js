@@ -1,6 +1,8 @@
 var foodEatenComponent = new Vue({
 	el: '#foodEatenDiv',
+	mixins: [sharedFunction],
   	data: {
+  		listPerson:[],
     	listFoodEaten:[],
     	foodEatenSelected:{
     		id:null,
@@ -11,8 +13,8 @@ var foodEatenComponent = new Vue({
     	idPerson:null
   	},
   	created: function(){
-  		this.idPerson = 1;
   		this.readFoodEaten();
+  		this.readPersons();
   	},
   	methods: {
   		cancell: function(){
@@ -74,7 +76,7 @@ var foodEatenComponent = new Vue({
       				'Accept': 'application/json',
       				'Content-Type': 'application/json'
     			},
-    			body: JSON.stringify({id: this.foodEatenSelected.id, idPerson: this.idPerson, meal: this.foodEatenSelected.meal, date: this.foodEatenSelected.date})
+    			body: JSON.stringify({id: this.foodEatenSelected.id, idPerson: this.foodEatenSelected.idPerson, meal: this.foodEatenSelected.meal, date: this.foodEatenSelected.date})
       		};
 			
 			var url = "/food/food/insert";
@@ -110,7 +112,7 @@ var foodEatenComponent = new Vue({
     			}
       		};
       		
-      		var url = "/food/food/get?idPerson=" + this.idPerson;
+      		var url = "/food/food/get";
 			
 			const promise = fetch(url, myInit).then(function(response) {
 				console.log("http status: " + response.status);

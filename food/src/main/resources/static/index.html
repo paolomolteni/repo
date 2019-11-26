@@ -1,6 +1,7 @@
 <html>
 <head>
 	<title>Gestione alimentazione</title>
+	<link rel="stylesheet" href="css/index.css">
 	<script src="js/vue.min.js"></script>
 </head>
 <body>
@@ -15,9 +16,10 @@
   
   <button v-on:click="cancell()">Annulla</button>
   
-  <table border=1>
+  <table border=1 class="table_width">
+ 	<tr><th>ID persona</th><th>Nome</th><th>Modifica</th><th>Elimina</th></tr>
   	<tr v-for="person in listPerson">
-		<td>{{person.id}}</td><td>{{  person.name + " " + person.lastName }}</td><td v-on:click="doUpdate(person)">Modifica</td><td v-on:click="deletePerson(person)">Elimina</td>
+		<td>{{person.id}}</td><td>{{  person.name + " " + person.lastName }}</td><td v-on:click="doUpdate(person)">M</td><td v-on:click="deletePerson(person)">D</td>
  	 </tr>
   </table>
 </div>
@@ -27,7 +29,7 @@
 <div id="foodEatenDiv">
   <span>Persona</span><br/>
   <select v-model="foodEatenSelected.idPerson">
-	  <option value="1">Paolo Molteni</option>
+	  <option v-for="person in listPerson" v-bind:value="person.id">{{ person.name + " " + person.lastName }}</option>
   </select><br/>
   <span>Pasto</span><br/>
   <input v-model="foodEatenSelected.meal"><br/>
@@ -39,9 +41,12 @@
   	<span v-if="foodEatenSelected.id != null">Aggiorna pasto</span>
   </button>
   
-  <table border=1>
+  <button v-on:click="cancell()">Annulla</button>
+  
+  <table border=1 class="table_width">
+  	<tr><th>ID</th><th>Pasto</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
   	<tr v-for="foodEaten in listFoodEaten">
-		<td>{{foodEaten.id}}</td><td>{{ foodEaten.meal }}</td><td>{{ foodEaten.date }}</td><td>{{ foodEaten.idPerson }}</td><td v-on:click="doUpdate(foodEaten)">Modifica</td><td v-on:click="deleteFoodEaten(foodEaten)">Elimina</td>
+		<td>{{foodEaten.id}}</td><td>{{ foodEaten.meal }}</td><td>{{ foodEaten.date }}</td><td>{{ foodEaten.idPerson }}</td><td v-on:click="doUpdate(foodEaten)">M</td><td v-on:click="deleteFoodEaten(foodEaten)">D</td>
  	 </tr>
   </table>
 </div>

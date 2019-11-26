@@ -1,12 +1,12 @@
 <html>
 <head>
-
 	<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 
 	<title>Gestione alimentazione</title>
 	
+	<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="css/bootstrap/bootstrap-vue.min.css">
 	<link rel="stylesheet" href="css/index.css">
 	
@@ -18,7 +18,15 @@
 
 <div id="app">
 
-  <b-button variant="danger">Button</b-button>
+	<div>
+  		<div>
+    		<b-button-group size="lg">
+	      		<b-button>Utenti</b-button>
+	      		<b-button>Pasti</b-button>
+	      		<b-button>Stato</b-button>
+    		</b-button-group>
+  		</div>
+	</div>
 
   <span>Nome</span><br/>
   <input v-model="personSelected.name"><br/>

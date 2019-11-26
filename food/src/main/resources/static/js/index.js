@@ -29,7 +29,14 @@ var sharedFunction = {
 			(error) => {
 				console.log("Errore generico: " + error);
 			});
+    	},
+    	checkField: function(field){
+    		if(field && field != ""){
+    			return true;
+    		}
+    		return false;
     	}
+    	
 	}	
 		
 };
@@ -98,7 +105,7 @@ var app = new Vue({
   		},
     	createOrUpdatePerson: function () {
       		
-      		if(this.personSelected.name == "" || this.personSelected.lastName == ""){
+      		if(!this.checkField(this.personSelected.name) || !this.checkField(this.personSelected.lastName)){
       			alert("Verificare i parametri di input");
       			return;
       		}

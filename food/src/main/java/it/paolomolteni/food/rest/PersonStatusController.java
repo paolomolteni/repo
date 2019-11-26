@@ -1,5 +1,6 @@
 package it.paolomolteni.food.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,16 +89,23 @@ public class PersonStatusController {
 	 * @param idPerson
 	 * @return
 	 */
-	@RequestMapping("/get/byperson")
-    public Response getByPerson(@RequestParam(value="idPerson") Long idPerson) {
+	@RequestMapping("/get")
+    public Response getByPerson(@RequestParam(value="idPerson", required = false) Long idPerson) {
 
-		Person person = personRepository.findById(idPerson);
+		List<PersonStatus> status = new ArrayList<PersonStatus>();
 		
-		if(person == null) {
-			return Response.error();
+		if(idPerson != null) {
+			Person person = personRepository.findById(idPerson);
+			
+			if(person == null) {
+				return Response.error();
+			}
+			
+			status.addAll(personStatusRepository.findByPerson(person));
 		}
-		
-		List<PersonStatus> status = personStatusRepository.findByPerson(person);
+		else {
+			personStatusRepository.findAll().forEach(status::add); 
+		}
 		
 		List<it.paolomolteni.food.json.PersonStatus> modelFoods = status.stream().map(s -> MappingEntity.mapPersonStatus(s)).collect(Collectors.toList());
 		

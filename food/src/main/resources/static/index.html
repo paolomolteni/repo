@@ -7,7 +7,9 @@
 <body>
 
 <div id="app">
+  <span>Nome</span><br/>
   <input v-model="personSelected.name"><br/>
+  <span>Cognome</span><br/>
   <input v-model="personSelected.lastName"><br/>
   <button v-on:click="createOrUpdatePerson()">
   	<span v-if="personSelected.id == null">Crea persona</span>
@@ -51,8 +53,36 @@
   </table>
 </div>
 
+<br/><br/><br/>
+
+<div id="personStatusDiv">
+  <span>Persona</span><br/>
+  <select v-model="personStatusSelected.idPerson">
+	  <option v-for="person in listPerson" v-bind:value="person.id">{{ person.name + " " + person.lastName }}</option>
+  </select><br/>
+  <span>Descrizione</span><br/>
+  <input v-model="personStatusSelected.description"><br/>
+  <span>Data</span><br/>
+  <input v-model="personStatusSelected.date"><br/>
+  
+  <button v-on:click="createOrUpdatePersonStatus">
+  	<span v-if="personStatusSelected.id == null">Inserisci stato</span>
+  	<span v-if="personStatusSelected.id != null">Aggiorna stato</span>
+  </button>
+  
+  <button v-on:click="cancell()">Annulla</button>
+  
+  <table border=1 class="table_width">
+  	<tr><th>ID</th><th>Descrizione</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
+  	<tr v-for="personStatus in listPersonStatus">
+		<td>{{personStatus.id}}</td><td>{{ personStatus.description }}</td><td>{{ personStatus.date }}</td><td>{{ personStatus.idPerson }}</td><td v-on:click="doUpdate(personStatus)">M</td><td v-on:click="deletePersonStatus(personStatus)">D</td>
+ 	 </tr>
+  </table>
+</div>
+
 <script src="js/index.js"></script>
 <script src="js/food_eaten.js"></script>
+<script src="js/person_status.js"></script>
 
 </body>
 </html>

@@ -1,34 +1,34 @@
-var foodEatenComponent = new Vue({
-	el: '#foodEatenDiv',
+var personStatusComponent = new Vue({
+	el: '#personStatusDiv',
 	mixins: [sharedFunction],
   	data: {
   		listPerson:[],
-    	listFoodEaten:[],
-    	foodEatenSelected:{
+    	listPersonStatus:[],
+    	personStatusSelected:{
     		id:null,
     		idPerson:null,
-    		meal:null,
+    		description:null,
     		date:null
     	},
     	idPerson:null
   	},
   	created: function(){
-  		this.readFoodEaten();
+  		this.readPersonStatus();
   		this.readPersons();
   	},
   	methods: {
   		cancell: function(){
-  			this.foodEatenSelected = {};
+  			this.personStatusSelected = {};
   		},
-  		doUpdate: function(foodEaten){
-  			this.foodEatenSelected = {
-  				id: foodEaten.id,
-  				idPerson: foodEaten.idPerson,
-  				meal: foodEaten.meal,
-  				date: foodEaten.date
+  		doUpdate: function(personStatus){
+  			this.personStatusSelected = {
+  				id: personStatus.id,
+  				idPerson: personStatus.idPerson,
+  				description: personStatus.description,
+  				date: personStatus.date
   			};
   		},
-  		deleteFoodEaten : function(foodEaten){
+  		deletePersonStatus : function(personStatus){
       		
       		var confirmDelete = confirm("Eliminare il pasto?");
       		
@@ -44,7 +44,7 @@ var foodEatenComponent = new Vue({
     			}
       		};
 			
-			var url = "/food/food/delete?id=" + foodEaten.id;
+			var url = "/food/person/status/delete?id=" + personStatus.id;
 			
 			const promise = fetch(url, myInit).then(function(response) {
 
@@ -56,16 +56,16 @@ var foodEatenComponent = new Vue({
 
 			promise.then((json) => {
 				console.log("Stato eliminazione: " + json.success);
-				this.foodEatenSelected = {};
-				this.readFoodEaten();
+				this.personStatusSelected = {};
+				this.readPersonStatus();
 			},
 			(error) => {
 				console.log("Errore generico: " + error);
 			});
   		},
-    	createOrUpdateFoodEaten: function () {
+    	createOrUpdatePersonStatus: function () {
       		
-      		if(!this.checkField(this.foodEatenSelected.meal) || !this.checkField(this.foodEatenSelected.date)){
+      		if(!this.checkField(this.personStatusSelected.description) || !this.checkField(this.personStatusSelected.date)){
       			alert("Verificare i parametri di input");
       			return;
       		}
@@ -76,10 +76,10 @@ var foodEatenComponent = new Vue({
       				'Accept': 'application/json',
       				'Content-Type': 'application/json'
     			},
-    			body: JSON.stringify({id: this.foodEatenSelected.id, idPerson: this.foodEatenSelected.idPerson, meal: this.foodEatenSelected.meal, date: this.foodEatenSelected.date})
+    			body: JSON.stringify({id: this.personStatusSelected.id, idPerson: this.personStatusSelected.idPerson, description: this.personStatusSelected.description, date: this.personStatusSelected.date})
       		};
 			
-			var url = "/food/food/insert";
+			var url = "/food/person/status/insert";
 			
 			const promise = fetch(url, myInit).then(function(response) {
 
@@ -91,8 +91,8 @@ var foodEatenComponent = new Vue({
 
 			promise.then((json) => {
 				console.log("Stato salvataggio: " + json.success);
-				this.foodEatenSelected = {};
-				this.readFoodEaten();
+				this.personStatusSelected = {};
+				this.readPersonStatus();
 			},
 			(error) => {
 				console.log("Errore generico: " + error);
@@ -100,9 +100,9 @@ var foodEatenComponent = new Vue({
       		
       		
     	},
-    	readFoodEaten: function(){
+    	readPersonStatus: function(){
     	
-    		this.listFoodEaten = [];
+    		this.listPersonStatus = [];
     	
     		var myInit = { 
       			method: 'GET',
@@ -112,7 +112,7 @@ var foodEatenComponent = new Vue({
     			}
       		};
       		
-      		var url = "/food/food/get";
+      		var url = "/food/person/status/get";
 			
 			const promise = fetch(url, myInit).then(function(response) {
 				console.log("http status: " + response.status);
@@ -122,7 +122,7 @@ var foodEatenComponent = new Vue({
 		
 			promise.then((json) => {
 		
-				json.data.forEach(foodEaten => this.listFoodEaten.push(foodEaten));
+				json.data.forEach(personStatus => this.listPersonStatus.push(personStatus));
 		
 			},
 			(error) => {

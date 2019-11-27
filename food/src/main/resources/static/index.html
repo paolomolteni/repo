@@ -16,100 +16,90 @@
 </head>
 <body>
 
+
+<div id="application">
+
 <div id ="menu">
 	<div>
 	   	<b-button-group size="lg">
 	    	<b-button v-on:click="showPerson()">Utenti</b-button>
-	      	<b-button v-on:click="showMeal()">Pasti</b-button>
+	      	<b-button v-on:click="showFoodEaten()">Pasti</b-button>
 	      	<b-button v-on:click="showStatus()">Stato</b-button>
 	   	</b-button-group>
  	</div>
-	<router-link to="/person">Go to Foo</router-link>
-	<router-view></router-view>
 </div>
 
-
-
-<div id="app">
-
-  <span>Nome</span><br/>
-  <input v-model="personSelected.name"><br/>
-  <span>Cognome</span><br/>
-  <input v-model="personSelected.lastName"><br/>
-  <button v-on:click="createOrUpdatePerson()">
-  	<span v-if="personSelected.id == null">Crea persona</span>
-  	<span v-if="personSelected.id != null">Aggiorna persona</span>
-  </button>
-  
-  <button v-on:click="cancell()">Annulla</button>
-  
-  <table border=1 class="table_width">
- 	<tr><th>ID persona</th><th>Nome</th><th>Modifica</th><th>Elimina</th></tr>
-  	<tr v-for="person in listPerson">
-		<td>{{person.id}}</td><td>{{  person.name + " " + person.lastName }}</td><td v-on:click="doUpdate(person)">M</td><td v-on:click="deletePerson(person)">D</td>
- 	 </tr>
-  </table>
+<!-- ******************************* PERSON COMPONENT ****************************** -->
+<div v-if="isPersonToShow">
+  	<span>Nome</span><br/>
+	<input v-model="personSelected.name"><br/>
+	<span>Cognome</span><br/>
+	<input v-model="personSelected.lastName"><br/>
+	<button v-on:click="createOrUpdatePerson()">
+		<span v-if="personSelected.id == null">Crea persona</span>
+		<span v-if="personSelected.id != null">Aggiorna persona</span>
+	</button>
+  	<button v-on:click="cancellPerson()">Annulla</button>
+	<table border="1" class="table_width">
+		<tr><th>ID persona</th><th>Nome</th><th>Modifica</th><th>Elimina</th></tr>
+		<tr v-for="person in listPerson">
+			<td>{{person.id}}</td><td>{{  person.name + " " + person.lastName }}</td><td v-on:click="doUpdatePerson(person)">M</td><td v-on:click="deletePerson(person)">D</td>
+	 	</tr>
+	</table>
 </div>
 
-<br/><br/><br/>
-
-<div id="foodEatenDiv">
-  <span>Persona</span><br/>
-  <select v-model="foodEatenSelected.idPerson">
-	  <option v-for="person in listPerson" v-bind:value="person.id">{{ person.name + " " + person.lastName }}</option>
-  </select><br/>
-  <span>Pasto</span><br/>
-  <input v-model="foodEatenSelected.meal"><br/>
-  <span>Data</span><br/>
-  <input v-model="foodEatenSelected.date"><br/>
+<!-- ******************************* FOOD EATEN COMPONENT ****************************** -->
+<div v-if="isFoodEatenToShow">
+	<span>Persona</span><br/>
+	<select v-model="foodEatenSelected.idPerson">
+		<option v-for="person in listPerson" v-bind:value="person.id">{{ person.name + " " + person.lastName }}</option>
+	</select><br/>
+	<span>Pasto</span><br/>
+	<input v-model="foodEatenSelected.meal"><br/>
+	<span>Data</span><br/>
+	<input v-model="foodEatenSelected.date"><br/>
   
-  <button v-on:click="createOrUpdateFoodEaten">
-  	<span v-if="foodEatenSelected.id == null">Inserisci pasto</span>
-  	<span v-if="foodEatenSelected.id != null">Aggiorna pasto</span>
-  </button>
-  
-  <button v-on:click="cancell()">Annulla</button>
-  
-  <table border=1 class="table_width">
-  	<tr><th>ID</th><th>Pasto</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
-  	<tr v-for="foodEaten in listFoodEaten">
-		<td>{{foodEaten.id}}</td><td>{{ foodEaten.meal }}</td><td>{{ foodEaten.date }}</td><td>{{ foodEaten.idPerson }}</td><td v-on:click="doUpdate(foodEaten)">M</td><td v-on:click="deleteFoodEaten(foodEaten)">D</td>
- 	 </tr>
-  </table>
+	<button v-on:click="createOrUpdateFoodEaten">
+		<span v-if="foodEatenSelected.id == null">Inserisci pasto</span>
+		<span v-if="foodEatenSelected.id != null">Aggiorna pasto</span>
+	</button>
+  	<button v-on:click="cancellFoodEaten()">Annulla</button>
+	<table border="1" class="table_width">
+		<tr><th>ID</th><th>Pasto</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
+		<tr v-for="foodEaten in listFoodEaten">
+			<td>{{foodEaten.id}}</td><td>{{ foodEaten.meal }}</td><td>{{ foodEaten.date }}</td><td>{{ foodEaten.idPerson }}</td><td v-on:click="doUpdateFoodEaten(foodEaten)">M</td><td v-on:click="deleteFoodEaten(foodEaten)">D</td>
+	 	</tr>
+	</table>
 </div>
 
-<br/><br/><br/>
-
-<div id="personStatusDiv">
-  <span>Persona</span><br/>
-  <select v-model="personStatusSelected.idPerson">
-	  <option v-for="person in listPerson" v-bind:value="person.id">{{ person.name + " " + person.lastName }}</option>
-  </select><br/>
-  <span>Descrizione</span><br/>
-  <input v-model="personStatusSelected.description"><br/>
-  <span>Data</span><br/>
-  <input v-model="personStatusSelected.date"><br/>
+<!-- ******************************* PERSON STATUS COMPONENT ****************************** -->
+<div v-if="isPersonStatusToShow">
+	<span>Persona</span><br/>
+	<select v-model="personStatusSelected.idPerson">
+ 		<option v-for="person in listPerson" v-bind:value="person.id">{{ person.name + " " + person.lastName }}</option>
+	</select><br/>
+	<span>Descrizione</span><br/>
+	<input v-model="personStatusSelected.description"><br/>
+	<span>Data</span><br/>
+	<input v-model="personStatusSelected.date"><br/>
   
-  <button v-on:click="createOrUpdatePersonStatus">
-  	<span v-if="personStatusSelected.id == null">Inserisci stato</span>
-  	<span v-if="personStatusSelected.id != null">Aggiorna stato</span>
-  </button>
+	<button v-on:click="createOrUpdatePersonStatus">
+		<span v-if="personStatusSelected.id == null">Inserisci stato</span>
+		<span v-if="personStatusSelected.id != null">Aggiorna stato</span>
+	</button>
   
-  <button v-on:click="cancell()">Annulla</button>
+  	<button v-on:click="cancellPersonStatus()">Annulla</button>
   
-  <table border=1 class="table_width">
-  	<tr><th>ID</th><th>Descrizione</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
-  	<tr v-for="personStatus in listPersonStatus">
-		<td>{{personStatus.id}}</td><td>{{ personStatus.description }}</td><td>{{ personStatus.date }}</td><td>{{ personStatus.idPerson }}</td><td v-on:click="doUpdate(personStatus)">M</td><td v-on:click="deletePersonStatus(personStatus)">D</td>
- 	 </tr>
-  </table>
+	<table border="1" class="table_width">
+		<tr><th>ID</th><th>Descrizione</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
+		<tr v-for="personStatus in listPersonStatus">
+			<td>{{personStatus.id}}</td><td>{{ personStatus.description }}</td><td>{{ personStatus.date }}</td><td>{{ personStatus.idPerson }}</td><td v-on:click="doUpdatePersonStatus(personStatus)">M</td><td v-on:click="deletePersonStatus(personStatus)">D</td>
+	 	</tr>
+	</table>
+</div>
 </div>
 
-<script src="js/shared.js"></script>
-<script src="js/person.js"></script>
-<script src="js/menu.js"></script>
-<script src="js/food_eaten.js"></script>
-<script src="js/person_status.js"></script>
+<script src="js/index.js"></script>
 
 </body>
 </html>

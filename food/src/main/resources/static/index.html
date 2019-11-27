@@ -11,22 +11,26 @@
 	<link rel="stylesheet" href="css/index.css">
 	
 	<script src="js/vue.min.js"></script>
+	<script src="js/vue-router.js"></script>
 	<script src="js/bootstrap/bootstrap-vue.min.js"></script>
 </head>
 <body>
 
+<div id ="menu">
+	<div>
+	   	<b-button-group size="lg">
+	    	<b-button v-on:click="showPerson()">Utenti</b-button>
+	      	<b-button v-on:click="showMeal()">Pasti</b-button>
+	      	<b-button v-on:click="showStatus()">Stato</b-button>
+	   	</b-button-group>
+ 	</div>
+	<router-link to="/person">Go to Foo</router-link>
+	<router-view></router-view>
+</div>
+
+
 
 <div id="app">
-
-	<div>
-  		<div>
-    		<b-button-group size="lg">
-	      		<b-button>Utenti</b-button>
-	      		<b-button>Pasti</b-button>
-	      		<b-button>Stato</b-button>
-    		</b-button-group>
-  		</div>
-	</div>
 
   <span>Nome</span><br/>
   <input v-model="personSelected.name"><br/>
@@ -101,7 +105,9 @@
   </table>
 </div>
 
-<script src="js/index.js"></script>
+<script src="js/shared.js"></script>
+<script src="js/person.js"></script>
+<script src="js/menu.js"></script>
 <script src="js/food_eaten.js"></script>
 <script src="js/person_status.js"></script>
 

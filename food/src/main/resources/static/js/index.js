@@ -21,6 +21,8 @@ var application = new Vue({
     		date:null
     	},
     	idPerson:null,
+    	currentPagePersonStatus: 1,
+    	perPagePersonStatus: 2,
     	//######################################
     	listFoodEaten:[],
     	foodEatenSelected:{
@@ -28,7 +30,9 @@ var application = new Vue({
     		idPerson:null,
     		meal:null,
     		date:null
-    	}
+    	},
+    	currentPageFoodEaten: 1,
+    	perPageFoodEaten: 2
     	//######################################
   	},
   	computed: {
@@ -41,6 +45,26 @@ var application = new Vue({
   			let pageEnd = this.perPagePerson * (this.currentPagePerson-1) + (this.perPagePerson);
   			// Cut the list
   			return this.listPerson.slice(pageStart, pageEnd);
+  		},
+  		rowsPersonStatus() {
+  			return this.listPersonStatus.length;
+  		},
+  		getPersonStatusListToShow(){
+  			// Calculate start and end elements
+  			let pageStart = this.perPagePersonStatus * (this.currentPagePersonStatus-1);
+  			let pageEnd = this.perPagePersonStatus * (this.currentPagePersonStatus-1) + (this.perPagePersonStatus);
+  			// Cut the list
+  			return this.listPersonStatus.slice(pageStart, pageEnd);
+  		},
+  		rowsFoodEaten() {
+  			return this.listFoodEaten.length;
+  		},
+  		getFoodEatenListToShow(){
+  			// Calculate start and end elements
+  			let pageStart = this.perPageFoodEaten * (this.currentPageFoodEaten-1);
+  			let pageEnd = this.perPageFoodEaten * (this.currentPageFoodEaten-1) + (this.perPageFoodEaten);
+  			// Cut the list
+  			return this.listFoodEaten.slice(pageStart, pageEnd);
   		}
   	},
   	created: function(){

@@ -53,7 +53,7 @@
     <p class="mt-3">Current Page: {{ currentPagePerson }}</p>
   	
   	<!-- Table -->
-	<table border="1" class="table_width">
+	<table class="table_width">
 		<tr><th>ID persona</th><th>Nome</th><th>Modifica</th><th>Elimina</th></tr>
 		<tr v-for="person in getPersonListToShow">
 			<td>{{person.id}}</td><td>{{  person.name + " " + person.lastName }}</td><td v-on:click="doUpdatePerson(person)">M</td><td v-on:click="deletePerson(person)">D</td>
@@ -71,7 +71,7 @@
 	<input v-model="foodEatenSelected.meal"><br/>
   
   	<!-- Date/time management -->
-	<span>Data</span><br/> 	
+	<span>Data/Ora</span><br/> 	
   	<b-form-input type="date" v-model="dateI"></b-form-input>
 	<b-form-input type="time" v-model="timeI"></b-form-input>
   
@@ -91,7 +91,7 @@
     <p class="mt-3">Current Page: {{ currentPageFoodEaten }}</p>
   	
   	<!-- Table -->
-	<table border="1" class="table_width">
+	<table class="table_width">
 		<tr><th>ID</th><th>Pasto</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
 		<tr v-for="foodEaten in getFoodEatenListToShow">
 			<td>{{foodEaten.id}}</td><td>{{ foodEaten.meal }}</td><td>{{ foodEaten.date }}</td><td>{{ foodEaten.idPerson }}</td><td v-on:click="doUpdateFoodEaten(foodEaten)">M</td><td v-on:click="deleteFoodEaten(foodEaten)">D</td>
@@ -109,7 +109,7 @@
 	<input v-model="personStatusSelected.description"><br/>
 	
 	<!-- Date/time management -->
-	<span>Data</span><br/> 	
+	<span>Data/Ora</span><br/> 	
   	<b-form-input type="date" v-model="dateI"></b-form-input>
 	<b-form-input type="time" v-model="timeI"></b-form-input>
   
@@ -130,7 +130,7 @@
     <p class="mt-3">Current Page: {{ currentPagePersonStatus }}</p>
   
   	<!-- Table -->
-	<table border="1" class="table_width">
+	<table class="table_width">
 		<tr><th>ID</th><th>Descrizione</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
 		<tr v-for="personStatus in getPersonStatusListToShow">
 			<td>{{personStatus.id}}</td><td>{{ personStatus.description }}</td><td>{{ personStatus.date }}</td><td>{{ personStatus.idPerson }}</td><td v-on:click="doUpdatePersonStatus(personStatus)">M</td><td v-on:click="deletePersonStatus(personStatus)">D</td>

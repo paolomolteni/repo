@@ -23,6 +23,8 @@ var application = new Vue({
     	idPerson:null,
     	currentPagePersonStatus: 1,
     	perPagePersonStatus: 2,
+    	dateI: null,
+    	timeI: null,
     	//######################################
     	listFoodEaten:[],
     	foodEatenSelected:{
@@ -217,6 +219,10 @@ var application = new Vue({
   				description: personStatus.description,
   				date: personStatus.date
   			};
+  			
+  			let d = new Date(personStatus.date);
+  			this.dateI = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDate() < 10 ? '0' : '') + d.getDate();
+  			this.timeI = d.getHours()+":"+d.getMinutes();
   		},
   		deletePersonStatus : function(personStatus){
       		
@@ -260,6 +266,8 @@ var application = new Vue({
       			return;
       		}
       		
+      		this.personStatusSelected.date = this.dateI+" "+this.timeI;
+      		
       		var myInit = { 
       			method: 'POST',
       			headers: {
@@ -283,6 +291,8 @@ var application = new Vue({
 				console.log("Stato salvataggio: " + json.success);
 				this.personStatusSelected = {};
 				this.readPersonStatus();
+				this.dateI = null;
+				this.timeI = null;
 			},
 			(error) => {
 				console.log("Errore generico: " + error);

@@ -103,7 +103,12 @@
 	<span>Descrizione</span><br/>
 	<input v-model="personStatusSelected.description"><br/>
 	<span>Data</span><br/>
+	
 	<input v-model="personStatusSelected.date"><br/>
+  	
+  	<b-form-input type="date" v-model="dateI"></b-form-input>
+	<b-form-input type="time" v-model="timeI"></b-form-input>
+  	
   
 	<button v-on:click="createOrUpdatePersonStatus">
 		<span v-if="personStatusSelected.id == null">Inserisci stato</span>

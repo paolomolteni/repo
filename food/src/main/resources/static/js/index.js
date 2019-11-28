@@ -76,16 +76,19 @@ var application = new Vue({
   	},
   	methods: {
   		showPerson: function(){
+  			this.cancellPerson();
   			this.isPersonToShow = true;
   			this.isFoodEatenToShow = false;
   			this.isPersonStatusToShow = false;
   		},
   		showFoodEaten: function(){
+  			this.cancellFoodEaten();
   			this.isPersonToShow = false;
   			this.isFoodEatenToShow = true;
   			this.isPersonStatusToShow = false;
   		},
   		showStatus: function(){
+  			this.cancellPersonStatus();
   			this.isPersonToShow = false;
   			this.isFoodEatenToShow = false;
   			this.isPersonStatusToShow = true;

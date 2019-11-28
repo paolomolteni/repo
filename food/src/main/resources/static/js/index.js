@@ -338,6 +338,8 @@ var application = new Vue({
     	//########################## FOOD EATEN ######################################################
     	cancellFoodEaten: function(){
   			this.foodEatenSelected = {};
+  			this.dateI = null;
+  			this.timeI = null;
   		},
   		doUpdateFoodEaten: function(foodEaten){
   			this.foodEatenSelected = {

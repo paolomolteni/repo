@@ -10,6 +10,8 @@ var application = new Vue({
     		name:"",
     		lastName:""
     	},
+    	currentPagePerson: 1,
+    	perPagePerson: 2,
     	//######################################
     	listPersonStatus:[],
     	personStatusSelected:{
@@ -28,6 +30,18 @@ var application = new Vue({
     		date:null
     	}
     	//######################################
+  	},
+  	computed: {
+  		rowsPerson() {
+  			return this.listPerson.length;
+  		},
+  		getPersonListToShow(){
+  			// Calculate start and end elements
+  			let pageStart = this.perPagePerson * (this.currentPagePerson-1);
+  			let pageEnd = this.perPagePerson * (this.currentPagePerson-1) + (this.perPagePerson);
+  			// Cut the list
+  			return this.listPerson.slice(pageStart, pageEnd);
+  		}
   	},
   	created: function(){
   		this.readPersons();

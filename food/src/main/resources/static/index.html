@@ -29,6 +29,8 @@
  	</div>
 </div>
 
+<br/>
+
 <!-- ******************************* PERSON COMPONENT ****************************** -->
 <div v-if="isPersonToShow">
   	<span>Nome</span><br/>
@@ -67,8 +69,11 @@
 	</select><br/>
 	<span>Pasto</span><br/>
 	<input v-model="foodEatenSelected.meal"><br/>
-	<span>Data</span><br/>
-	<input v-model="foodEatenSelected.date"><br/>
+  
+  	<!-- Date/time management -->
+	<span>Data</span><br/> 	
+  	<b-form-input type="date" v-model="dateI"></b-form-input>
+	<b-form-input type="time" v-model="timeI"></b-form-input>
   
 	<button v-on:click="createOrUpdateFoodEaten">
 		<span v-if="foodEatenSelected.id == null">Inserisci pasto</span>
@@ -102,13 +107,11 @@
 	</select><br/>
 	<span>Descrizione</span><br/>
 	<input v-model="personStatusSelected.description"><br/>
-	<span>Data</span><br/>
 	
-	<input v-model="personStatusSelected.date"><br/>
-  	
+	<!-- Date/time management -->
+	<span>Data</span><br/> 	
   	<b-form-input type="date" v-model="dateI"></b-form-input>
 	<b-form-input type="time" v-model="timeI"></b-form-input>
-  	
   
 	<button v-on:click="createOrUpdatePersonStatus">
 		<span v-if="personStatusSelected.id == null">Inserisci stato</span>

@@ -11,7 +11,7 @@ var application = new Vue({
     		lastName:""
     	},
     	currentPagePerson: 1,
-    	perPagePerson: 2,
+    	perPagePerson: 10,
     	//######################################
     	listPersonStatus:[],
     	personStatusSelected:{
@@ -22,7 +22,7 @@ var application = new Vue({
     	},
     	idPerson:null,
     	currentPagePersonStatus: 1,
-    	perPagePersonStatus: 2,
+    	perPagePersonStatus: 10,
     	dateI: null,
     	timeI: null,
     	//######################################
@@ -34,7 +34,7 @@ var application = new Vue({
     		date:null
     	},
     	currentPageFoodEaten: 1,
-    	perPageFoodEaten: 2
+    	perPageFoodEaten: 10
     	//######################################
   	},
   	computed: {
@@ -211,6 +211,8 @@ var application = new Vue({
     	//#########################  PERSON STATUS ###################################################
     	cancellPersonStatus: function(){
   			this.personStatusSelected = {};
+  			this.dateI = null;
+  			this.timeI = null;
   		},
   		doUpdatePersonStatus: function(personStatus){
   			this.personStatusSelected = {
@@ -221,7 +223,7 @@ var application = new Vue({
   			};
   			
   			let d = new Date(personStatus.date);
-  			this.dateI = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+(d.getDate() < 10 ? '0' : '') + d.getDate();
+  			this.dateI = d.getFullYear()+"-"+  ((d.getMonth()+1) < 10 ? '0' : '') + (d.getMonth()+1) +"-"+(d.getDate() < 10 ? '0' : '') + d.getDate();
   			this.timeI = d.getHours()+":"+d.getMinutes();
   		},
   		deletePersonStatus : function(personStatus){
@@ -261,7 +263,7 @@ var application = new Vue({
   		},
     	createOrUpdatePersonStatus: function () {
       		
-      		if(!this.checkField(this.personStatusSelected.description) || !this.checkField(this.personStatusSelected.date)){
+      		if(!this.checkField(this.personStatusSelected.description) || !this.checkField(this.dateI) || !this.checkField(this.timeI)){
       			alert("Verificare i parametri di input");
       			return;
       		}
@@ -341,6 +343,10 @@ var application = new Vue({
   				meal: foodEaten.meal,
   				date: foodEaten.date
   			};
+  			
+  			let d = new Date(foodEaten.date);
+  			this.dateI = d.getFullYear()+"-"+  ((d.getMonth()+1) < 10 ? '0' : '') + (d.getMonth()+1) +"-"+(d.getDate() < 10 ? '0' : '') + d.getDate();
+  			this.timeI = d.getHours()+":"+d.getMinutes();
   		},
   		deleteFoodEaten : function(foodEaten){
       		
@@ -379,10 +385,12 @@ var application = new Vue({
   		},
     	createOrUpdateFoodEaten: function () {
       		
-      		if(!this.checkField(this.foodEatenSelected.meal) || !this.checkField(this.foodEatenSelected.date)){
+      		if(!this.checkField(this.foodEatenSelected.meal) || !this.checkField(this.dateI) || !this.checkField(this.timeI)){
       			alert("Verificare i parametri di input");
       			return;
       		}
+      		
+      		this.foodEatenSelected.date = this.dateI+" "+this.timeI;
       		
       		var myInit = { 
       			method: 'POST',
@@ -407,6 +415,8 @@ var application = new Vue({
 				console.log("Stato salvataggio: " + json.success);
 				this.foodEatenSelected = {};
 				this.readFoodEaten();
+				this.dateI = null;
+				this.timeI = null;
 			},
 			(error) => {
 				console.log("Errore generico: " + error);

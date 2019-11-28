@@ -5,6 +5,7 @@ var application = new Vue({
 		isFoodEatenToShow: false,
 		isPersonStatusToShow: false,
 		//#####################################
+		listPersonSelectI:[],
     	listPerson:[],
     	personSelected:{
     		name:"",
@@ -198,6 +199,12 @@ var application = new Vue({
 			promise.then((json) => {
 		
 				json.data.forEach(person => this.listPerson.push(person));
+				
+				this.listPersonSelect = [];
+				json.data.forEach(person => this.listPersonSelectI.push({
+					text: person.name+" "+person.lastName,
+					value: person.id
+				}));
 		
 			},
 			(error) => {

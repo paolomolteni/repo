@@ -33,10 +33,14 @@
 
 <!-- ******************************* PERSON COMPONENT ****************************** -->
 <div v-if="isPersonToShow">
+  	<!-- Name -->
   	<span>Nome</span><br/>
-	<input v-model="personSelected.name"><br/>
+	<b-form-input type="text" v-model="personSelected.name"></b-form-input>
+	
+	<!-- Last name -->
 	<span>Cognome</span><br/>
-	<input v-model="personSelected.lastName"><br/>
+	<b-form-input type="text" v-model="personSelected.lastName"></b-form-input>
+	
 	<button v-on:click="createOrUpdatePerson()">
 		<span v-if="personSelected.id == null">Crea persona</span>
 		<span v-if="personSelected.id != null">Aggiorna persona</span>
@@ -63,12 +67,13 @@
 
 <!-- ******************************* FOOD EATEN COMPONENT ****************************** -->
 <div v-if="isFoodEatenToShow">
+	<!-- Person who eaten -->
 	<span>Persona</span><br/>
-	<select v-model="foodEatenSelected.idPerson">
-		<option v-for="person in listPerson" v-bind:value="person.id">{{ person.name + " " + person.lastName }}</option>
-	</select><br/>
+ 	<b-form-select v-model="foodEatenSelected.idPerson" :options="listPersonSelectI"></b-form-select>
+	
+	<!-- Meal -->
 	<span>Pasto</span><br/>
-	<input v-model="foodEatenSelected.meal"><br/>
+	<b-form-input type="text" v-model="foodEatenSelected.meal"></b-form-input>
   
   	<!-- Date/time management -->
 	<span>Data/Ora</span><br/> 	
@@ -101,12 +106,13 @@
 
 <!-- ******************************* PERSON STATUS COMPONENT ****************************** -->
 <div v-if="isPersonStatusToShow">
+	<!-- Person who eaten -->
 	<span>Persona</span><br/>
-	<select v-model="personStatusSelected.idPerson">
- 		<option v-for="person in listPerson" v-bind:value="person.id">{{ person.name + " " + person.lastName }}</option>
-	</select><br/>
+ 	<b-form-select v-model="foodEatenSelected.idPerson" :options="listPersonSelectI"></b-form-select>
+ 	
+ 	<!-- Description -->
 	<span>Descrizione</span><br/>
-	<input v-model="personStatusSelected.description"><br/>
+	<b-form-input type="text" v-model="personStatusSelected.description"></b-form-input>
 	
 	<!-- Date/time management -->
 	<span>Data/Ora</span><br/> 	

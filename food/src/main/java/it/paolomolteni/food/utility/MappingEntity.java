@@ -40,6 +40,7 @@ public class MappingEntity {
 		model.setDescription(personStatus.getDescription());
 		model.setId(personStatus.getId());
 		model.setIdPerson(personStatus.getPerson().getId());
+		model.setQuality(personStatus.getQuality());
 		return model;
 	}
 	

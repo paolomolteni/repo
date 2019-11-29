@@ -108,7 +108,7 @@
 <div v-if="isPersonStatusToShow">
 	<!-- Person who eaten -->
 	<span>Persona</span><br/>
- 	<b-form-select v-model="foodEatenSelected.idPerson" :options="listPersonSelectI"></b-form-select>
+ 	<b-form-select v-model="personStatusSelected.idPerson" :options="listPersonSelectI"></b-form-select>
  	
  	<!-- Description -->
 	<span>Descrizione</span><br/>
@@ -118,6 +118,8 @@
 	<span>Data/Ora</span><br/> 	
   	<b-form-input type="date" v-model="dateI"></b-form-input>
 	<b-form-input type="time" v-model="timeI"></b-form-input>
+	
+	<b-form-select v-model="personStatusSelected.quality" :options="qualityI"></b-form-select>
   
 	<button v-on:click="createOrUpdatePersonStatus">
 		<span v-if="personStatusSelected.id == null">Inserisci stato</span>
@@ -137,9 +139,9 @@
   
   	<!-- Table -->
 	<table class="table_width">
-		<tr><th>ID</th><th>Descrizione</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
+		<tr><th>ID</th><th>Descrizione</th><th>Date</th><th>ID persona</th><th>Qualità</th><th>Modifica</th><th>Elimina</th></tr>
 		<tr v-for="personStatus in getPersonStatusListToShow">
-			<td>{{personStatus.id}}</td><td>{{ personStatus.description }}</td><td>{{ personStatus.date }}</td><td>{{ personStatus.idPerson }}</td><td v-on:click="doUpdatePersonStatus(personStatus)">M</td><td v-on:click="deletePersonStatus(personStatus)">D</td>
+			<td>{{personStatus.id}}</td><td>{{ personStatus.description }}</td><td>{{ personStatus.date }}</td><td>{{ personStatus.idPerson }}</td><td>{{ personStatus.quality }}</td><td v-on:click="doUpdatePersonStatus(personStatus)">M</td><td v-on:click="deletePersonStatus(personStatus)">D</td>
 	 	</tr>
 	</table>
 </div>

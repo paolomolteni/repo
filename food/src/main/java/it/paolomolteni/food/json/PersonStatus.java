@@ -33,6 +33,12 @@ public class PersonStatus {
 	@JsonProperty("date")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
 	private Date date;
+	
+	/**
+	 * 
+	 */
+	@JsonProperty("quality")
+	private int quality;
 
 	/**
 	 * @return the id
@@ -88,6 +94,20 @@ public class PersonStatus {
 	 */
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	/**
+	 * @return the quality
+	 */
+	public int getQuality() {
+		return quality;
+	}
+
+	/**
+	 * @param quality the quality to set
+	 */
+	public void setQuality(int quality) {
+		this.quality = quality;
 	}
 
 }

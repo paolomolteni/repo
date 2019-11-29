@@ -26,6 +26,19 @@ var application = new Vue({
     	perPagePersonStatus: 10,
     	dateI: null,
     	timeI: null,
+    	qualityI : [
+    		{text: 'Zero' , value: 0},
+    		{text: 'Uno' , value: 1},
+    		{text: 'Due' , value: 2},
+    		{text: 'Tre' , value: 3},
+    		{text: 'Quattro' , value: 4},
+    		{text: 'Cinque' , value: 5},
+    		{text: 'Sei' , value: 6},
+    		{text: 'Sette' , value: 7},
+    		{text: 'Otto' , value: 8},
+    		{text: 'Nove' , value: 9},
+    		{text: 'Dieci' , value: 10}
+    	],
     	//######################################
     	listFoodEaten:[],
     	foodEatenSelected:{
@@ -229,7 +242,8 @@ var application = new Vue({
   				id: personStatus.id,
   				idPerson: personStatus.idPerson,
   				description: personStatus.description,
-  				date: personStatus.date
+  				date: personStatus.date,
+  				quality: personStatus.quality
   			};
   			
   			let d = new Date(personStatus.date);
@@ -286,7 +300,13 @@ var application = new Vue({
       				'Accept': 'application/json',
       				'Content-Type': 'application/json'
     			},
-    			body: JSON.stringify({id: this.personStatusSelected.id, idPerson: this.personStatusSelected.idPerson, description: this.personStatusSelected.description, date: this.personStatusSelected.date})
+    			body: JSON.stringify({
+    				id: this.personStatusSelected.id, 
+    				idPerson: this.personStatusSelected.idPerson, 
+    				description: this.personStatusSelected.description, 
+    				date: this.personStatusSelected.date,
+    				quality: this.personStatusSelected.quality
+    			})
       		};
 			
 			var url = "/food/person/status/insert";
@@ -410,7 +430,12 @@ var application = new Vue({
       				'Accept': 'application/json',
       				'Content-Type': 'application/json'
     			},
-    			body: JSON.stringify({id: this.foodEatenSelected.id, idPerson: this.foodEatenSelected.idPerson, meal: this.foodEatenSelected.meal, date: this.foodEatenSelected.date})
+    			body: JSON.stringify({
+    				id: this.foodEatenSelected.id, 
+    				idPerson: this.foodEatenSelected.idPerson, 
+    				meal: this.foodEatenSelected.meal, 
+    				date: this.foodEatenSelected.date
+    			})
       		};
 			
 			var url = "/food/food/insert";

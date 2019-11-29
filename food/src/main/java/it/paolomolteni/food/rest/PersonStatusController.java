@@ -77,6 +77,7 @@ public class PersonStatusController {
 		personStatus.setDate(model.getDate());
 		personStatus.setDescription(model.getDescription());
 		personStatus.setPerson(person);
+		personStatus.setQuality(model.getQuality());
 		
 		personStatus = personStatusService.save(personStatus);
 		

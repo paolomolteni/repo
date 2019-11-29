@@ -50,6 +50,12 @@ public class PersonStatus {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date", nullable = false)
 	private Date date;
+	
+	/**
+	 * 
+	 */
+	@Column(name = "quality", nullable = false)
+	private int quality;
 
 	/**
 	 * @return the id
@@ -105,6 +111,20 @@ public class PersonStatus {
 	 */
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	/**
+	 * @return the quality
+	 */
+	public int getQuality() {
+		return quality;
+	}
+
+	/**
+	 * @param quality the quality to set
+	 */
+	public void setQuality(int quality) {
+		this.quality = quality;
 	}
 	
 

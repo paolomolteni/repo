@@ -4,6 +4,7 @@ var application = new Vue({
 		isPersonToShow: false,
 		isFoodEatenToShow: false,
 		isPersonStatusToShow: false,
+		isGraphToShow: false,
 		//#####################################
 		listPersonSelectI:[],
     	listPerson:[],
@@ -48,8 +49,9 @@ var application = new Vue({
     		date:null
     	},
     	currentPageFoodEaten: 1,
-    	perPageFoodEaten: 10
+    	perPageFoodEaten: 10,
     	//######################################
+    	personForGraphSelected: null
   	},
   	computed: {
   		rowsPerson() {
@@ -94,18 +96,27 @@ var application = new Vue({
   			this.isPersonToShow = true;
   			this.isFoodEatenToShow = false;
   			this.isPersonStatusToShow = false;
+  			this.isGraphToShow = false;
   		},
   		showFoodEaten: function(){
   			this.cancellFoodEaten();
   			this.isPersonToShow = false;
   			this.isFoodEatenToShow = true;
   			this.isPersonStatusToShow = false;
+  			this.isGraphToShow = false;
   		},
   		showStatus: function(){
   			this.cancellPersonStatus();
   			this.isPersonToShow = false;
   			this.isFoodEatenToShow = false;
   			this.isPersonStatusToShow = true;
+  			this.isGraphToShow = false;
+  		},
+  		showGraph: function(){
+  			this.isPersonToShow = false;
+  			this.isFoodEatenToShow = false;
+  			this.isPersonStatusToShow = false;
+  			this.isGraphToShow = true;
   		},
   		cancellPerson: function(){
   			this.personSelected = {};
@@ -489,6 +500,14 @@ var application = new Vue({
 			(error) => {
 				console.log("Errore generico: " + error);
 			});
+    	},
+    	//############################################################################################
+    	//########################## GRAPH ###########################################################
+    	cancellPersonSelected: function(){
+    		this.personForGraphSelected = null;
+    	},
+    	showChart: function(){
+    		
     	}
   	}
 	

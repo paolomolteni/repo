@@ -1,5 +1,6 @@
 package it.paolomolteni.food.rest;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.paolomolteni.food.json.QualityPerDay;
 import it.paolomolteni.food.json.Response;
 import it.paolomolteni.food.model.Person;
 import it.paolomolteni.food.model.PersonStatus;
@@ -131,6 +133,32 @@ public class PersonStatusController {
 		personStatusService.delete(personStatus);
 		
 		return Response.ok(it.paolomolteni.food.json.PersonStatus.class);
+    }
+	
+	/**
+	 * @param idPerson
+	 * @return
+	 */
+	@GetMapping("/get/quality")
+    public Response getQualities(@RequestParam(value="idPerson", required = false) Long idPerson) {
+		
+		Person person = null;
+		
+		if(idPerson != null) {
+			person = personRepository.findById(idPerson);
+		}
+		
+		if(person == null) {
+			return Response.error();
+		}
+		
+		List<Object[]> qualityDayByDay = personStatusRepository.getQualityDayByDay(person);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		
+		List<QualityPerDay> qualityPerDays = qualityDayByDay.stream().map(item -> new QualityPerDay(sdf.format(item[0]), (Integer)item[1])).collect(Collectors.toList());
+		
+		return Response.ok(qualityPerDays);
     }
 
 }

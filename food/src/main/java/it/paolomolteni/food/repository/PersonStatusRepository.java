@@ -31,4 +31,15 @@ public interface PersonStatusRepository extends CrudRepository<PersonStatus, Int
 			+ " and ps.person = :person")
     public List<PersonStatus> findByPerson(@Param("person") Person person);
 	
+	/**
+	 * @param person
+	 * @return
+	 */
+	@Query("SELECT ps.date, min(ps.quality) "
+			+ " FROM PersonStatus ps "
+			+ " where 1 = 1 "
+			+ " and ps.person = :person "
+			+ " group by date(ps.date) ")
+    public List<Object[]> getQualityDayByDay(@Param("person") Person person);
+	
 }

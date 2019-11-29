@@ -10,8 +10,9 @@
 	<link rel="stylesheet" href="css/bootstrap/bootstrap-vue.min.css">
 	<link rel="stylesheet" href="css/index.css">
 	
+	<script src="js/chartjs/Chart.min.js"></script>
+	
 	<script src="js/vue.min.js"></script>
-	<script src="js/vue-router.js"></script>
 	<script src="js/bootstrap/bootstrap-vue.min.js"></script>
 </head>
 <body>
@@ -25,6 +26,7 @@
       		<b-nav-item v-on:click="showPerson()">Utenti</b-nav-item>
       		<b-nav-item v-on:click="showFoodEaten()">Pasti</b-nav-item>
       		<b-nav-item v-on:click="showStatus()">Stato</b-nav-item>
+      		<b-nav-item v-on:click="showGraph()">Grafico</b-nav-item>
     	</b-navbar-nav>
 	</b-navbar>
 </div>
@@ -145,7 +147,50 @@
 	 	</tr>
 	</table>
 </div>
+
+<!-- ******************************* PERSON STATUS COMPONENT ****************************** -->
+<div v-if="isGraphToShow">
+	<span>Persona</span><br/>
+ 	<b-form-select v-model="personForGraphSelected" :options="listPersonSelectI"></b-form-select>
+ 	
+ 	<button v-on:click="showChart()">Mostra</button>
+  	<button v-on:click="cancellPersonSelected()">Annulla</button>
+  	
+  	<div style="width:50% !important;margin: 0 auto;">
+		<canvas id="myChart"></canvas>
+	</div>
+  	
 </div>
+
+</div>
+
+<script>
+	var ctx = document.getElementById('myChart').getContext('2d');
+	var chart = new Chart(ctx, {
+		// The type of chart we want to create
+		type: 'bar',
+
+		// The data for our dataset
+		data: {
+			labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+			datasets: [{
+			    label: 'My First dataset',
+			    backgroundColor: 'rgb(255, 99, 132)',
+			    borderColor: 'rgb(255, 99, 132)',
+			    data: [0, 10, 5, 2, 20, 30, 45]
+			},
+			{
+			    label: 'My second dataset',
+			    backgroundColor: 'rgb(43, 123, 252)',
+			    borderColor: 'rgb(43, 123, 252)',
+			    data: [1, 5, 50, 20, 10, 30, 45]
+			}]
+		},
+
+		// Configuration options go here
+		options: {}
+	});
+</script>
 
 <script src="js/index.js"></script>
 

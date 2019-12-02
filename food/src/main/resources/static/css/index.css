@@ -7,7 +7,7 @@ table {
 }
 
 table, th, td {
-	 border: 1px solid black;
+	 /*border: 1px solid black;*/
 }
 
 .updateIcon{
@@ -34,4 +34,12 @@ table, th, td {
   	width: 30px;
   	height: 30px;
   	margin: 0 auto;
+}
+
+.row1{
+	background-color: #a6b3ff;
+}
+
+.row2{
+	background-color: #e1e3f0;
 }

@@ -14,6 +14,8 @@
 	
 	<script src="js/vue.min.js"></script>
 	<script src="js/bootstrap/bootstrap-vue.min.js"></script>
+	<script src="js/bootstrap/star-rating.min.js"></script>
+	
 </head>
 <body>
 
@@ -59,8 +61,13 @@
   	
   	<!-- Table -->
 	<table class="table_width">
-		<tr><th>ID persona</th><th>Nome</th><th class="tdUpdateIcon"></th><th class="tdDeleteIcon"></th></tr>
-		<tr v-for="person in getPersonListToShow">
+		<tr>
+			<th>ID persona</th>
+			<th>Nome</th>
+			<th class="tdUpdateIcon"></th>
+			<th class="tdDeleteIcon"></th>
+		</tr>
+		<tr v-for="(person, index) in getPersonListToShow" v-bind:class="{ 'row1': index%2==0, 'row2': index%2!=0 }">
 			<td>{{person.id}}</td>
 			<td>{{  person.name + " " + person.lastName }}</td>
 			<td class="tdUpdateIcon">
@@ -69,7 +76,6 @@
 			<td class="tdDeleteIcon">
 				<div v-on:click="deletePerson(person)" class="deleteIcon"></div>	
 			</td>
-			
 	 	</tr>
 	</table>
 </div>
@@ -106,8 +112,15 @@
   	
   	<!-- Table -->
 	<table class="table_width">
-		<tr><th>ID</th><th>Pasto</th><th>Date</th><th>ID persona</th><th class="tdUpdateIcon"></th><th class="tdDeleteIcon"></th></tr>
-		<tr v-for="foodEaten in getFoodEatenListToShow">
+		<tr>
+			<th>ID</th>
+			<th>Pasto</th>
+			<th>Date</th>
+			<th>ID persona</th>
+			<th class="tdUpdateIcon"></th>
+			<th class="tdDeleteIcon"></th>
+		</tr>
+		<tr v-for="(foodEaten, index) in getFoodEatenListToShow" v-bind:class="{ 'row1': index%2==0, 'row2': index%2!=0 }">
 			<td>{{foodEaten.id}}</td>
 			<td>{{ foodEaten.meal }}</td>
 			<td>{{ foodEaten.date }}</td>
@@ -159,8 +172,15 @@
   
   	<!-- Table -->
 	<table class="table_width">
-		<tr><th>ID</th><th>Descrizione</th><th>Date</th><th>ID persona</th><th>Qualità</th><th class="tdUpdateIcon"></th><th class="tdDeleteIcon"></th></tr>
-		<tr v-for="personStatus in getPersonStatusListToShow">
+		<tr>
+			<th>ID</th>
+			<th>Descrizione</th>
+			<th>Date</th><th>ID persona</th>
+			<th>Qualità</th>
+			<th class="tdUpdateIcon"></th>
+			<th class="tdDeleteIcon"></th>
+		</tr>
+		<tr v-for="(personStatus, index) in getPersonStatusListToShow" v-bind:class="{ 'row1': index%2==0, 'row2': index%2!=0 }">
 			<td>{{personStatus.id}}</td>
 			<td>{{ personStatus.description }}</td>
 			<td>{{ personStatus.date }}</td>

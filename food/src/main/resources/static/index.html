@@ -44,6 +44,8 @@
 	<span>Cognome</span><br/>
 	<b-form-input type="text" v-model="personSelected.lastName"></b-form-input>
 	
+	<br/>
+	
 	<button v-on:click="createOrUpdatePerson()">
 		<span v-if="personSelected.id == null">Crea persona</span>
 		<span v-if="personSelected.id != null">Aggiorna persona</span>
@@ -94,6 +96,8 @@
 	<span>Data/Ora</span><br/> 	
   	<b-form-input type="date" v-model="dateI"></b-form-input>
 	<b-form-input type="time" v-model="timeI"></b-form-input>
+  
+  	<br/>
   
 	<button v-on:click="createOrUpdateFoodEaten">
 		<span v-if="foodEatenSelected.id == null">Inserisci pasto</span>
@@ -152,8 +156,11 @@
 	
 	<!-- Qiality -->
 	<span>Qualità</span>
-	<b-form-select v-model="personStatusSelected.quality" :options="qualityI"></b-form-select>
-  
+	<!-- <b-form-select v-model="personStatusSelected.quality" :options="qualityI"></b-form-select>  -->
+	<star-rating increment="1" v-model="personStatusSelected.quality"></star-rating>
+  	
+  	<br/>
+  	
 	<button v-on:click="createOrUpdatePersonStatus">
 		<span v-if="personStatusSelected.id == null">Inserisci stato</span>
 		<span v-if="personStatusSelected.id != null">Aggiorna stato</span>

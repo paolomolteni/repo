@@ -26,7 +26,6 @@
       		<b-nav-item v-on:click="showPerson()">Utenti</b-nav-item>
       		<b-nav-item v-on:click="showFoodEaten()">Pasti</b-nav-item>
       		<b-nav-item v-on:click="showStatus()">Stato</b-nav-item>
-      		<b-nav-item v-on:click="showGraph()">Grafico</b-nav-item>
     	</b-navbar-nav>
 	</b-navbar>
 </div>
@@ -60,9 +59,17 @@
   	
   	<!-- Table -->
 	<table class="table_width">
-		<tr><th>ID persona</th><th>Nome</th><th>Modifica</th><th>Elimina</th></tr>
+		<tr><th>ID persona</th><th>Nome</th><th class="tdUpdateIcon"></th><th class="tdDeleteIcon"></th></tr>
 		<tr v-for="person in getPersonListToShow">
-			<td>{{person.id}}</td><td>{{  person.name + " " + person.lastName }}</td><td v-on:click="doUpdatePerson(person)">M</td><td v-on:click="deletePerson(person)">D</td>
+			<td>{{person.id}}</td>
+			<td>{{  person.name + " " + person.lastName }}</td>
+			<td class="tdUpdateIcon">
+				<div v-on:click="doUpdatePerson(person)" class="updateIcon"></div>	
+			</td>
+			<td class="tdDeleteIcon">
+				<div v-on:click="deletePerson(person)" class="deleteIcon"></div>	
+			</td>
+			
 	 	</tr>
 	</table>
 </div>
@@ -99,9 +106,18 @@
   	
   	<!-- Table -->
 	<table class="table_width">
-		<tr><th>ID</th><th>Pasto</th><th>Date</th><th>ID persona</th><th>Modifica</th><th>Elimina</th></tr>
+		<tr><th>ID</th><th>Pasto</th><th>Date</th><th>ID persona</th><th class="tdUpdateIcon"></th><th class="tdDeleteIcon"></th></tr>
 		<tr v-for="foodEaten in getFoodEatenListToShow">
-			<td>{{foodEaten.id}}</td><td>{{ foodEaten.meal }}</td><td>{{ foodEaten.date }}</td><td>{{ foodEaten.idPerson }}</td><td v-on:click="doUpdateFoodEaten(foodEaten)">M</td><td v-on:click="deleteFoodEaten(foodEaten)">D</td>
+			<td>{{foodEaten.id}}</td>
+			<td>{{ foodEaten.meal }}</td>
+			<td>{{ foodEaten.date }}</td>
+			<td>{{ foodEaten.idPerson }}</td>
+			<td class="tdUpdateIcon">
+				<div v-on:click="doUpdateFoodEaten(foodEaten)" class="updateIcon"></div>	
+			</td>
+			<td class="tdDeleteIcon">
+				<div v-on:click="deleteFoodEaten(foodEaten)" class="deleteIcon"></div>	
+			</td>
 	 	</tr>
 	</table>
 </div>
@@ -121,6 +137,8 @@
   	<b-form-input type="date" v-model="dateI"></b-form-input>
 	<b-form-input type="time" v-model="timeI"></b-form-input>
 	
+	<!-- Qiality -->
+	<span>Qualità</span>
 	<b-form-select v-model="personStatusSelected.quality" :options="qualityI"></b-form-select>
   
 	<button v-on:click="createOrUpdatePersonStatus">
@@ -141,9 +159,19 @@
   
   	<!-- Table -->
 	<table class="table_width">
-		<tr><th>ID</th><th>Descrizione</th><th>Date</th><th>ID persona</th><th>Qualità</th><th>Modifica</th><th>Elimina</th></tr>
+		<tr><th>ID</th><th>Descrizione</th><th>Date</th><th>ID persona</th><th>Qualità</th><th class="tdUpdateIcon"></th><th class="tdDeleteIcon"></th></tr>
 		<tr v-for="personStatus in getPersonStatusListToShow">
-			<td>{{personStatus.id}}</td><td>{{ personStatus.description }}</td><td>{{ personStatus.date }}</td><td>{{ personStatus.idPerson }}</td><td>{{ personStatus.quality }}</td><td v-on:click="doUpdatePersonStatus(personStatus)">M</td><td v-on:click="deletePersonStatus(personStatus)">D</td>
+			<td>{{personStatus.id}}</td>
+			<td>{{ personStatus.description }}</td>
+			<td>{{ personStatus.date }}</td>
+			<td>{{ personStatus.idPerson }}</td>
+			<td>{{ personStatus.quality }}</td>
+			<td class="tdUpdateIcon">
+				<div v-on:click="doUpdatePersonStatus(personStatus)" class="updateIcon"></div>	
+			</td>
+			<td class="tdDeleteIcon">
+				<div v-on:click="deletePersonStatus(personStatus)" class="deleteIcon"></div>	
+			</td>
 	 	</tr>
 	</table>
 </div>

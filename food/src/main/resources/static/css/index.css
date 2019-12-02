@@ -9,3 +9,29 @@ table {
 table, th, td {
 	 border: 1px solid black;
 }
+
+.updateIcon{
+	background-image: url("../images/update.png");
+  	background-repeat: no-repeat;
+  	background-size: 25px;
+  	width: 30px;
+  	height: 30px;
+  	margin: 0 auto;
+}
+
+.tdUpdateIcon{
+	width: 30px;
+}
+
+.tdDeleteIcon{
+	width: 30px;
+}
+
+.deleteIcon{
+	background-image: url("../images/delete.png");
+  	background-repeat: no-repeat;
+  	background-size: 25px;
+  	width: 30px;
+  	height: 30px;
+  	margin: 0 auto;
+}

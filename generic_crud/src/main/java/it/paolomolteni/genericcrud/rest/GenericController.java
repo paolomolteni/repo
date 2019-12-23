@@ -1,5 +1,8 @@
 package it.paolomolteni.genericcrud.rest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -115,5 +118,21 @@ public abstract class GenericController<J extends ICrudModel, M> {
 		
 		return Response.ok(jsonClass);
     }
+	
+	/**
+	 * @return
+	 */
+	@RequestMapping("/get/list")
+	public Response<List<J>> getEntities(){
+		
+		Iterable<M> entityIterable = getRepository().findAll();
+		List<J> list = new ArrayList<J>();
+		
+		for(M entity : entityIterable) {
+			list.add(mapModelToJson(entity));
+		}
+		
+		return Response.ok(list);
+	}
 
 }

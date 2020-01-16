@@ -1,22 +1,30 @@
 package it.paolomolteni.vaadintest;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.imageio.ImageIO;
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.HasValue.ValueChangeEvent;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
+import com.vaadin.server.StreamResource.StreamSource;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.Registration;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
@@ -110,25 +118,33 @@ public class MyUI extends UI {
 //        layout.addComponents(cmbCountry, cmbRegion);
         
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        MyJsComponent myJsComponent = new MyJsComponent();
-        myJsComponent.setId("divMap");
-        myJsComponent.setSizeFull();
-        myJsComponent.setHeight(400, Unit.PIXELS);
+//        MyJsComponent myJsComponent = new MyJsComponent();
+//        myJsComponent.setId("divMap");
+//        myJsComponent.setSizeFull();
+//        myJsComponent.setHeight(400, Unit.PIXELS);
+//        
+//        TextField txtLatitude = new TextField();
+//        txtLatitude.setSizeFull();
+//        
+//        TextField txtLongitude = new TextField();
+//        txtLongitude.setSizeFull();
+//        
+//        Button btnApply = new Button("Apply");
+//        btnApply.addClickListener(event -> {
+//        	myJsComponent.setLatitude(Double.valueOf(txtLatitude.getValue()));
+//        	myJsComponent.setLongitude(Double.valueOf(txtLongitude.getValue()));
+//        });
+//       
+//        
+//        layout.addComponents(txtLatitude, txtLongitude, btnApply, myJsComponent);
         
-        TextField txtLatitude = new TextField();
-        txtLatitude.setSizeFull();
         
-        TextField txtLongitude = new TextField();
-        txtLongitude.setSizeFull();
-        
-        Button btnApply = new Button("Apply");
-        btnApply.addClickListener(event -> {
-        	myJsComponent.setLatitude(Double.valueOf(txtLatitude.getValue()));
-        	myJsComponent.setLongitude(Double.valueOf(txtLongitude.getValue()));
-        });
-       
-        
-        layout.addComponents(txtLatitude, txtLongitude, btnApply, myJsComponent);
+        Button downloadButton = new Button("Download image");
+
+        StreamResource myResource = createResource();
+        FileDownloader fileDownloader = new FileDownloader(myResource);
+        fileDownloader.extend(downloadButton);
+        layout.addComponent(downloadButton);;
         
         setContent(layout);
     }
@@ -231,5 +247,31 @@ public class MyUI extends UI {
     	}
     	
     	return regions;
+    }
+    
+    private StreamResource createResource() {
+    	StreamResource streamResource = new StreamResource(new StreamSource() {
+            @Override
+            public InputStream getStream() {
+                String text = "My image";
+
+                BufferedImage bi = new BufferedImage(100, 30, BufferedImage.TYPE_3BYTE_BGR);
+                bi.getGraphics().drawChars(text.toCharArray(), 0, text.length(), 10, 20);
+
+                try {
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    ImageIO.write(bi, "png", bos);
+                    return new ByteArrayInputStream(bos.toByteArray());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+
+            }
+        }, "myImage.png");
+    	
+    	streamResource.setCacheTime(0);
+    	
+    	return streamResource;
     }
 }

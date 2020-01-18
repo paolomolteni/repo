@@ -1,4 +1,4 @@
-package it.paolomolteni.loginapp;
+package it.paolomolteni.loginapp.service;
 
 import java.util.Set;
 
@@ -10,6 +10,8 @@ import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import it.paolomolteni.loginapp.model.User;
 
 @Component
 public class MyUserService {

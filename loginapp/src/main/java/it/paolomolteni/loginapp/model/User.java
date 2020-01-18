@@ -1,4 +1,4 @@
-package it.paolomolteni.loginapp;
+package it.paolomolteni.loginapp.model;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

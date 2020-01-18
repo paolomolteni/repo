@@ -1,9 +1,11 @@
-package it.paolomolteni.loginapp;
+package it.paolomolteni.loginapp.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import it.paolomolteni.loginapp.service.MyUserService;
 
 @RestController
 public class MyController {

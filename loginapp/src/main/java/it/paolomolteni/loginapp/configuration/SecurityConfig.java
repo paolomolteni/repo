@@ -1,4 +1,4 @@
-package it.paolomolteni.loginapp;
+package it.paolomolteni.loginapp.configuration;
 
 import org.keycloak.adapters.springboot.KeycloakSpringBootConfigResolver;
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents;
@@ -31,6 +31,7 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
  
     @Bean
     public KeycloakSpringBootConfigResolver KeycloakConfigResolver() {
+    	// Automatically discover of keycloak configuration from application.properties
         return new KeycloakSpringBootConfigResolver();
     }
  
